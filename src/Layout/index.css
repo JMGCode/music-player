@@ -1,0 +1,11 @@
+body {
+  background-color: #131315;
+}
+.layout {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: 1fr min-content;
+  background-color: #131315;
+  color: white;
+}

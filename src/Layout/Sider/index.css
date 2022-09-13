@@ -1,0 +1,13 @@
+.sider {
+  --sider-width: 200px;
+  width: var(--sider-width);
+  transition: width 1s;
+  overflow-y: hidden;
+  background-color: #0d0d0d;
+  display: grid;
+  grid-template-rows: min-content 1fr;
+}
+
+.sider:hover {
+  color: rgba(255, 255, 255, 1);
+}

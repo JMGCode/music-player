@@ -1,0 +1,44 @@
+.search-page {
+  /* background-color: red; */
+  display: grid;
+  grid-template-rows: min-content 1fr;
+  height: 100%;
+}
+
+.scrollable {
+  height: 100%;
+  /* background-color: blueviolet; */
+  overflow-y: scroll;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #56bd40;
+  border-radius: 10px;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #3e822e;
+}
+
+.menu {
+  padding: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.menu__item {
+  width: 100%;
+  margin: 10px;
+}
+
+.menu hr {
+  margin-bottom: 0;
+}
+
+.menu__item__icon {
+  margin-right: 15px;
+}

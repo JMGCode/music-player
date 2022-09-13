@@ -1,0 +1,1 @@
+export { getSmallestImage } from "./getSmallestImage";
