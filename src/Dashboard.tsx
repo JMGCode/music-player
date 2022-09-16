@@ -1,6 +1,12 @@
 import "./Dashboard.css";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
+import {
+  useGetPlaylistTracksQuery,
+  useGetPlaylistsQuery,
+  useSearchByTrackQuery,
+} from "./features/api/spotify/spotifySlice";
 
 import Content from "./Layout/Content";
 import Footer from "./Layout/Footer";
@@ -14,81 +20,52 @@ import Search from "./Search/Search";
 import Sider from "./Layout/Sider";
 import TempComponent from "./TempComponent";
 import TrackList from "./Tracks/TrackList";
-import { getSmallestImage } from "./helpers";
-import { useAuthContext } from "./hooks/useAuth";
+import { refreshCredentials } from "./features/auth/authSlice";
 import useDebounce from "./hooks/useDebounce";
+import { useRefreshTokenMutation } from "./features/api/serverAPI/serverSlice";
 
 const Dashboard: React.FC = () => {
+  const dispatch = useAppDispatch();
   type LocationKeys = "search" | "lyrics" | "playlist" | "";
-  const { spotifyApi } = useAuthContext();
-
   const [location, setLocation] = useState<{
     curr: LocationKeys;
     prev: LocationKeys;
   }>({ curr: "search", prev: "" });
 
-  const [playlistResults, setPlaylistResults] = useState<ITrack[] | undefined>(
-    []
-  );
-  const [filterPlaylistResults, setFilterPlaylistResults] = useState<
-    ITrack[] | undefined
-  >([]);
-  const [searchResults, setSearchResults] = useState<ITrack[] | undefined>([]);
-  const [playingTrack, setPlayingTrack] = useState<ITrack>();
-  const [isLoading, setIsLoding] = useState(false);
+  const [searchValue, setSerachValue] = useState("");
+  const { data: searchQueryResults, isLoading: searchLoading } =
+    useSearchByTrackQuery(searchValue, {
+      skip: searchValue === "" || location.curr !== "search",
+    });
+  const [playlistIdValue, setPlayListIdValue] = useState("");
+  const { data: playListQueryResults = [] } = useGetPlaylistsQuery();
+  const {
+    data: playListSelectedQueryResults = [],
+    isLoading: playlistLoading,
+  } = useGetPlaylistTracksQuery(playlistIdValue, {
+    skip: playlistIdValue === "",
+  });
 
+  const authState = useAppSelector((state) => state.auth);
+  const [refreshTokenMutation] = useRefreshTokenMutation();
+
+  useEffect(() => {
+    const { expiresIn, refreshToken } = authState;
+    console.log(expiresIn);
+    const intervalId = setInterval(async () => {
+      const payload = await refreshTokenMutation(refreshToken).unwrap();
+      dispatch(refreshCredentials(payload));
+    }, (expiresIn - 60) * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const [playingTrack, setPlayingTrack] = useState<ITrack>();
   const debounce = useDebounce();
 
   const chooseTrack = (track: ITrack) => {
     setPlayingTrack(track);
     // setSearch("");
-  };
-
-  const getTracks = async (search: string) => {
-    if (!search) return setSearchResults([]);
-    setIsLoding(true);
-
-    const data = await spotifyApi?.searchTracks(search);
-
-    const result: ITrack[] | undefined = data?.body.tracks?.items.map(
-      (item) => {
-        const smallestImage = getSmallestImage(item.album.images);
-
-        return {
-          artist: item.artists[0].name,
-          title: item.name,
-          uri: item.uri,
-          albumUrl: smallestImage.url,
-        };
-      }
-    );
-
-    //TODO:Split constrains get shouldnt set
-    if (result === undefined) setSearchResults([]);
-    setSearchResults(result);
-
-    setIsLoding(false);
-  };
-
-  const getPlaylistTracks = async (playlistId: string) => {
-    const data = await spotifyApi?.getPlaylist(playlistId);
-
-    const result: ITrack[] | undefined = data?.body.tracks.items
-      .filter((item) => item.track !== null)
-      .map((item) => {
-        const track = item?.track;
-        if (!track) return { artist: "", title: "", uri: "", albumUrl: "" };
-
-        const smallestImage = getSmallestImage(track.album.images);
-
-        return {
-          artist: track.artists[0].name,
-          title: track.name,
-          uri: track.uri,
-          albumUrl: smallestImage.url,
-        };
-      });
-    return result;
   };
 
   const trackFilter = (tracks: ITrack[] | undefined, search: string) => {
@@ -101,13 +78,7 @@ const Dashboard: React.FC = () => {
   };
 
   const handleSearch = (value: string) => {
-    if (location.curr === "search") {
-      getTracks(value);
-    }
-    if (location.curr === "playlist") {
-      const newTracks = trackFilter(playlistResults, value);
-      setFilterPlaylistResults(newTracks);
-    }
+    setSerachValue(value);
   };
 
   return (
@@ -121,33 +92,32 @@ const Dashboard: React.FC = () => {
             if (location.curr !== "playlist") {
               setLocation({ prev: location.curr, curr: "playlist" });
             }
-            setPlaylistResults([]);
-            setFilterPlaylistResults([]);
-            const results = await getPlaylistTracks(playlistId);
-            setPlaylistResults(results);
-            setFilterPlaylistResults(results);
+            setPlayListIdValue(playlistId);
           }}
+          playlists={playListQueryResults}
         />
       </Sider>
+
       {/* TODO: Cambiar content location a redux para un manejo mas sencillo */}
       <Content>
         {(location.curr === "search" || location.curr === "playlist") && (
           <div className="search-page">
             <Search
-              // onChange={(value: string) =>
-              //   debounce(() => handleSearch(value), 500)
-              // }
               onChange={(value: string) =>
                 debounce(() => handleSearch(value), 500)
               }
             />
             {/* TODO: Pensar en una mejor forma de hacer a los componentes Loading */}
-            <Loading isLoading={isLoading}>
+            <Loading
+              isLoading={
+                location.curr === "playlist" ? playlistLoading : searchLoading
+              }
+            >
               <TrackList
                 tracks={
                   location.curr === "search"
-                    ? searchResults
-                    : filterPlaylistResults
+                    ? searchQueryResults
+                    : trackFilter(playListSelectedQueryResults, searchValue)
                 }
                 onChoose={chooseTrack}
               />
