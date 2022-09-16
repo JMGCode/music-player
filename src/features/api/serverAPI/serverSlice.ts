@@ -30,7 +30,11 @@ export const serverApiSlice = createApi({
         invalidatesTags: ["Post"],
       }),
     }),
+    getLyrics: builder.query<any, { title: string; artist: string }>({
+      query: ({ title, artist }) => `lyrics?title=${title}&artist=${artist}`,
+    }),
   }),
 });
 
-export const { useLoginMutation, useRefreshTokenMutation } = serverApiSlice;
+export const { useLoginMutation, useRefreshTokenMutation, useGetLyricsQuery } =
+  serverApiSlice;
