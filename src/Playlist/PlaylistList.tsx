@@ -1,28 +1,24 @@
 import "./Playlist.css";
 
 import Playlist from "./Playlist";
+import { useGetPlaylistsQuery } from "../features/api/spotify/spotifySlice";
+import { useNavigate } from "react-router-dom";
 
 interface IPlaylistList {
   title: string;
-  onSelect: Function;
-  playlists: { name: string; trackUri: string; id: string }[];
 }
 
-const PlaylistList: React.FC<IPlaylistList> = ({
-  title,
-  onSelect,
-  playlists,
-}) => {
+const PlaylistList: React.FC<IPlaylistList> = ({ title }) => {
+  const { data: playlists = [] } = useGetPlaylistsQuery();
+  let navigate = useNavigate();
   return (
     <div className="playlist playlist__scroll ">
-      {/* <h1 className="playlist__title">{title}</h1> */}
-
       {playlists.map((playlist) => (
         <Playlist
           name={playlist.name}
           key={playlist.trackUri}
           onClick={() => {
-            onSelect(playlist.id);
+            navigate(`/playlist/${playlist.id}`);
           }}
         />
       ))}
