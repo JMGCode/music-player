@@ -11,6 +11,7 @@ import {
   persistStore,
 } from "redux-persist";
 
+import dashboardReducer from "../features/dashboard/dashboardSlice";
 import authReducer from "../features/auth/authSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { serverApiSlice } from "../features/api/serverAPI/serverSlice";
@@ -27,6 +28,7 @@ const persistedAuthReducer = persistReducer(persistConfig, authReducer);
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
+    dashboard: dashboardReducer,
     [spotifyApiSlice.reducerPath]: spotifyApiSlice.reducer,
     [serverApiSlice.reducerPath]: serverApiSlice.reducer,
   },
