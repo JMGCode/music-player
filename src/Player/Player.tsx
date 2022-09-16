@@ -13,29 +13,17 @@ import {
   faVolumeMute,
   faVolumeOff,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import SpotifyWebPlayer from "react-spotify-web-playback/lib";
 import TrackSearchResult from "../TrackSearchResult";
+import { useAppSelector } from "../app/hooks";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Player = ({
-  trackUri,
-  playingTrack,
-  showLyrics,
-  setShowLyrics,
-}: {
-  trackUri: any;
-  playingTrack: any;
-  showLyrics: boolean;
-  setShowLyrics: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const [play, setPlay] = useState(false);
-
-  useEffect(() => {
-    setPlay(true);
-  }, [trackUri]);
-
+const Player = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
+  const path = location.pathname;
   return (
     <div className="player-container">
       <div className="player">
@@ -65,9 +53,13 @@ const Player = ({
         <div className="volume-container">
           <FontAwesomeIcon
             icon={faMicrophoneLines}
-            color={`${showLyrics ? "green" : ""}`}
+            color={`${path === "/lyrics" ? "green" : ""}`}
             onClick={() => {
-              setShowLyrics((prev) => !prev);
+              if (path === "/lyrics") {
+                navigate(-1);
+              } else {
+                navigate("/lyrics");
+              }
             }}
           />
           <FontAwesomeIcon icon={faVolumeOff} />
