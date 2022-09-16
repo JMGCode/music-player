@@ -1,10 +1,10 @@
-import { IMe, IPlaylists, ISearch, ISearchItem } from "./interfaces";
+import { IMe, IPlaylists, ISearch } from "./interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { IPlaylist } from "./interfaces/playlist";
-import { ITrack } from "../../../Tracks/TrackItem";
 import { RootState } from "../../../app/store";
 import { getSmallestImage } from "../../../helpers";
+import { ITrack } from "../../../components/Tracks/TrackItem";
 
 // Define a service using a base URL and expected endpoints
 export const spotifyApiSlice = createApi({

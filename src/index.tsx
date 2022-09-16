@@ -14,9 +14,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-import SearchPage from "./pages/SearchPage";
-import PlaylistPage from "./pages/PlaylistPage";
-import Lyrics from "./Lyrics/Lyrics";
+import { SearchPage, PlaylistPage } from "./Pages";
+import { Lyrics } from "./components";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

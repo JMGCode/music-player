@@ -15,8 +15,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TrackSearchResult from "../TrackSearchResult";
-import { useAppSelector } from "../app/hooks";
+import { PlayerTrack } from "./PlayerTrack";
+import { useAppSelector } from "../../app/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const Player = () => {
@@ -29,7 +29,7 @@ const Player = () => {
       <div className="player">
         <div className="playing-track-container">
           {playingTrack ? (
-            <TrackSearchResult
+            <PlayerTrack
               key={playingTrack.uri}
               track={playingTrack}
               chooseTrack={() => {

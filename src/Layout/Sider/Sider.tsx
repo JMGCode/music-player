@@ -1,4 +1,4 @@
-import "./index.css";
+import "./Sider.css";
 
 import { PropsWithChildren } from "react";
 

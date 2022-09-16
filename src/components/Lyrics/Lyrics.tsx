@@ -1,7 +1,7 @@
 import "./Lyrics.css";
-import Loading from "../Loading";
-import { useAppSelector } from "../app/hooks";
-import { useGetLyricsQuery } from "../features/api/serverAPI/serverSlice";
+import Loading from "../Loading/Loading";
+import { useAppSelector } from "../../app/hooks";
+import { useGetLyricsQuery } from "../../features/api/serverAPI";
 
 const Lyrics = () => {
   const playingTrack = useAppSelector((state) => state.dashboard.currTrack);

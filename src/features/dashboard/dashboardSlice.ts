@@ -1,6 +1,6 @@
 //Payload is a typescript type that represents the contents of one given action object
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ITrack } from "../../Tracks/TrackItem";
+import { ITrack } from "../../components/Tracks/TrackItem";
 
 interface IDashboard {
   currTrack: ITrack;

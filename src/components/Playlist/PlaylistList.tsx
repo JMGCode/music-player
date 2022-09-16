@@ -1,7 +1,7 @@
 import "./Playlist.css";
 
 import Playlist from "./Playlist";
-import { useGetPlaylistsQuery } from "../features/api/spotify/spotifySlice";
+import { useGetPlaylistsQuery } from "../../features/api/spotify";
 import { useNavigate } from "react-router-dom";
 
 interface IPlaylistList {

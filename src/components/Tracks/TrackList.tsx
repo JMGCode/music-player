@@ -1,6 +1,6 @@
 import TrackItem, { ITrack } from "./TrackItem";
-import { useAppDispatch } from "../app/hooks";
-import { setPlayingTrack } from "../features/dashboard/dashboardSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { setPlayingTrack } from "../../features/dashboard/dashboardSlice";
 interface ITracks {
   tracks: ITrack[] | undefined;
 }

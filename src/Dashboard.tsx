@@ -3,16 +3,12 @@ import "./Dashboard.css";
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 
-import Content from "./Layout/Content";
-import Footer from "./Layout/Footer";
-import Layout from "./Layout";
-import Player from "./Player/Player";
-import PlaylistList from "./Playlist/PlaylistList";
+import { Content, Footer, Layout, Sider } from "./Layout";
+import { PlaylistList, Player } from "./components";
 
-import Sider from "./Layout/Sider";
 import TempComponent from "./TempComponent";
 import { refreshCredentials } from "./features/auth/authSlice";
-import { useRefreshTokenMutation } from "./features/api/serverAPI/serverSlice";
+import { useRefreshTokenMutation } from "./features/api/serverAPI";
 import { Outlet } from "react-router-dom";
 
 const Dashboard: React.FC = () => {

@@ -1,12 +1,9 @@
-import { FC, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { useAppSelector } from "../app/hooks";
-import { useGetPlaylistTracksQuery } from "../features/api/spotify/spotifySlice";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useGetPlaylistTracksQuery } from "../features/api/spotify";
 import useDebounce from "../hooks/useDebounce";
-import Loading from "../Loading";
-import Search from "../Search/Search";
-import { ITrack } from "../Tracks/TrackItem";
-import TrackList from "../Tracks/TrackList";
+import { Loading, TrackList, Search } from "../components";
+import { ITrack } from "../components/Tracks/TrackItem";
 
 const PlaylistPage = () => {
   const [search, setSearch] = useState("");

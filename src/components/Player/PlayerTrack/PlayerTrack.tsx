@@ -10,7 +10,7 @@ interface Props {
   chooseTrack: Function;
 }
 
-const TrackSearchResult: React.FC<Props> = ({ track, chooseTrack }) => {
+const PlayerTrack: React.FC<Props> = ({ track, chooseTrack }) => {
   const handlePlay = () => {
     chooseTrack(track);
   };
@@ -34,4 +34,4 @@ const TrackSearchResult: React.FC<Props> = ({ track, chooseTrack }) => {
   );
 };
 
-export default TrackSearchResult;
+export default PlayerTrack;

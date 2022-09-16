@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import Login from "./Login";
 import { setCredentials } from "./features/auth/authSlice";
 import { useEffect } from "react";
-import { useLoginMutation } from "./features/api/serverAPI/serverSlice";
+import { useLoginMutation } from "./features/api/serverAPI";
 import { useNavigate } from "react-router-dom";
 
 const OAuth = () => {

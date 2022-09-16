@@ -1,10 +1,8 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 
-import Loading from "../Loading";
-import Search from "../Search/Search";
-import TrackList from "../Tracks/TrackList";
+import { Search, TrackList, Loading } from "../components";
 import useDebounce from "../hooks/useDebounce";
-import { useSearchByTrackQuery } from "../features/api/spotify/spotifySlice";
+import { useSearchByTrackQuery } from "../features/api/spotify";
 
 const SearchPage = () => {
   const [search, setSearch] = useState("");
