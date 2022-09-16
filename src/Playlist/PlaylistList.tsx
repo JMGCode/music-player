@@ -1,11 +1,6 @@
 import "./Playlist.css";
 
-import { useEffect, useState } from "react";
-
 import Playlist from "./Playlist";
-import { useAppSelector } from "../app/hooks";
-import { useAuthContext } from "../hooks/useAuth";
-import { useGetMeQuery } from "../features/api/spotify/spotifySlice";
 
 interface IPlaylistList {
   title: string;

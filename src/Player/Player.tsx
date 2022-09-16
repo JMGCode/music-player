@@ -18,7 +18,6 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import SpotifyWebPlayer from "react-spotify-web-playback/lib";
 import TrackSearchResult from "../TrackSearchResult";
-import { useAuthContext } from "../hooks/useAuth";
 
 const Player = ({
   trackUri,
@@ -31,13 +30,11 @@ const Player = ({
   showLyrics: boolean;
   setShowLyrics: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { accessToken } = useAuthContext();
   const [play, setPlay] = useState(false);
 
   useEffect(() => {
     setPlay(true);
   }, [trackUri]);
-  if (!accessToken) return null;
 
   return (
     <div className="player-container">
