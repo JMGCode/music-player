@@ -12,8 +12,6 @@ interface ISearch {
 //TODO: Mover boton log out a un componente separado de Search
 const Search: React.FC<ISearch> = ({ onChange }) => {
   const [search, setSearch] = useState("");
-  const authUrl =
-    "https://accounts.spotify.com/authorize?client_id=fdbb32b746414133adaa41a22ace8ba5&response_type=code&show_dialog=true&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state";
 
   return (
     <div className="search-bar">
@@ -29,7 +27,19 @@ const Search: React.FC<ISearch> = ({ onChange }) => {
           setSearch(value);
         }}
       />
-      <Button
+    </div>
+  );
+};
+
+export default Search;
+
+{
+  /* 
+  
+   // const authUrl =
+  //   "https://accounts.spotify.com/authorize?client_id=fdbb32b746414133adaa41a22ace8ba5&response_type=code&show_dialog=true&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state";
+
+  <Button
         href={authUrl}
         style={{
           width: "minContent",
@@ -41,9 +51,5 @@ const Search: React.FC<ISearch> = ({ onChange }) => {
         }}
       >
         Log out
-      </Button>
-    </div>
-  );
-};
-
-export default Search;
+      </Button> */
+}
