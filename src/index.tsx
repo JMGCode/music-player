@@ -14,6 +14,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
+import SearchPage from "./pages/SearchPage";
+import PlaylistPage from "./pages/PlaylistPage";
+import Lyrics from "./Lyrics/Lyrics";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -27,10 +30,17 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: () => {
       const token = store.getState().auth.accessToken;
-      if (token === "") {
+      const tokenStorage = localStorage.getItem("persist:main-root");
+      if (token === "" && !tokenStorage) {
         return redirect("/login");
       }
     },
+    children: [
+      { path: "/", element: <p style={{ color: "white" }}>HOME!!!!</p> },
+      { path: "/search", element: <SearchPage /> },
+      { path: "/playlist/:playlistId", element: <PlaylistPage /> },
+      { path: "/lyrics", element: <Lyrics /> },
+    ],
   },
   {
     path: "/login",
