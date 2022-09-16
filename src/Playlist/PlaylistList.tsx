@@ -3,32 +3,21 @@ import "./Playlist.css";
 import { useEffect, useState } from "react";
 
 import Playlist from "./Playlist";
+import { useAppSelector } from "../app/hooks";
 import { useAuthContext } from "../hooks/useAuth";
+import { useGetMeQuery } from "../features/api/spotify/spotifySlice";
 
 interface IPlaylistList {
   title: string;
   onSelect: Function;
+  playlists: { name: string; trackUri: string; id: string }[];
 }
-//TODO : Separar componente visual del estado? (ver si es conveniente)
-const PlaylistList: React.FC<IPlaylistList> = ({ title, onSelect }) => {
-  const { spotifyApi, accessToken } = useAuthContext();
 
-  const [playlists, setPlayLists] = useState<
-    { name: string; trackUri: string; id: string }[]
-  >([]);
-
-  useEffect(() => {
-    if (!accessToken) return;
-
-    spotifyApi?.getUserPlaylists().then((data) => {
-      const d = data.body.items.map((item) => {
-        return { name: item.name, trackUri: item.tracks.href, id: item.id };
-      });
-
-      setPlayLists(d);
-    });
-  }, [spotifyApi, accessToken]);
-
+const PlaylistList: React.FC<IPlaylistList> = ({
+  title,
+  onSelect,
+  playlists,
+}) => {
   return (
     <div className="playlist playlist__scroll ">
       {/* <h1 className="playlist__title">{title}</h1> */}
