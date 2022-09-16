@@ -1,13 +1,11 @@
 import "./Dashboard.css";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
-import { useGetPlaylistsQuery } from "./features/api/spotify/spotifySlice";
 
 import Content from "./Layout/Content";
 import Footer from "./Layout/Footer";
 import Layout from "./Layout";
-import Lyrics from "./Lyrics/Lyrics";
 import Player from "./Player/Player";
 import PlaylistList from "./Playlist/PlaylistList";
 
@@ -40,7 +38,6 @@ const Dashboard: React.FC = () => {
         <PlaylistList title="Playlists" />
       </Sider>
 
-      {/* TODO: Cambiar content location a redux para un manejo mas sencillo */}
       <Content>
         <Outlet />
       </Content>
