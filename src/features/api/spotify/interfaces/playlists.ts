@@ -1,4 +1,4 @@
-export interface IAPIPlaylist {
+export interface IPlaylists {
   href: string;
   items: Item[];
   limit: number;

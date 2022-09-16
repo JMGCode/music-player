@@ -1,14 +1,16 @@
-export interface IAPISearch {
-  href: string;
-  items: Item[];
-  limit: number;
-  next: string;
-  offset: number;
-  previous: null;
-  total: number;
+export interface ISearch {
+  tracks: {
+    href: string;
+    items: ISearchItem[];
+    limit: number;
+    next: string;
+    offset: number;
+    previous: null;
+    total: number;
+  };
 }
 
-interface Item {
+export interface ISearchItem {
   album: Album;
   artists: Artist[];
   available_markets: string[];

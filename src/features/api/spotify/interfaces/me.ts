@@ -1,4 +1,4 @@
-export interface IAPIMe {
+export interface IMe {
   country: string;
   display_name: string;
   email: string;
