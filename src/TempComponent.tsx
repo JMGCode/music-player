@@ -5,8 +5,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
-const TempComponent = ({ location, setLocation }: any) => {
+const TempComponent = () => {
+  let navigate = useNavigate();
   return (
     <div className="menu">
       <div className="menu__item">
@@ -15,9 +17,10 @@ const TempComponent = ({ location, setLocation }: any) => {
       <div
         className="menu__item"
         onClick={() => {
-          if (location.curr !== "search") {
-            setLocation({ prev: location.curr, curr: "search" });
-          }
+          // if (location.curr !== "search") {
+          //   setLocation({ prev: location.curr, curr: "search" });
+          // }
+          navigate("/search");
         }}
       >
         <FontAwesomeIcon icon={faSearch} className="menu__item__icon" /> Search
