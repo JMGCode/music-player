@@ -5,12 +5,14 @@ interface IAuthState {
   accessToken: string;
   expiresIn: number;
   refreshToken: string;
+  deviceId?: string;
 }
 
 const initialState: IAuthState = {
   accessToken: "",
   expiresIn: 0,
   refreshToken: "",
+  deviceId: "",
 };
 
 const authSlice = createSlice({
@@ -23,8 +25,12 @@ const authSlice = createSlice({
     refreshCredentials(state, action: PayloadAction<IAuthState>) {
       return { ...state, ...action.payload };
     },
+    setDeviceId(state, action: PayloadAction<string>) {
+      return { ...state, deviceId: action.payload };
+    },
   },
 });
 
-export const { setCredentials, refreshCredentials } = authSlice.actions;
+export const { setCredentials, refreshCredentials, setDeviceId } =
+  authSlice.actions;
 export default authSlice.reducer;

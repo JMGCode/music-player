@@ -2,9 +2,18 @@ import { IMe, IPlaylists, ISearch } from "./interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { IPlaylist } from "./interfaces/playlist";
+import { ISpotifyTrack } from "../../dashboard/dashboardSlice";
 import { RootState } from "../../../app/store";
-import { getSmallestImage } from "../../../helpers";
-import { ITrack } from "../../../components/Tracks/TrackItem";
+
+interface IPlayListTracksResponse {
+  uri: string;
+  name: string;
+  owner: string | undefined;
+  total: number;
+  image: string;
+  public: boolean;
+  tracks: ISpotifyTrack[];
+}
 
 // Define a service using a base URL and expected endpoints
 export const spotifyApiSlice = createApi({
@@ -35,37 +44,37 @@ export const spotifyApiSlice = createApi({
         });
       },
     }),
-    getPlaylistTracks: builder.query<ITrack[], string>({
-      query: (id) => `https://api.spotify.com/v1/playlists/${id}`,
+    getPlaylistTracks: builder.query<IPlayListTracksResponse, string>({
+      query: (id) => `playlists/${id}`,
       transformResponse: (response: IPlaylist) => {
+        const image = response.images[1]
+          ? response.images[1].url
+          : response.images[0].url;
+
+        const info = {
+          uri: response.uri,
+          name: response.name,
+          owner: response.owner.display_name,
+          total: response.tracks.total,
+          public: response.public,
+          image,
+        };
+
         const items = response.tracks.items;
         const filterItems = items.filter((item) => item.track !== null);
-
         const trackItems = filterItems.map((item: any) => {
           const { track } = item;
-          const smallestImage = getSmallestImage(track.album.images);
-
-          return {
-            artist: track.artists[0].name,
-            title: track.name,
-            uri: track.uri,
-            albumUrl: smallestImage.url,
-          };
+          return track;
         });
-        return trackItems;
+        return { ...info, tracks: trackItems };
       },
     }),
-    searchByTrack: builder.query<ITrack[], string>({
+    searchByTrack: builder.query<ISpotifyTrack[], string>({
       query: (trackName = "") => `search/?type=track&q=${trackName}`,
       transformResponse: (response: ISearch) => {
-        return response.tracks.items.map((item) => {
-          const smallestImage = getSmallestImage(item.album.images);
-          return {
-            artist: item.artists[0].name,
-            title: item.name,
-            uri: item.uri,
-            albumUrl: smallestImage.url,
-          };
+        console.log("search response: ", response);
+        return response.tracks.items.map((item: any) => {
+          return item;
         });
       },
     }),

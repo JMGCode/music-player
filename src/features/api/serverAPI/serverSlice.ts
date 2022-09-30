@@ -38,3 +38,5 @@ export const serverApiSlice = createApi({
 
 export const { useLoginMutation, useRefreshTokenMutation, useGetLyricsQuery } =
   serverApiSlice;
+
+export default serverApiSlice;
