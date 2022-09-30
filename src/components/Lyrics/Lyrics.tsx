@@ -6,8 +6,11 @@ import { useGetLyricsQuery } from "../../features/api/serverAPI";
 const Lyrics = () => {
   const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
   const { data, isLoading, isError } = useGetLyricsQuery(
-    { artist: playingTrack.artist, title: playingTrack.title },
-    { skip: !playingTrack.title || !playingTrack.artist }
+    {
+      artist: playingTrack?.artists[0].name || "",
+      title: playingTrack?.name || "",
+    },
+    { skip: !playingTrack?.name || !playingTrack?.artists }
   );
 
   return (
