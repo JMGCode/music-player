@@ -4,3 +4,4 @@ export * from "./Playlist";
 export * from "./Player";
 export * from "./Search";
 export * from "./Tracks";
+export * from "./ConnectDevice";
