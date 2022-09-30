@@ -18,7 +18,8 @@ const useDebounce = () => {
   const dispatch = (callback: Function, delay = 1000, ...args: any) => {
     if (timeoutId) clearTimeout(timeoutId);
     const timer = setTimeout(() => {
-      callback();
+      callback(...args);
+      // callback();
     }, delay);
     setTimeoutId(timer);
   };
