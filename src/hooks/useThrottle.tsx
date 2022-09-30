@@ -1,31 +1,29 @@
-import { useState } from "react";
+import { useRef } from "react";
 
-const useThrottle = (callback: Function, delay = 1000) => {
-  const [shouldWait, setShouldWait] = useState(false);
-  const [waitingArgs, setWaitingArgs] = useState<any>(null);
+const useThrottle = () => {
+  const lastExecuted = useRef<number>(Date.now());
+  const timeoutId = useRef<NodeJS.Timeout>();
 
-  const timeoutFunc = () => {
-    if (waitingArgs == null) {
-      setShouldWait(false);
+  const dispatch = (callback: Function, interval = 1000, ...args: any) => {
+    const currTime = Date.now();
+    const timeSinceLastCall = currTime - lastExecuted.current;
+    const delayRemaining = interval - timeSinceLastCall;
+
+    if (delayRemaining < 0) {
+      lastExecuted.current = Date.now();
+      callback(...args);
     } else {
-      callback(waitingArgs);
-      setWaitingArgs(null);
-      setShouldWait(false);
-      setTimeout(timeoutFunc, delay);
+      if (timeoutId.current) clearTimeout(timeoutId.current);
+      const timerId = setTimeout(() => {
+        lastExecuted.current = Date.now();
+        callback(...args);
+      }, delayRemaining);
+
+      timeoutId.current = timerId;
     }
   };
 
-  return (...args: any) => {
-    if (shouldWait) {
-      setWaitingArgs(args);
-      return;
-    }
-
-    callback(...args);
-    setShouldWait(true);
-
-    setTimeout(timeoutFunc, delay);
-  };
+  return dispatch;
 };
 
 export default useThrottle;
