@@ -1,5 +1,5 @@
 <svg width="120" height="100" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="triangles" clip-path="url(#clip0_2_2)">
+<g id="triangles" clipPath="url(#clip0_2_2)">
 <g id="lightGroup">
 <path id="light1" opacity="0.6" d="M46 48.268C47.3333 49.0378 47.3333 50.9623 46 51.7321L11.5 71.6506C10.1667 72.4204 8.5 71.4582 8.5 69.9186L8.5 30.0814C8.5 28.5418 10.1667 27.5796 11.5 28.3494L46 48.268Z" fill="#43C4ED"/>
 </g>
