@@ -17,15 +17,20 @@ const Dashboard: React.FC = () => {
   const [refreshTokenMutation] = useRefreshTokenMutation();
 
   useEffect(() => {
-    const { expiresIn, refreshToken } = authState;
-    console.log(expiresIn);
-    const intervalId = setInterval(async () => {
+    const callRefresh = async (refreshToken: string) => {
       const payload = await refreshTokenMutation(refreshToken).unwrap();
       dispatch(refreshCredentials(payload));
-    }, 60 * 1000);
+    };
+
+    const { refreshToken } = authState;
+    callRefresh(refreshToken);
+
+    const intervalId = setInterval(async () => {
+      callRefresh(refreshToken);
+    }, 60 * 15 * 1000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [dispatch, refreshTokenMutation]);
 
   return (
     <Layout>
