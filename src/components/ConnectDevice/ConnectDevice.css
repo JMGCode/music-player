@@ -1,0 +1,70 @@
+.connect-button {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.connect-button::after {
+  content: " ";
+  position: absolute;
+  bottom: calc(-100% - 18px);
+  left: 50%;
+  margin-left: -15px;
+  border-width: 15px;
+  border-style: solid;
+  border-color: transparent transparent #56bd40 transparent;
+}
+
+.connect-button:has(.connect-menu.open)::before {
+  content: "";
+  position: absolute;
+  top: -130%;
+  left: 50%;
+  margin-left: -16px;
+  border-width: 16px;
+  border-style: solid;
+  border-color: #242424 transparent transparent transparent;
+}
+
+.connect-button .connect-menu {
+  visibility: hidden;
+  width: 300px;
+  background-color: #242424;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  left: calc(-150px + 8px);
+  bottom: calc(30px + 16px);
+}
+
+.connect-button .connect-menu.open {
+  visibility: visible;
+}
+
+.connect-menu-item {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  padding: 10px 20px;
+  text-align: start;
+}
+.connect-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+.connect-menu-item-info {
+  display: flex;
+  flex-direction: column;
+}
+.connect-menu-item-info-text-container {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+}
+
+.connect-menu * {
+  user-select: none;
+  -webkit-user-select: none;
+}
