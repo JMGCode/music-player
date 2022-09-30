@@ -11,9 +11,9 @@ import {
   persistStore,
 } from "redux-persist";
 
-import dashboardReducer from "../features/dashboard/dashboardSlice";
 import authReducer from "../features/auth/authSlice";
 import { configureStore } from "@reduxjs/toolkit";
+import dashboardReducer from "../features/dashboard/dashboardSlice";
 import { serverApiSlice } from "../features/api/serverAPI";
 import { spotifyApiSlice } from "../features/api/spotify";
 import storage from "redux-persist/lib/storage";

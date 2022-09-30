@@ -1,12 +1,8 @@
-interface ISearchResults {
-  artist: string;
-  title: string;
-  uri: string;
-  albumUrl: string;
-}
+import { ISpotifyTrack } from "../../../features/dashboard/dashboardSlice";
+import { getSmallestImage } from "../../../helpers";
 
 interface Props {
-  track: ISearchResults;
+  track: ISpotifyTrack | undefined;
   chooseTrack: Function;
 }
 
@@ -15,23 +11,36 @@ const PlayerTrack: React.FC<Props> = ({ track, chooseTrack }) => {
     chooseTrack(track);
   };
 
+  const albumImg = getSmallestImage(track?.album.images || []);
   return (
     <div
       className="d-flex m-2 align-items-center"
-      style={{ cursor: "pointer" }}
+      style={{ cursor: "pointer", padding: ".5rem" }}
       onClick={handlePlay}
     >
-      <img
-        src={track.albumUrl}
-        alt=""
-        style={{ height: "64px", width: "64px" }}
-      />
+      {track ? (
+        <img
+          src={albumImg.url}
+          alt=""
+          style={{ height: "64px", width: "64px" }}
+        />
+      ) : (
+        <div style={{ height: "64px", width: "64px" }}></div>
+      )}
       <div className="ms-3">
-        <div>{track.title}</div>
-        <div className="text-muted">{track.artist}</div>
+        <div>{track?.name}</div>
+        <div className="text-muted">{track?.artists[0].name}</div>
       </div>
     </div>
   );
 };
 
 export default PlayerTrack;
+
+/**
+ * 
+ * {
+    "status": 404,
+    "message": "Device not found"
+}
+ */
