@@ -6,7 +6,7 @@ import { useSearchByTrackQuery } from "../features/api/spotify";
 
 const SearchPage = () => {
   const [search, setSearch] = useState("");
-  const { data: tracks, isLoading } = useSearchByTrackQuery(search, {
+  const { data: tracks = [], isLoading } = useSearchByTrackQuery(search, {
     skip: search === "",
   });
   const debounce = useDebounce();
