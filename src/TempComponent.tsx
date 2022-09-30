@@ -5,12 +5,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LogoIcon } from "./components/Icons";
 import { useNavigate } from "react-router-dom";
 
 const TempComponent = () => {
   let navigate = useNavigate();
   return (
     <div className="menu">
+      <div style={{ padding: "5px 0 15px 5px" }}>
+        <LogoIcon size="100" />
+      </div>
+
       <div className="menu__item">
         <FontAwesomeIcon icon={faHome} className="menu__item__icon" /> Home
       </div>
