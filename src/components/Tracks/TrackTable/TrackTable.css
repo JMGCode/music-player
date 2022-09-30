@@ -1,0 +1,31 @@
+.track-table {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header"
+    "main";
+
+  position: absolute;
+  top: 370px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.track-table > .track-table-header {
+  grid-area: header;
+  display: grid;
+  grid-template-columns: 20px 2fr 1fr 100px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  column-gap: 15px;
+  position: sticky;
+  top: 64px;
+  padding: 5px 55px 5px 65px;
+}
+
+.track-table > .track-table-main {
+  grid-area: main;
+  padding: 0 40px;
+}

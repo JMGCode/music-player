@@ -1,2 +1,4 @@
-export { default as TrackItem } from "./TrackItem";
-export { default as TrackList } from "./TrackList";
+export { TrackItem } from "./TrackItem";
+export { TrackList } from "./TrackList";
+export { TrackTable } from "./TrackTable";
+export { TrackTableRow } from "./TrackTableRow";

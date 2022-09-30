@@ -1,0 +1,49 @@
+/* .track-table {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "header"
+    "main";
+
+  position: absolute;
+  top: 370px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.track-table > .track-table-header {
+  grid-area: header;
+  display: grid;
+  grid-template-columns: 20px 2fr 1fr 100px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  column-gap: 15px;
+  position: sticky;
+  top: 64px;
+  padding: 5px 15px 5px 60px;
+}
+
+.track-table > .track-table-main {
+  grid-area: main;
+}
+
+
+.track-table > .track-table-main > div {
+  grid-area: main;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 20px 2fr 1fr 100px;
+  column-gap: 15px;
+  align-items: center;
+  padding: 5px 15px 5px 60px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.track-table > .track-table-main > div:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+} */

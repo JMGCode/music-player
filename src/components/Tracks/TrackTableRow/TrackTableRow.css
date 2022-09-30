@@ -1,0 +1,55 @@
+.track-table-title {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+/* .track-table-title.selected {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+} */
+
+.track-table-title .track-artist-text {
+  color: #6c757d;
+}
+
+.track-table-title.selected .track-artist-text {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.track-table-title.selected .track-text {
+  color: #56bd40;
+}
+
+.track-table > .track-table-main > .track-table-row {
+  grid-area: main;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 20px 2fr 1fr 100px;
+  column-gap: 15px;
+  align-items: center;
+  padding: 0px 15px 0px 25px;
+  /* padding: 5px 15px 5px 25px; */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.track-table > .track-table-main > .track-table-row.selected {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.track-table > .track-table-main > .track-table-row:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.track-table-row:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 5px;
+}
+
+.track-table-row.selected:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
