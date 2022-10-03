@@ -1,6 +1,7 @@
 import { IMe, IPlaylists, ISearch } from "./interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+import CustomFetch from "../customFetch";
 import { IPlaylist } from "./interfaces/playlist";
 import { ISpotifyTrack } from "../../dashboard/dashboardSlice";
 import { RootState } from "../../../app/store";
@@ -16,19 +17,21 @@ interface IPlayListTracksResponse {
 }
 
 // Define a service using a base URL and expected endpoints
+
 export const spotifyApiSlice = createApi({
   reducerPath: "spotifyApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.spotify.com/v1/",
-    prepareHeaders: (headers, { getState }) => {
-      const state = getState() as RootState;
-      const token = state.auth.accessToken;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  // baseQuery: fetchBaseQuery({
+  //   baseUrl: "https://api.spotify.com/v1/",
+  //   prepareHeaders: (headers, { getState }) => {
+  //     const state = getState() as RootState;
+  //     const token = state.auth.accessToken;
+  //     if (token) {
+  //       headers.set("authorization", `Bearer ${token}`);
+  //     }
+  //     return headers;
+  //   },
+  // }),
+  baseQuery: CustomFetch,
   endpoints: (builder) => ({
     getMe: builder.query<IMe, void>({
       query: () => `me`,
