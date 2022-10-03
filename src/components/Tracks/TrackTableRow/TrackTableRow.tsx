@@ -15,13 +15,16 @@ interface IProps {
   index: number;
   track: ISpotifyTrack;
   uri: string | undefined;
-  isSelected: boolean;
 }
-const TrackTableRow: FC<IProps> = ({ index, track, uri, isSelected }) => {
+const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
   const [controlMutation] = useControlPlayerMutation();
   const albumImg = getSmallestImage(track?.album.images || []);
   const [isHovered, setIsHovered] = useState(false);
   const isPaused = useAppSelector((state) => state.dashboard.isPaused);
+  const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
+
+  const isSelected =
+    playingTrack?.id === track.id || playingTrack?.name === track.name;
 
   const handlePlay = (value: ISpotifyTrack) => {
     const args = uri

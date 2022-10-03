@@ -35,6 +35,7 @@ const TrackTable: React.FC<{ uri?: string; tracks: ISpotifyTrack[] }> = ({
     const tr = document.querySelector(".playlist-header");
     if (tr) obs?.observe(tr);
   }
+
   return (
     <div className="track-table">
       <div
@@ -53,8 +54,8 @@ const TrackTable: React.FC<{ uri?: string; tracks: ISpotifyTrack[] }> = ({
               track={track}
               uri={uri}
               index={index}
-              key={track.uri}
-              isSelected={playingTrack?.id === track?.id}
+              key={"tableRow" + track.uri + index}
+              // isSelected={playingTrack?.id === track?.id}
             />
           );
         })}
