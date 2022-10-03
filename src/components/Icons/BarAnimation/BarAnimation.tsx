@@ -16,9 +16,11 @@ const BarAnimation: FC<IProps> = ({ size, color = "white" }) => {
         height: size,
       }}
     >
-      {[1, 2, 3, 4, 5].map((e) => {
-        return <div className="bar" style={{ backgroundColor: color }}></div>;
-      })}
+      <div className="bar" style={{ backgroundColor: color }}></div>
+      <div className="bar" style={{ backgroundColor: color }}></div>
+      <div className="bar" style={{ backgroundColor: color }}></div>
+      <div className="bar" style={{ backgroundColor: color }}></div>
+      <div className="bar" style={{ backgroundColor: color }}></div>
     </div>
   );
 };

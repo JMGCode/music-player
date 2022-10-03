@@ -18,7 +18,7 @@ const PauseClearIcon = ({
         x2="3.46256"
         y2="10.5025"
         stroke={color}
-        stroke-width="2"
+        strokeWidth="2"
       />
       <line
         x1="7.50435"
@@ -26,7 +26,7 @@ const PauseClearIcon = ({
         x2="7.50435"
         y2="10.5025"
         stroke={color}
-        stroke-width="2"
+        strokeWidth="2"
       />
     </svg>
   );
