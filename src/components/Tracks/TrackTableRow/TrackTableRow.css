@@ -19,16 +19,27 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+.track-table-title .track-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .track-table-title.selected .track-text {
   color: #56bd40;
 }
 
-.track-table > .track-table-main > .track-table-row {
+.track-table-main .track-album-name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.track-table > .track-table-main {
   grid-area: main;
   padding: 10px;
   display: grid;
-  grid-template-columns: 20px 2fr 1fr 100px;
-  column-gap: 15px;
+  grid-template-columns: 20px minmax(200px, 1fr) minmax(200px, 1fr) 100px;
+  /* column-gap: 15px; */
   align-items: center;
   padding: 0px 15px 0px 25px;
   /* padding: 5px 15px 5px 25px; */
@@ -41,15 +52,22 @@
 .track-table > .track-table-main > .track-table-row.selected {
   background-color: rgba(255, 255, 255, 0.05);
 }
-.track-table > .track-table-main > .track-table-row:hover {
+
+.track-table > .track-table-main > .track-table-row:hover > div {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.track-table-row:hover {
+.track-table-row:hover > div:first-child {
+  border-radius: 8px 0 0 8px;
+}
+.track-table-row:hover > div:last-child {
+  border-radius: 0 8px 8px 0;
+}
+/* .track-table-row:hover {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 5px;
-}
+} */
 
-.track-table-row.selected:hover {
+/* .track-table-row.selected:hover {
   background-color: rgba(255, 255, 255, 0.2);
-}
+} */

@@ -78,7 +78,7 @@ const PlaylistPage = () => {
         <img
           src={data?.image}
           alt=""
-          style={{ height: "260px", width: "260px" }}
+          className="playlist-header-img"
         />
         <div
           style={{
