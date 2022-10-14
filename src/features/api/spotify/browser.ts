@@ -3,7 +3,7 @@ import { spotifyApiSlice } from "./spotifySlice";
 
 export const spotifyApiBrowserSlice = spotifyApiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getCategories: builder.query<any, any>({
+    getCategories: builder.query<any, void>({
       query: () => `browse/categories`,
     }),
     getCategory: builder.query<any, string>({
