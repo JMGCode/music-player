@@ -48,7 +48,7 @@ const TrackTable: React.FC<{ uri?: string; tracks: ISpotifyTrack[] }> = ({
         <ClockIcon size="18" />
       </div>
       <div className="track-table-main">
-        {tracks.map((track, index) => {
+        {tracks?.map((track, index) => {
           return (
             <TrackTableRow
               track={track}
