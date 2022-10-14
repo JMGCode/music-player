@@ -2,9 +2,11 @@ import { IMe, IPlaylists, ISearch } from "./interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import CustomFetch from "../customFetch";
+import { IGenSearch } from "./interfaces/genericSearch";
 import { IPlaylist } from "./interfaces/playlist";
 import { ISpotifyTrack } from "../../dashboard/dashboardSlice";
 import { RootState } from "../../../app/store";
+import { getParamsString } from "../../../helpers";
 
 interface IPlayListTracksResponse {
   uri: string;
@@ -75,10 +77,18 @@ export const spotifyApiSlice = createApi({
     searchByTrack: builder.query<ISpotifyTrack[], string>({
       query: (trackName = "") => `search/?type=track&q=${trackName}`,
       transformResponse: (response: ISearch) => {
-        console.log("search response: ", response);
         return response.tracks.items.map((item: any) => {
           return item;
         });
+      },
+    }),
+    search: builder.query<
+      IGenSearch,
+      { query: string; types: string[]; limit?: number }
+    >({
+      query: ({ query, types, limit }) => {
+        const params = getParamsString({ type: types, q: query, limit });
+        return `search${params}`;
       },
     }),
   }),
@@ -91,4 +101,5 @@ export const {
   useGetPlaylistsQuery,
   useSearchByTrackQuery,
   useGetPlaylistTracksQuery,
+  useSearchQuery,
 } = spotifyApiSlice;
