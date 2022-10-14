@@ -1,2 +1,4 @@
-export { default as PlaylistPage } from "./PlaylistPage";
-export { default as SearchPage } from "./SearchPage";
+export { PlaylistPage } from "./Playlist";
+export { SearchPage, SearchQueryPage } from "./Search";
+export { LibraryPage } from "./Library";
+export { HomePage } from "./Home";
