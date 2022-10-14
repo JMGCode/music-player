@@ -6,14 +6,14 @@ import {
   PlaylistPage,
   SearchPage,
   SearchQueryPage,
-} from "./Pages";
+} from "./pages";
 import {
   Outlet,
   RouterProvider,
   createBrowserRouter,
   redirect,
 } from "react-router-dom";
-import { SearchAllPage, SearchIndexPage } from "./Pages/Search";
+import { SearchAllPage, SearchIndexPage } from "./pages/Search";
 import { persistor, store } from "./app/store";
 
 import Dashboard from "./Dashboard";
@@ -23,7 +23,7 @@ import OAuth from "./OAuth";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
-import SearchArtistPage from "./Pages/Search/SearchArtistPage";
+import SearchArtistPage from "./pages/Search/SearchArtistPage";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
