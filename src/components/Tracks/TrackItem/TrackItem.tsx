@@ -30,7 +30,7 @@ const TrackItem: React.FC<Props> = ({ track, chooseTrack }) => {
         <img
           src={albumImg.url}
           alt=""
-          style={{ height: "64px", width: "64px" }}
+          style={{ height: "48px", width: "48px" }}
         />
       )}
       <div className="ms-3">
