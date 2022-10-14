@@ -17,6 +17,11 @@
   background: linear-gradient(0deg, #131313 0%, #2dc5bd 50%, #32e0d8 100%);
 }
 
+.playlist-header-img {
+  height: 260px;
+  width: 260px;
+}
+
 .playlist-duration {
   color: rgba(255, 255, 255, 0.6);
 }

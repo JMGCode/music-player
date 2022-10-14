@@ -112,6 +112,7 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
 
   return (
     <div
+      style={{ display: "contents" }}
       className={`track-table-row `}
       onMouseEnter={() => {
         setIsHovered(true);
@@ -120,7 +121,16 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
         setIsHovered(false);
       }}
     >
-      {renderIndex(isPaused, isHovered, isSelected, index)}
+      {/* <> */}
+      <div
+        style={{
+          height: "100%",
+          alignItems: "center",
+          display: "grid",
+        }}
+      >
+        {renderIndex(isPaused, isHovered, isSelected, index)}
+      </div>
       <div
         className={`track-table-title ${isSelected ? "selected" : ""}`}
         onClick={() => {
@@ -135,14 +145,40 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
             // style={{ height: "64px", width: "64px" }}
           />
         )}
-        <div className="ms-3">
+        <div
+          className="ms-3"
+          style={{
+            overflow: "hidden",
+            height: "100%",
+            alignItems: "center",
+            display: "grid",
+          }}
+        >
           <div className="track-text">{track?.name}</div>
           <div className="track-artist-text">{track?.artists[0].name}</div>
         </div>
       </div>
-      <div>{track.album.name}</div>
+      <div
+        className="track-album-name"
+        style={{
+          height: "100%",
+          alignItems: "center",
+          display: "grid",
+        }}
+      >
+        {track.album.name}
+      </div>
 
-      <div>{getTimeString(track.duration_ms / 1000)}</div>
+      <div
+        style={{
+          overflow: "hidden",
+          height: "100%",
+          alignItems: "center",
+          display: "grid",
+        }}
+      >
+        {getTimeString(track.duration_ms / 1000)}
+      </div>
     </div>
   );
 };
