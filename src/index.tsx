@@ -1,21 +1,30 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import {
+  HomePage,
+  LibraryPage,
+  PlaylistPage,
+  SearchPage,
+  SearchQueryPage,
+} from "./Pages";
+import {
+  Outlet,
   RouterProvider,
   createBrowserRouter,
   redirect,
 } from "react-router-dom";
+import { SearchAllPage, SearchIndexPage } from "./Pages/Search";
 import { persistor, store } from "./app/store";
 
 import Dashboard from "./Dashboard";
 import ErrorPage from "./error-page";
+import { Lyrics } from "./components";
 import OAuth from "./OAuth";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
+import SearchArtistPage from "./Pages/Search/SearchArtistPage";
 import reportWebVitals from "./reportWebVitals";
-import { SearchPage, PlaylistPage } from "./Pages";
-import { Lyrics } from "./components";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -35,10 +44,37 @@ const router = createBrowserRouter([
       }
     },
     children: [
-      { path: "/", element: <p style={{ color: "white" }}>HOME!!!!</p> },
-      { path: "/search", element: <SearchPage /> },
+      { path: "/", element: <HomePage /> },
+      {
+        path: "/search",
+        element: <SearchPage />,
+        children: [
+          { path: "/search", element: <SearchIndexPage /> },
+          {
+            path: "/search/:searchQuery",
+            element: <SearchQueryPage />,
+            children: [
+              { path: "/search/:searchQuery", element: <SearchAllPage /> },
+              {
+                path: "/search/:searchQuery/:searchQueryType",
+                element: <SearchArtistPage />,
+              },
+            ],
+          },
+        ],
+      },
       { path: "/playlist/:playlistId", element: <PlaylistPage /> },
       { path: "/lyrics", element: <Lyrics /> },
+      {
+        path: "/collection",
+        element: <Outlet />,
+        children: [
+          { path: "/collection/playlist", element: <p>My playlists</p> },
+          { path: "/collection/artists", element: <p>My Artists</p> },
+          { path: "/collection/shows", element: <p>My Podcast</p> },
+        ],
+      },
+      { path: "/collection/playlist", element: <LibraryPage /> },
     ],
   },
   {
