@@ -1,15 +1,14 @@
 import "./Dashboard.css";
 
+import { Content, Footer, Layout, Sider } from "./Layout";
+import { Player, PlaylistList } from "./components";
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 
-import { Content, Footer, Layout, Sider } from "./Layout";
-import { PlaylistList, Player } from "./components";
-
+import { Outlet } from "react-router-dom";
 import TempComponent from "./TempComponent";
 import { refreshCredentials } from "./features/auth/authSlice";
 import { useRefreshTokenMutation } from "./features/api/serverAPI";
-import { Outlet } from "react-router-dom";
 
 const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();

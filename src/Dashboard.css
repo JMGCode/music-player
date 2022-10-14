@@ -1,8 +1,11 @@
+.page-padding {
+  padding: 20px 20px 20px 40px;
+}
+
 .search-page {
-  /* background-color: red; */
-  display: grid;
-  grid-template-rows: min-content 1fr;
-  height: 100%;
+  /* height: calc(100% - 60px); */
+  display: flex;
+  flex-direction: column;
 }
 
 .scrollable {
@@ -33,6 +36,8 @@
 .menu__item {
   width: 100%;
   margin: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .menu hr {
@@ -41,4 +46,13 @@
 
 .menu__item__icon {
   margin-right: 15px;
+  margin-bottom: 5px;
+}
+
+/* .search-recents-container {
+  padding: 20px 20px 20px 40px;
+} */
+
+.search-recents-container::-webkit-scrollbar {
+  display: none;
 }
