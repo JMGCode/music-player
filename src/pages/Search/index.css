@@ -1,0 +1,63 @@
+.search-header {
+  position: sticky;
+  top: 60px;
+  display: flex;
+  justify-content: start;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  gap: 20px;
+  background-color: #131313;
+  padding: 10px 0;
+  z-index: 3;
+}
+
+.search-tab {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 5px 20px;
+  border-radius: 20px;
+  text-align: center;
+}
+.search-tab:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.search-tab.selected {
+  background-color: white;
+  color: #131313;
+}
+
+.search-principal-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 10px 0;
+}
+
+.search-principal {
+  flex-basis: 300px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-songs {
+  flex-basis: 250px;
+  flex-grow: 5;
+}
+
+.search-list {
+  margin: 40px 0;
+}
+/* [src=""] { 
+  background-color: red;
+  border-radius: 0px !important;
+} */
+
+.search-list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 30px;
+  overflow: hidden;
+  max-height: 293px;
+}

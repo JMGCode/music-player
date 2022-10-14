@@ -1,13 +1,14 @@
-import "./index.css";
+import "../index.css";
 
-import { Loading, Search, TrackList, TrackTable } from "../components";
+import { Loading, Search, TrackList, TrackTable } from "../../components";
 
-import { ISpotifyTrack } from "../features/dashboard/dashboardSlice";
-import { PlayIcon } from "../components/Icons";
-import { getTimeFromSec } from "../helpers";
-import useDebounce from "../hooks/useDebounce";
-import { useGetPlaylistTracksQuery } from "../features/api/spotify";
-import useObservableIntersection from "../hooks/useObservableIntersection";
+import { Header } from "../../Layout/Header";
+import { ISpotifyTrack } from "../../features/dashboard/dashboardSlice";
+import { PlayIcon } from "../../components/Icons";
+import { getTimeFromSec } from "../../helpers";
+import useDebounce from "../../hooks/useDebounce";
+import { useGetPlaylistTracksQuery } from "../../features/api/spotify";
+import useObservableIntersection from "../../hooks/useObservableIntersection";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 
@@ -64,7 +65,8 @@ const PlaylistPage = () => {
   }
 
   return (
-    <div className="scrollable" style={{ position: "relative" }}>
+    <div className="page-padding" style={{ position: "relative" }}>
+      <Header />
       <div style={{ position: "sticky", top: 0, zIndex: 1 }}>
         <div className={`playlist-scroll-title ${trans ? "visiblea" : ""}`}>
           <PlayIcon
