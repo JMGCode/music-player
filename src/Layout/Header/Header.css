@@ -1,0 +1,21 @@
+.header-container {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background-color: #131313;
+  height: 64px;
+}
+
+.header-navigation-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header-menu {
+}
