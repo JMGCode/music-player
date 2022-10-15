@@ -6,10 +6,8 @@
     "header"
     "main";
 
-  position: absolute;
-  top: 370px;
-  left: 0px;
-  right: 0px;
+  /* transform: translate(0px, -100px); */
+  transform: translate(0px, -200px);
   background-color: rgba(0, 0, 0, 0.05);
 }
 
@@ -21,7 +19,8 @@
 
   column-gap: 15px;
   position: sticky;
-  top: 64px;
+  top: 264px;
+  /* top: 164px; */
   padding: 5px 55px 5px 65px;
 }
 
