@@ -114,28 +114,30 @@ const PlaylistPage = () => {
         </div>
       </Header>
 
-      <div
-        className="playlist-header"
-        style={{
-          background: `linear-gradient(0deg, #131313 0%, hsla(${h},70%,25%,1) 50%, hsla(${h},70%,50%,1) 100%)`,
-        }}
-      >
-        <img src={data?.image} alt="" className="playlist-header-img" />
+      <div style={{ height: "324px" }}>
         <div
+          className="playlist-header"
           style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "end",
+            background: `linear-gradient(0deg, #131313 0%, hsla(${h},70%,25%,1) 50%, hsla(${h},70%,50%,1) 100%)`,
           }}
         >
-          <div>{data?.public ? "Public" : "Private"} List</div>
-          <div className="playlist-name">{data?.name}</div>
-          <span>
-            {data?.owner} - {data?.total} songs,{" "}
-            <span className="playlist-duration">
-              {getListRepTime(data?.tracks)}
+          <img src={data?.image} alt="" className="playlist-header-img" />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "end",
+            }}
+          >
+            <div>{data?.public ? "Public" : "Private"} List</div>
+            <div className="playlist-name">{data?.name}</div>
+            <span>
+              {data?.owner} - {data?.total} songs,{" "}
+              <span className="playlist-duration">
+                {getListRepTime(data?.tracks)}
+              </span>
             </span>
-          </span>
+          </div>
         </div>
       </div>
 

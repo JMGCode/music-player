@@ -13,29 +13,37 @@ const TrackTable: React.FC<{
   const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
 
   return (
-    <div className="track-table">
-      <div
-        style={{ backgroundColor: headerColor }}
-        className="track-table-header"
-      >
-        <div>#</div>
-        <div>Title</div>
-        <div>Album</div>
-        <ClockIcon size="18" />
-      </div>
-      <div className="track-table-main">
-        {tracks?.map((track, index) => {
-          return (
-            <TrackTableRow
-              track={track}
-              uri={uri}
-              index={index}
-              key={"tableRow" + track.uri + index}
-              // isSelected={playingTrack?.id === track?.id}
-            />
-          );
-        })}
-      </div>
+    <div className="track-table-container">
+      <table className="track-table">
+        <thead
+          style={{ backgroundColor: headerColor }}
+          className="track-table-header"
+        >
+          <tr>
+            <th></th>
+            <th>#</th>
+            <th>Title</th>
+            <th>Album</th>
+            <th>
+              <ClockIcon size="18" />
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {tracks?.map((track, index) => {
+            return (
+              <TrackTableRow
+                track={track}
+                uri={uri}
+                index={index}
+                key={"tableRow" + track.uri + index}
+                // isSelected={playingTrack?.id === track?.id}
+              />
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };

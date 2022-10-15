@@ -111,9 +111,8 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
   };
 
   return (
-    <div
-      style={{ display: "contents" }}
-      className={`track-table-row `}
+    <tr
+      className="track-table-row"
       onMouseEnter={() => {
         setIsHovered(true);
       }}
@@ -121,65 +120,41 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
         setIsHovered(false);
       }}
     >
-      {/* <> */}
-      <div
-        style={{
-          height: "100%",
-          alignItems: "center",
-          display: "grid",
-        }}
-      >
-        {renderIndex(isPaused, isHovered, isSelected, index)}
-      </div>
-      <div
-        className={`track-table-title ${isSelected ? "selected" : ""}`}
-        onClick={() => {
-          console.log("handle play");
-        }}
-      >
-        {track && (
-          <img
-            src={albumImg.url}
-            alt=""
-            style={{ height: "45px", width: "45px" }}
-            // style={{ height: "64px", width: "64px" }}
-          />
-        )}
+      <td></td>
+      <td>{renderIndex(isPaused, isHovered, isSelected, index)}</td>
+      <td>
         <div
-          className="ms-3"
-          style={{
-            overflow: "hidden",
-            height: "100%",
-            alignItems: "center",
-            display: "grid",
+          className={`track-table-title ${isSelected ? "selected" : ""}`}
+          onClick={() => {
+            console.log("handle play");
           }}
         >
-          <div className="track-text">{track?.name}</div>
-          <div className="track-artist-text">{track?.artists[0].name}</div>
+          {track && (
+            <img
+              src={albumImg.url}
+              alt=""
+              style={{ height: "45px", width: "45px" }}
+              // style={{ height: "64px", width: "64px" }}
+            />
+          )}
+          <div
+            className="ms-3"
+            style={{
+              overflow: "hidden",
+              height: "100%",
+              alignItems: "center",
+              display: "grid",
+            }}
+          >
+            <div className="track-text">{track?.name}</div>
+            <div className="track-artist-text">{track?.artists[0].name}</div>
+          </div>
         </div>
-      </div>
-      <div
-        className="track-album-name"
-        style={{
-          height: "100%",
-          alignItems: "center",
-          display: "grid",
-        }}
-      >
-        {track.album.name}
-      </div>
-
-      <div
-        style={{
-          overflow: "hidden",
-          height: "100%",
-          alignItems: "center",
-          display: "grid",
-        }}
-      >
-        {getTimeString(track.duration_ms / 1000)}
-      </div>
-    </div>
+      </td>
+      <td>{track.album.name}</td>
+      <td>{getTimeString(track.duration_ms / 1000)}</td>
+      <td></td>
+    </tr>
   );
 };
 

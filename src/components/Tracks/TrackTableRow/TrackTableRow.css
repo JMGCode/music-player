@@ -1,7 +1,6 @@
 .track-table-title {
   display: flex;
-  align-items: center;
-  padding: 0.5rem;
+  align-items: center; 
 }
 /* .track-table-title.selected {
   display: flex;
@@ -39,10 +38,8 @@
   padding: 10px;
   display: grid;
   grid-template-columns: 20px minmax(200px, 1fr) minmax(200px, 1fr) 100px;
-  /* column-gap: 15px; */
   align-items: center;
   padding: 0px 15px 0px 25px;
-  /* padding: 5px 15px 5px 25px; */
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -53,21 +50,32 @@
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.track-table > .track-table-main > .track-table-row:hover > div {
-  background-color: rgba(255, 255, 255, 0.05);
+.track-table-header th {
+  padding: 0.5rem 16px;
 }
 
-.track-table-row:hover > div:first-child {
-  border-radius: 8px 0 0 8px;
+.track-table-header th:first-child {
+  padding-left: 0px;
 }
-.track-table-row:hover > div:last-child {
-  border-radius: 0 8px 8px 0;
+.track-table-header th:last-child {
+  padding-right: 20px;
 }
-/* .track-table-row:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-radius: 5px;
-} */
 
-/* .track-table-row.selected:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-} */
+.track-table-row td {
+  padding: 0.5rem 16px;
+}
+
+.track-table-row td:nth-child(2) {
+  padding-left: 20px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.track-table-row td:nth-last-child(2) {
+  padding-right: 20px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.track-table-row:hover td:not(:first-child):not(:last-child) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
