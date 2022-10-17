@@ -63,38 +63,25 @@ const Player = () => {
     setVolume(volume);
   };
 
-  const repeat = async (callback: any, times: number, delay: number = 500) => {
-    let _times = times;
-    while (_times > 0) {
-      try {
-        await callback().unwrap();
-        break;
-      } catch (e) {
-        console.log("repeat - error:", e);
-      }
-
-      await new Promise<void>((resolve) =>
-        setTimeout(() => {
-          resolve();
-        }, delay)
-      );
-      _times -= 1;
-    }
-  };
-
   const handleControlAction = (action: ControlType) => {
     if (!deviceId) return;
+
     controlMutation({ deviceId, action })
       .unwrap()
       .then((fulfilled: any) => console.log("action fulfulled"))
       .catch(async ({ data, status }) => {
-        console.log("action failed", data);
+        console.log(`action failed ${action}: `, data);
         if (status === 404) {
           await player.disconnect();
           await player.connect();
           setTimeout(async () => {
             await transferMutation({ deviceId, play: false });
-            repeat(() => controlMutation({ deviceId, action }), 5, 1000);
+
+            controlMutation({ deviceId, action })
+              .unwrap()
+              .catch(() => {
+                console.log("action failed a second time go back to login");
+              });
           }, 1500);
         }
       });
@@ -125,31 +112,19 @@ const Player = () => {
               size="20"
               onClick={() => {
                 handleControlAction("previous");
-                // if (!deviceId) return;
-                // controlMutation({ deviceId, action: "previous" });
               }}
             />
             {!isPaused ? (
               <PauseIcon
                 onClick={() => {
                   handleControlAction("pause");
-                  // if (!deviceId) return;
-                  // controlMutation({ deviceId, action: "pause" });
                 }}
               />
             ) : (
               <PlayIcon
                 onClick={async () => {
-                  if (!deviceId) return;
-                  if (ppdata?.device?.id !== deviceId) {
-                    await transferMutation({ deviceId });
-                    setTimeout(() => {
-                      refetch();
-                    }, 5000);
-                  } else {
-                    // controlMutation({ deviceId, action: "play" });
-                    handleControlAction("play");
-                  }
+                  handleControlAction("play");
+                  // }
                 }}
               />
             )}
@@ -158,8 +133,6 @@ const Player = () => {
               size="20"
               onClick={() => {
                 handleControlAction("next");
-                // if (!deviceId) return;
-                // controlMutation({ deviceId, action: "next" });
               }}
             />
 
@@ -201,7 +174,6 @@ const Player = () => {
             name="vol"
             min="0"
             max="100"
-            //   style={{ webkit: "#578211" }}
             onChange={(e) =>
               throttle(handleVolumeChange, 300, {
                 deviceId,

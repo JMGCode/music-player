@@ -39,7 +39,8 @@ const router = createBrowserRouter([
     loader: () => {
       const token = store.getState().auth.accessToken;
       const tokenStorage = localStorage.getItem("persist:main-root");
-      if (token === "" && !tokenStorage) {
+      const tokenS = JSON.parse(tokenStorage || "")?.accessToken;
+      if (token === "" && tokenS === "") {
         return redirect("/login");
       }
     },

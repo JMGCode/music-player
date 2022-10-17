@@ -19,7 +19,6 @@ export const serverApiSlice = createApi({
         url: "login",
         method: "POST",
         body: { code },
-        invalidatesTags: ["Post"],
       }),
     }),
     refreshToken: builder.mutation<IAPIRefreshToken, string>({
@@ -27,7 +26,6 @@ export const serverApiSlice = createApi({
         url: "refresh",
         method: "POST",
         body: { refreshToken },
-        invalidatesTags: ["Post"],
       }),
     }),
     getLyrics: builder.query<any, { title: string; artist: string }>({
