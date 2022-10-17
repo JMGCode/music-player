@@ -13,7 +13,7 @@
   display: flex;
   gap: 20px;
   /* padding: 0px 0px 150px 40px; */
-  padding: 64px 0px 200px 40px;
+  padding: 64px 0.7rem 200px 40px;
   /* background: linear-gradient(0deg, #131313 0%, #2dc5bd 50%, #32e0d8 100%); */
   transform: translateY(-64px);
 }

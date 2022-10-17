@@ -10,8 +10,10 @@
 
 .scrollable {
   height: 100%;
+  /* z-index: 1; */
   /* background-color: blueviolet; */
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
+  overflow: overlay;
 }
 
 .scrollable::-webkit-scrollbar-thumb {

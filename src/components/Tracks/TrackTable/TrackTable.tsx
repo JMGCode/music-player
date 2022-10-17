@@ -20,14 +20,14 @@ const TrackTable: React.FC<{
           className="track-table-header"
         >
           <tr>
-            <th></th>
-            <th>#</th>
+            <th style={{ width: "30px" }}></th>
+            <th style={{ width: "30px" }}>#</th>
             <th>Title</th>
             <th>Album</th>
-            <th>
+            <th style={{ width: "80px" }}>
               <ClockIcon size="18" />
             </th>
-            <th></th>
+            <th style={{ width: "30px" }}></th>
           </tr>
         </thead>
         <tbody>
