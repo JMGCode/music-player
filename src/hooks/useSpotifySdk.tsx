@@ -60,7 +60,7 @@ const useSpotifySdk = () => {
         if (!state) {
           return;
         }
-        console.log("playerSDKState: ", state);
+
         dispatch(setPlayingTrack(state.track_window.current_track));
         dispatch(setIsPlayerPaused(state.paused));
         dispatch(setPlayerLoopState(state.repeat_mode));
@@ -68,6 +68,7 @@ const useSpotifySdk = () => {
       });
 
       player.connect();
+
       setPlayerInstance(player);
     };
 
