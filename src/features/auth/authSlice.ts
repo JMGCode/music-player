@@ -19,8 +19,11 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    clearCredentials() {
+      return { accessToken: "", expiresIn: 0, refreshToken: "" };
+    },
     setCredentials(state, action: PayloadAction<IAuthState>) {
-      return { ...action.payload };
+      return { ...state, ...action.payload };
     },
     refreshCredentials(state, action: PayloadAction<IAuthState>) {
       return { ...state, ...action.payload };
@@ -31,6 +34,10 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, refreshCredentials, setDeviceId } =
-  authSlice.actions;
+export const {
+  setCredentials,
+  refreshCredentials,
+  setDeviceId,
+  clearCredentials,
+} = authSlice.actions;
 export default authSlice.reducer;
