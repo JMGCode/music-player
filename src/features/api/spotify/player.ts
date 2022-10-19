@@ -19,6 +19,19 @@ export type ControlType = "play" | "pause" | "next" | "previous";
 
 export const extendedApiSlice = spotifyApiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getRecentlyPlayed: builder.query<any, void>({
+      query: () => `me/player/recently-played`,
+      transformResponse: (data: any) => {
+        const foundItems: any[] = [];
+        //@ts-ignore
+        const filterItems = data.items.filter((item: any) => {
+          const isPresent = !foundItems.includes(item.track.id);
+          foundItems.push(item.track.id);
+          return isPresent;
+        });
+        return { ...data, items: filterItems };
+      },
+    }),
     getCurrentPlayingTrack: builder.query<any, any>({
       query: () => `me/player/currently-playing`,
     }),
@@ -149,4 +162,5 @@ export const {
   useTransferPlayerMutation,
   useGetPlayerStateQuery,
   useControlPlayerMutation,
+  useGetRecentlyPlayedQuery,
 } = extendedApiSlice;

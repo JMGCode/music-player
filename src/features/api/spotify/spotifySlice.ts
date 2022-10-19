@@ -42,7 +42,7 @@ export const spotifyApiSlice = createApi({
       { name: string; trackUri: string; id: any }[],
       void
     >({
-      query: () => "me/playlists",
+      query: () => "me/playlists?limit=30",
       transformResponse: (response: IPlaylists) => {
         return response.items.map((item) => {
           return { name: item.name, trackUri: item.tracks.href, id: item.id };
