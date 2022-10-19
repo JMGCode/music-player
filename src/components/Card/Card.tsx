@@ -32,12 +32,14 @@ interface ICategoryCard extends IProps {
   id: string;
 }
 
-export const CategoryCard: FC<ICategoryCard> = ({ title, img: imgSrc, id }) => {
+export const CategoryCard: FC<ICategoryCard> = ({
+  title,
+  img: imgSrc,
+  id,
+  onClick,
+}) => {
   return (
-    <article
-      className="card-container"
-      onClick={() => console.log("click", id)}
-    >
+    <article className="card-container" onClick={onClick}>
       <p className="card-title">{title}</p>
       <br />
       <img className="card-img" src={imgSrc} />

@@ -9,14 +9,20 @@ const TrackTable: React.FC<{
   uri?: string;
   tracks: ISpotifyTrack[];
   headerColor?: string;
-}> = ({ uri, tracks, headerColor = "rgba(23,23,23,1)" }) => {
+  headerTopOffset?: string;
+}> = ({
+  uri,
+  tracks,
+  headerColor = "rgba(23,23,23,1)",
+  headerTopOffset = "64px",
+}) => {
   const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
 
   return (
     <div className="track-table-container">
       <table className="track-table">
         <thead
-          style={{ backgroundColor: headerColor }}
+          style={{ backgroundColor: headerColor, top: headerTopOffset }}
           className="track-table-header"
         >
           <tr>

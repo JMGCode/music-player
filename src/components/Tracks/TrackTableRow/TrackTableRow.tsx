@@ -138,12 +138,12 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
             />
           )}
           <div
-            className="ms-3"
             style={{
               overflow: "hidden",
               height: "100%",
               alignItems: "center",
               display: "grid",
+              marginLeft: "1rem",
             }}
           >
             <div className="track-text">{track?.name}</div>

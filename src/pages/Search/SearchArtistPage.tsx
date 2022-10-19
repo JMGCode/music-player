@@ -19,7 +19,7 @@ const SearchArtistPage = () => {
         display: "grid",
         gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))",
         gap: "20px",
-        padding: "40px 0",
+        padding: "40px ",
       }}
     >
       {/* @ts-ignore */}
@@ -53,7 +53,12 @@ const SearchArtistPage = () => {
     </div>
   ) : (
     //@ts-ignore
-    <div>{data?.tracks && <TrackTable tracks={data?.tracks.items} />}</div>
+    <div>
+      {data?.tracks && (
+        //@ts-ignore
+        <TrackTable tracks={data?.tracks.items} headerTopOffset="109px" />
+      )}
+    </div>
   );
 };
 

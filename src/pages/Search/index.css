@@ -7,7 +7,7 @@
   overflow: hidden;
   gap: 20px;
   background-color: #131313;
-  padding: 10px 0;
+  padding: 10px 40px;
   z-index: 3;
 }
 
@@ -31,6 +31,7 @@
   justify-content: space-between;
   gap: 20px;
   margin: 10px 0;
+  /* padding: 0 40px; */
 }
 
 .search-principal {

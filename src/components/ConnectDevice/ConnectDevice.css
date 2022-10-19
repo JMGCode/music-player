@@ -57,10 +57,11 @@
 .connect-menu-item-info {
   display: flex;
   flex-direction: column;
+  gap: 5px;
 }
 .connect-menu-item-info-text-container {
   display: flex;
-  gap: 2px;
+  gap: 5px;
   align-items: center;
 }
 

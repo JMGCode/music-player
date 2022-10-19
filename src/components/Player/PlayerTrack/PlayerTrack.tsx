@@ -27,7 +27,7 @@ const PlayerTrack: React.FC<Props> = ({ track, chooseTrack }) => {
       ) : (
         <div style={{ height: "64px", width: "64px" }}></div>
       )}
-      <div className="ms-3">
+      <div style={{ marginLeft: "1rem" }}>
         <div>{track?.name}</div>
         <div className="text-muted">{track?.artists[0].name}</div>
       </div>

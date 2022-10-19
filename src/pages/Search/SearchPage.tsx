@@ -27,7 +27,7 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="search-page page-padding">
+    <div className="search-page">
       <SearchHeader
         setSearch={setSearch}
         search={search}

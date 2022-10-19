@@ -92,7 +92,8 @@ const PlaylistPage = () => {
 
   const { h } = primaryColor;
   return (
-    <div style={{ position: "relative" }}>
+    // <div style={{ position: "relative" }}>
+    <div>
       <Header
         styles={{
           container: {

@@ -1,4 +1,4 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 
 import {
   HomePage,
@@ -61,6 +61,10 @@ const router = createBrowserRouter([
                 element: <SearchArtistPage />,
               },
             ],
+          },
+          {
+            path: "",
+            element: <p>hhhasdf</p>,
           },
         ],
       },

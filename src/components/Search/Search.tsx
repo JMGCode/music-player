@@ -1,6 +1,5 @@
 import "./Search.css";
 
-import { Button, Form } from "react-bootstrap";
 import { CrossIcon, SearchIcon } from "../Icons";
 import React, { useState } from "react";
 
@@ -10,12 +9,7 @@ interface ISearch {
   search: string;
 }
 
-//TODO: Mover estilo del boton a un archivo css
-//TODO: Agregar funcion de log out
-//TODO: Mover boton log out a un componente separado de Search
 const Search: React.FC<ISearch> = ({ onChange, setSearch, search }) => {
-  // const [search, setSearch] = useState("");
-
   return (
     <div
       style={{
@@ -49,6 +43,7 @@ const Search: React.FC<ISearch> = ({ onChange, setSearch, search }) => {
           width: "calc(100% - 80px)",
           // width: "80%",
           border: "none",
+          padding: "0",
         }}
         onChange={(e) => {
           const { value } = e.target;
@@ -84,24 +79,3 @@ const Search: React.FC<ISearch> = ({ onChange, setSearch, search }) => {
 };
 
 export default Search;
-
-{
-  /* 
-  
-   // const authUrl =
-  //   "https://accounts.spotify.com/authorize?client_id=fdbb32b746414133adaa41a22ace8ba5&response_type=code&show_dialog=true&redirect_uri=http://localhost:3000&scope=streaming%20user-read-email%20user-read-private%20user-library-read%20user-library-modify%20user-read-playback-state%20user-modify-playback-state";
-
-  <Button
-        href={authUrl}
-        style={{
-          width: "minContent",
-          backgroundColor: "#56bd40",
-          borderColor: "#56bd40",
-          textOverflow: "ellipsis",
-          // overflow: "hidden",
-          whiteSpace: "nowrap",
-        }}
-      >
-        Log out
-      </Button> */
-}

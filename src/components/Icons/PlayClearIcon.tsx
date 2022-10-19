@@ -7,7 +7,8 @@ const PlayClearIcon = ({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 11 12"
+      viewBox="0 0 9 12"
+      // viewBox="0 0 11 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       onClick={onClick}

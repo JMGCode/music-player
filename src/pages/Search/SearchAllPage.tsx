@@ -125,7 +125,7 @@ const SearchAllPage = () => {
     }
   }, [data]);
   return (
-    <>
+    <div style={{padding:"0 40px"}}>
       <div className="search-principal-container">
         <div className="search-principal">
           <h3>Main result</h3>
@@ -266,7 +266,7 @@ const SearchAllPage = () => {
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
