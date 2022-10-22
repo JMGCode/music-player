@@ -62,13 +62,13 @@ const HomePage = () => {
   const { data: topTracks } = useGetTopTracksQuery();
   const { data: recentPlayed } = useGetRecentlyPlayedQuery();
 
-  console.log("followed artists", followedArtists);
-  console.log("top artists", topArtists);
-  console.log("top tracks", topTracks);
-  console.log("recent played", recentPlayed);
+  // console.log("followed artists", followedArtists);
+  // console.log("top artists", topArtists);
+  // console.log("top tracks", topTracks);
+  // console.log("recent played", recentPlayed);
 
   return (
-    <div className="scrollable">
+    <div>
       <Header
         styles={{
           container: {
