@@ -21,13 +21,11 @@ const scopeStr = scope.reduce((acc, curr, index) => {
   return acc;
 }, "");
 
-const authUrl = `${baseUrl}?client_id=fdbb32b746414133adaa41a22ace8ba5&response_type=code&redirect_uri=${redirectUri}&scope=${scopeStr}`;
+const authUrl = `${baseUrl}?client_id=fdbb32b746414133adaa41a22ace8ba5&response_type=code&redirect_uri=${redirectUri}&scope=${scopeStr}&show_dialog=${true}`;
 
 const Login = () => {
-  //TODO: Remove Bootstrap
   return (
     <div
-      // className="d-flex justify-content-center align-items-center"
       style={{
         minHeight: "100vh",
         display: "flex",
@@ -45,7 +43,6 @@ const Login = () => {
         }}
         href={authUrl}
       >
-        {/* <a className="btn btn-success btn-lg" href={authUrl}> */}
         Login With Spotify
       </a>
     </div>
