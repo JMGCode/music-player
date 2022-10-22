@@ -35,9 +35,6 @@ export const spotifyApiSlice = createApi({
   // }),
   baseQuery: CustomFetch,
   endpoints: (builder) => ({
-    getMe: builder.query<IMe, void>({
-      query: () => `me`,
-    }),
     getPlaylists: builder.query<
       { name: string; trackUri: string; id: any }[],
       void
@@ -97,7 +94,6 @@ export const spotifyApiSlice = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
-  useGetMeQuery,
   useGetPlaylistsQuery,
   useSearchByTrackQuery,
   useGetPlaylistTracksQuery,
