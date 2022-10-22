@@ -1,7 +1,6 @@
 import "./Player.css";
 
 import {
-  ConnectIcon,
   NextIcon,
   PauseIcon,
   PlayIcon,
@@ -12,7 +11,6 @@ import {
 import {
   ControlType,
   useControlPlayerMutation,
-  useGetPlayerStateQuery,
   useRepeatPlayedTrackMutation,
   useSetPlayerVolumeMutation,
   useToggleShufflePlayerMutation,
@@ -30,6 +28,7 @@ import { useAppSelector } from "../../app/hooks";
 import useSpotifySdk from "../../hooks/useSpotifySdk";
 import { useState } from "react";
 import useThrottle from "../../hooks/useThrottle";
+import { info as infoNotification } from "../Notification/Notify";
 
 const Player = () => {
   const navigate = useNavigate();
@@ -43,7 +42,6 @@ const Player = () => {
   const [transferMutation] = useTransferPlayerMutation();
   const [volumeMutation] = useSetPlayerVolumeMutation();
   const [controlMutation] = useControlPlayerMutation();
-  const { data: ppdata, refetch } = useGetPlayerStateQuery();
 
   const {
     isPaused,
@@ -63,8 +61,28 @@ const Player = () => {
     setVolume(volume);
   };
 
+  //TODO: get currDevice(Api) if not deviceSelected
+  //send curr deviceId if no device Id send notification error
+  //no device found
   const handleControlAction = (action: ControlType) => {
-    if (!deviceId) return;
+    if (!deviceId) {
+      infoNotification(
+        <div
+          style={{
+            flex: "1",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div>
+            Web Playback SDK is only available with a premium spotify account
+          </div>
+        </div>,
+        true
+      );
+      return;
+    }
 
     controlMutation({ deviceId, action })
       .unwrap()
