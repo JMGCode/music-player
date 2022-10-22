@@ -1,5 +1,5 @@
 .sider {
-  --sider-width: 200px;
+  --sider-width: 225px;
   width: var(--sider-width);
   transition: width 1s;
   overflow-y: hidden;
