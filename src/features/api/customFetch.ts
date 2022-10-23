@@ -10,6 +10,8 @@ import { clearCredentials, refreshCredentials } from "../auth/authSlice";
 import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
 import { Mutex } from "async-mutex";
 import { RootState } from "../../app/store";
+import { error as errorNotification } from "../../components/Notification/Notify";
+import { Error404NoPremium } from "../../Notifications";
 
 const baseUrl = `https://api.spotify.com/v1/`;
 const baseUrlServer = `http://localhost:3001/`;
@@ -40,9 +42,15 @@ const customFetchBase: BaseQueryFn<
   await mutex.waitForUnlock();
 
   let result = await baseQuery(args, api, extraOptions);
+  const errorData = (result.error?.data as any)?.error;
 
+  if (result.error?.status === 403) {
+    if (errorData.reason === "PREMIUM_REQUIRED") {
+      handleNoPremium(errorData);
+    }
+  }
   if (result.error?.status === 404) {
-    if ((result.error?.data as any)?.error.reason === "NO_ACTIVE_DEVICE") {
+    if (errorData.reason === "NO_ACTIVE_DEVICE") {
       const deviceResult = await handleNoDeviceFound(
         baseQuery,
         api,
@@ -131,6 +139,10 @@ const handleNoDeviceFound = async (
   } catch (e) {
     console.log("transfer error , refresh page !!!!");
   }
+};
+
+const handleNoPremium = (errorData: any) => {
+  errorNotification(Error404NoPremium(errorData), true);
 };
 
 export default customFetchBase;
