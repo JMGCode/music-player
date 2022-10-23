@@ -13,7 +13,7 @@ const DropDownArrow = ({
       xmlns="http://www.w3.org/2000/svg"
       onClick={onClick}
     >
-      <g clip-path="url(#clip0_150_2)">
+      <g clipPath="url(#clip0_150_2)">
         <path
           d="M4.5 4.11713L8.94615 0.0293427H0.0538497L4.5 4.11713Z"
           fill={color}

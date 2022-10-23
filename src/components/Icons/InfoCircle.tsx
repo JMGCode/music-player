@@ -14,7 +14,7 @@ const InfoCircle = ({
       xmlns="http://www.w3.org/2000/svg"
       onClick={onClick}
     >
-      <g clip-path="url(#clip0_150_6)">
+      <g clipPath="url(#clip0_150_6)">
         <circle cx="12.4747" cy="12" r="12" fill={backgroundColor} />
         {/* <circle cx="12.4747" cy="12" r="12" fill="#D9D9D9" /> */}
         <path
