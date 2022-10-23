@@ -29,6 +29,7 @@ import useSpotifySdk from "../../hooks/useSpotifySdk";
 import { useState } from "react";
 import useThrottle from "../../hooks/useThrottle";
 import { info as infoNotification } from "../Notification/Notify";
+import { InfoNoPremium } from "../../Notifications";
 
 const Player = () => {
   const navigate = useNavigate();
@@ -66,21 +67,7 @@ const Player = () => {
   //no device found
   const handleControlAction = (action: ControlType) => {
     if (!deviceId) {
-      infoNotification(
-        <div
-          style={{
-            flex: "1",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <div>
-            Web Playback SDK is only available with a premium spotify account
-          </div>
-        </div>,
-        true
-      );
+      infoNotification(<InfoNoPremium />, true);
       return;
     }
 
