@@ -1,8 +1,8 @@
+import { IGenSearch, Image } from "./interfaces/genericSearch";
 import { IMe, IPlaylists, ISearch } from "./interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import CustomFetch from "../customFetch";
-import { IGenSearch } from "./interfaces/genericSearch";
 import { IPlaylist } from "./interfaces/playlist";
 import { ISpotifyTrack } from "../../dashboard/dashboardSlice";
 import { RootState } from "../../../app/store";
@@ -36,13 +36,26 @@ export const spotifyApiSlice = createApi({
   baseQuery: CustomFetch,
   endpoints: (builder) => ({
     getPlaylists: builder.query<
-      { name: string; trackUri: string; id: any }[],
+      {
+        name: string;
+        trackUri: string;
+        id: any;
+        // images: { height: number; width: number; url: string }[];
+        images: Image[];
+        ownerName: string;
+      }[],
       void
     >({
       query: () => "me/playlists?limit=30",
-      transformResponse: (response: IPlaylists) => {
-        return response.items.map((item) => {
-          return { name: item.name, trackUri: item.tracks.href, id: item.id };
+      transformResponse: (response: any) => {
+        return response.items.map((item: any) => {
+          return {
+            name: item.name,
+            trackUri: item.tracks.href,
+            id: item.id,
+            images: item.images,
+            ownerName: item.owner.display_name,
+          };
         });
       },
     }),
@@ -68,6 +81,30 @@ export const spotifyApiSlice = createApi({
           const { track } = item;
           return track;
         });
+        return { ...info, tracks: trackItems };
+      },
+    }),
+    getAlbumTracks: builder.query<any, string>({
+      query: (id) => `albums/${id}`,
+      transformResponse: (response: any) => {
+        console.log("Album response:", response);
+        const image = response.images[1]
+          ? response.images[1].url
+          : response.images[0].url;
+
+        const info = {
+          uri: response.uri,
+          name: response.name,
+          total: response.tracks.total,
+          image,
+        };
+
+        const items = response.tracks.items;
+        const filterItems = items.filter((item: any) => item.track !== null);
+        const trackItems = filterItems.map((item: any) => ({
+          ...item,
+          album: { images: response.images },
+        }));
         return { ...info, tracks: trackItems };
       },
     }),
@@ -97,5 +134,6 @@ export const {
   useGetPlaylistsQuery,
   useSearchByTrackQuery,
   useGetPlaylistTracksQuery,
+  useGetAlbumTracksQuery,
   useSearchQuery,
 } = spotifyApiSlice;
