@@ -2,17 +2,14 @@
   padding: 20px 40px 20px 40px;
 }
 
-.search-page {
-  /* height: calc(100% - 60px); */
+.search-page { 
   display: flex;
   flex-direction: column;
 }
 
 .scrollable {
   height: 100%;
-  /* z-index: 1; */
-  /* background-color: blueviolet; */
-  /* overflow-y: scroll; */
+ 
   overflow: overlay;
 }
 
@@ -52,10 +49,7 @@
   margin-bottom: 5px;
 }
 
-/* .search-recents-container {
-  padding: 20px 20px 20px 40px;
-} */
-
+ 
 .search-recents-container::-webkit-scrollbar {
   display: none;
 }
