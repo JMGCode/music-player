@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Header } from "../../Layout/Header";
 import { ISpotifyTrack } from "../../features/dashboard/dashboardSlice";
 import { PlayIcon } from "../../components/Icons";
+import { PlayerButton } from "../../components/PlayerButton";
 import { getRandColorFromStr } from "../../helpers/getRandColorFromStr";
 import { getTimeFromSec } from "../../helpers";
 import useDebounce from "../../hooks/useDebounce";
@@ -20,12 +21,15 @@ const PlaylistPage = () => {
     skip: playlistId === "",
   });
 
-  const [primaryColor, setPrimaryColor] = useState({
-    red: 0,
-    green: 0,
-    blue: 0,
-    h: 0,
-  });
+  const [primaryColor, setPrimaryColor] = useState<
+    | {
+        red: number;
+        green: number;
+        blue: number;
+        h: number;
+      }
+    | undefined
+  >(undefined);
 
   useEffect(() => {
     if (data) {
@@ -64,7 +68,7 @@ const PlaylistPage = () => {
 
   const obFn = (entries: any) => {
     const ratio = entries[0].intersectionRatio;
-
+    // console.log("header title visible: ", headerTitleVisible);
     if (ratio <= 0.4) {
       setHeaderAlpha(1);
     } else if (ratio > 0.8) {
@@ -90,7 +94,25 @@ const PlaylistPage = () => {
     if (tr) obs?.observe(tr);
   }
 
-  const { h } = primaryColor;
+  //===================================================
+  const infiniteFn = (entries: any) => {
+    const ratio = entries[0].intersectionRatio;
+    console.log("infiniteRatio", ratio);
+  };
+  const infiniteOptions = { threshold: [0.8] };
+
+  const inifiniteObservation = useObservableIntersection(
+    infiniteFn,
+    infiniteOptions
+  );
+
+  if (inifiniteObservation) {
+    const infiniteTable = document.querySelector(".track-table-container");
+    if (infiniteTable) inifiniteObservation?.observe(infiniteTable);
+  }
+  //===================================================
+
+  const { h } = primaryColor || {};
   return (
     // <div style={{ position: "relative" }}>
     <div>
@@ -107,10 +129,12 @@ const PlaylistPage = () => {
             headerTitleVisible ? "visiblea" : ""
           }`}
         >
-          <PlayIcon
+          {/* <PlayIcon
             size="50"
             color={headerTitleVisible ? "#56bd40" : "rgba(0, 0, 0, 0.00)"}
-          />
+          /> */}
+          {headerTitleVisible && <PlayerButton width="45px" height="45px" />}
+
           <span>{data?.name}</span>
         </div>
       </Header>
@@ -119,7 +143,12 @@ const PlaylistPage = () => {
         <div
           className="playlist-header"
           style={{
-            background: `linear-gradient(0deg, #131313 0%, hsla(${h},70%,25%,1) 50%, hsla(${h},70%,50%,1) 100%)`,
+            background: `${
+              h
+                ? `linear-gradient(0deg, #131313 0%, hsla(${h},70%,25%,1) 50%, hsla(${h},70%,50%,1) 100%)`
+                : ""
+            }`,
+            // background: `linear-gradient(0deg, #131313 0%, hsla(${h},70%,25%,1) 50%, hsla(${h},70%,50%,1) 100%)`,
           }}
         >
           <img src={data?.image} alt="" className="playlist-header-img" />
