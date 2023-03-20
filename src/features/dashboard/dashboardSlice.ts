@@ -36,6 +36,9 @@ interface IDashboard {
   currTrack: ISpotifyTrack | undefined;
   loopState: { id: number; type: string };
   shuffleState: boolean;
+  trackPosition: number;
+  trackDuration: number;
+  isDeviceActive: boolean;
 }
 
 const initialState: IDashboard = {
@@ -43,6 +46,9 @@ const initialState: IDashboard = {
   currTrack: undefined,
   loopState: { id: 0, type: "" },
   shuffleState: false,
+  trackDuration: 0,
+  trackPosition: 0,
+  isDeviceActive: false,
 };
 
 const dashboardSlice = createSlice({
@@ -63,6 +69,15 @@ const dashboardSlice = createSlice({
     setPlayerShuffleState(state, action: PayloadAction<boolean>) {
       state.shuffleState = action.payload;
     },
+    setPlayerTrackPosition(state, action: PayloadAction<number>) {
+      state.trackPosition = action.payload;
+    },
+    setPlayerTrackDuration(state, action: PayloadAction<number>) {
+      state.trackDuration = action.payload;
+    },
+    setIsDeviceActive(state, action: PayloadAction<boolean>) {
+      state.isDeviceActive = action.payload;
+    },
   },
 });
 
@@ -71,5 +86,7 @@ export const {
   setIsPlayerPaused,
   setPlayerLoopState,
   setPlayerShuffleState,
+  setPlayerTrackDuration,
+  setPlayerTrackPosition,
 } = dashboardSlice.actions;
 export default dashboardSlice.reducer;
