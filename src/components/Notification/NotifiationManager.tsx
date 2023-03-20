@@ -19,7 +19,7 @@ const NotificationsManager: FC<IProps> = ({ setNotify }) => {
 
   const createNotification = ({
     type = "info",
-    timeToClose = 2000,
+    timeToClose = 5000,
     autoClose = false,
     children,
   }: createNotificationType) => {
