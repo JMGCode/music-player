@@ -19,6 +19,7 @@ const Search: React.FC<ISearch> = ({ onChange, setSearch, search }) => {
         borderRadius: "20px",
         display: "flex",
         alignItems: "center",
+        maxWidth: "35ch",
       }}
     >
       <div
