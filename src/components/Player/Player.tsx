@@ -1,6 +1,15 @@
 import "./Player.css";
 
 import {
+  ControlType,
+  useControlPlayerMutation,
+  useGetDevicesQuery,
+  useRepeatPlayedTrackMutation,
+  useSetPlayerVolumeMutation,
+  useToggleShufflePlayerMutation,
+  useTransferPlayerMutation,
+} from "../../features/api/spotify";
+import {
   NextIcon,
   PauseIcon,
   PlayIcon,
@@ -8,28 +17,21 @@ import {
   RepeatIcon,
   VolumeIcon,
 } from "../Icons";
-import {
-  ControlType,
-  useControlPlayerMutation,
-  useRepeatPlayedTrackMutation,
-  useSetPlayerVolumeMutation,
-  useToggleShufflePlayerMutation,
-  useTransferPlayerMutation,
-} from "../../features/api/spotify";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { ConnectMenu } from "../ConnectDevice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { InfoNoPremium } from "../../Notifications";
 import { PlayerTrack } from "./PlayerTrack";
+import { RangeControl } from "./RangeControl";
 import ShuffleIcon from "../Icons/ShuffleIcon";
 import SpotifyIcon from "../Icons/SpotifyIcon";
 import { faMicrophoneLines } from "@fortawesome/free-solid-svg-icons";
+import { info as infoNotification } from "../Notification/Notify";
 import { useAppSelector } from "../../app/hooks";
 import useSpotifySdk from "../../hooks/useSpotifySdk";
-import { useState } from "react";
 import useThrottle from "../../hooks/useThrottle";
-import { info as infoNotification } from "../Notification/Notify";
-import { InfoNoPremium } from "../../Notifications";
 
 const Player = () => {
   const navigate = useNavigate();
@@ -50,9 +52,10 @@ const Player = () => {
     shuffleState,
     currTrack: playingTrack,
   } = useAppSelector((state) => state.dashboard);
-
+  const { data } = useGetDevicesQuery();
   const deviceId = useAppSelector((state) => state.auth.deviceId);
   const [volume, setVolume] = useState(50);
+  const [isDeviceActive, setIsDeviceActive] = useState(false);
 
   const throttle = useThrottle();
 
@@ -61,6 +64,13 @@ const Player = () => {
     volumeMutation({ deviceId, volume });
     setVolume(volume);
   };
+
+  useEffect(() => {
+    const activeDevice = data?.devices.find((device) => device.is_active);
+    if (activeDevice?.id === deviceId) {
+      setIsDeviceActive(true);
+    }
+  }, [data]);
 
   //TODO: get currDevice(Api) if not deviceSelected
   //send curr deviceId if no device Id send notification error
@@ -105,55 +115,58 @@ const Player = () => {
           />
         </div>
         <div className="player-controls-container">
-          <div className="player-icon">
-            <ShuffleIcon
-              size="20"
-              color={shuffleState ? "#56bd40" : "rgba(255,255,255,0.2)"}
-              onClick={() => {
-                shuffleMutation({ deviceId, state: !shuffleState });
-              }}
-            />
-            <PrevIcon
-              size="20"
-              onClick={() => {
-                handleControlAction("previous");
-              }}
-            />
-            {!isPaused ? (
-              <PauseIcon
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div className="player-icon">
+              <ShuffleIcon
+                size="20"
+                color={shuffleState ? "#56bd40" : "rgba(255,255,255,0.2)"}
                 onClick={() => {
-                  handleControlAction("pause");
+                  shuffleMutation({ deviceId, state: !shuffleState });
                 }}
               />
-            ) : (
-              <PlayIcon
-                onClick={async () => {
-                  handleControlAction("play");
-                  // }
+              <PrevIcon
+                size="20"
+                onClick={() => {
+                  handleControlAction("previous");
                 }}
               />
-            )}
+              {!isPaused ? (
+                <PauseIcon
+                  onClick={() => {
+                    handleControlAction("pause");
+                  }}
+                />
+              ) : (
+                <PlayIcon
+                  onClick={async () => {
+                    handleControlAction("play");
+                    // }
+                  }}
+                />
+              )}
 
-            <NextIcon
-              size="20"
-              onClick={() => {
-                handleControlAction("next");
-              }}
-            />
+              <NextIcon
+                size="20"
+                onClick={() => {
+                  handleControlAction("next");
+                }}
+              />
 
-            <RepeatIcon
-              type={loopState.type}
-              size="24"
-              color={
-                loopState.type !== "off" ? "#56bd40" : "rgba(255,255,255,0.2)"
-              }
-              onClick={() => {
-                const values = ["off", "context", "track"];
-                const nextMode = (loopState.id + 1) % 3;
-                const state = values[nextMode];
-                repeatMutation({ deviceId, state });
-              }}
-            />
+              <RepeatIcon
+                type={loopState.type}
+                size="24"
+                color={
+                  loopState.type !== "off" ? "#56bd40" : "rgba(255,255,255,0.2)"
+                }
+                onClick={() => {
+                  const values = ["off", "context", "track"];
+                  const nextMode = (loopState.id + 1) % 3;
+                  const state = values[nextMode];
+                  repeatMutation({ deviceId, state });
+                }}
+              />
+            </div>
+            <RangeControl />
           </div>
         </div>
         <div className="volume-container">
@@ -187,22 +200,24 @@ const Player = () => {
             }
           />
         </div>
-        <div
-          style={{
-            backgroundColor: "#56bd40",
-            gridColumn: "span 3",
-            display: "flex",
-            justifyContent: "end",
-            padding: "4px 100px 4px 4px",
-            color: "black",
-            alignItems: "center",
-            gap: "5px",
-            lineHeight: "22px",
-          }}
-        >
-          <SpotifyIcon id="spotify-bottom-bar" color="black" size="20" />{" "}
-          Listening on JMGCode's PC
-        </div>
+        {isDeviceActive && (
+          <div
+            style={{
+              backgroundColor: "#56bd40",
+              gridColumn: "span 3",
+              display: "flex",
+              justifyContent: "end",
+              padding: "4px 100px 4px 4px",
+              color: "black",
+              alignItems: "center",
+              gap: "5px",
+              lineHeight: "22px",
+            }}
+          >
+            <SpotifyIcon id="spotify-bottom-bar" color="black" size="20" />{" "}
+            Listening on JMGCode's PC
+          </div>
+        )}
       </div>
     </div>
   );
