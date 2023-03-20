@@ -15,10 +15,14 @@ export const spotifyApiBrowserSlice = spotifyApiSlice.injectEndpoints({
     >({
       query: ({ categoryId, ...rest }) => {
         const params = getParamsString(rest);
-        return `browse/categories/${categoryId}/playlist/${params}`;
+        return `browse/categories/${categoryId}/playlists/${params}`;
       },
     }),
   }),
 });
 
-export const { useGetCategoriesQuery } = spotifyApiBrowserSlice;
+export const {
+  useGetCategoriesQuery,
+  useGetCategoryPlaylistQuery,
+  useGetCategoryQuery,
+} = spotifyApiBrowserSlice;
