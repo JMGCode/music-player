@@ -13,7 +13,6 @@ import {
   SearchPage,
   SearchQueryPage,
 } from "./pages";
-
 import {
   RouterProvider,
   createBrowserRouter,
@@ -21,13 +20,18 @@ import {
 } from "react-router-dom";
 import { persistor, store } from "./app/store";
 
+import { AlbumPage } from "./pages/Album";
+import { ArtistPage } from "./pages/Artist";
 import Dashboard from "./Dashboard";
 import ErrorPage from "./error-page";
+import { GenrePage } from "./pages/Genre";
+import { LibraryAlbumsPage } from "./pages/Library";
 import { Lyrics } from "./components";
 import OAuth from "./OAuth";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
+import { ShowPage } from "./pages/Show";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
@@ -69,6 +73,10 @@ const router = createBrowserRouter([
         ],
       },
       { path: "/playlist/:playlistId", element: <PlaylistPage /> },
+      { path: "/album/:albumId", element: <AlbumPage /> },
+      { path: "/artist/:artistId", element: <ArtistPage /> },
+      { path: "/show/:showId", element: <ShowPage /> },
+      { path: "/genre/:genreId", element: <GenrePage /> },
       { path: "/lyrics", element: <Lyrics /> },
       {
         path: "/collection",
@@ -77,6 +85,7 @@ const router = createBrowserRouter([
           { path: "/collection/playlists", element: <LibraryPlaylistsPage /> },
           { path: "/collection/artists", element: <LibraryArtistsPage /> },
           { path: "/collection/shows", element: <LibraryPodcastsPage /> },
+          { path: "/collection/albums", element: <LibraryAlbumsPage /> },
         ],
       },
     ],
