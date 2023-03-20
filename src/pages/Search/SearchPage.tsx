@@ -19,8 +19,13 @@ const SearchPage = () => {
   const navigate = useNavigate();
   const handleSearch = (value: string) => {
     const pathname = location.pathname.split("/");
+
     if (pathname.length > 3) {
-      navigate(`/search/${value}/${pathname[pathname.length - 1]}`);
+      if (!value) {
+        navigate(`/search/`);
+      } else {
+        navigate(`/search/${value}/${pathname[pathname.length - 1]}`);
+      }
     } else {
       navigate(`/search/${value}`);
     }
