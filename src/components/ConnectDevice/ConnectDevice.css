@@ -3,7 +3,7 @@
   align-items: center;
   position: relative;
 }
-.connect-button::after {
+.connect-button-active::after {
   content: " ";
   position: absolute;
   bottom: calc(-100% - 18px);
@@ -13,6 +13,16 @@
   border-style: solid;
   border-color: transparent transparent #56bd40 transparent;
 }
+/* .connect-button::after {
+  content: " ";
+  position: absolute;
+  bottom: calc(-100% - 18px);
+  left: 50%;
+  margin-left: -15px;
+  border-width: 15px;
+  border-style: solid;
+  border-color: transparent transparent #56bd40 transparent;
+} */
 
 .connect-button:has(.connect-menu.open)::before {
   content: "";

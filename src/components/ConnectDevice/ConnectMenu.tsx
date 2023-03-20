@@ -1,16 +1,31 @@
 import "./ConnectDevice.css";
 
+import { useEffect, useState } from "react";
+
 import { ConnectIcon } from "../Icons";
 import ConnectItem from "./ConnectItem";
+import { useAppSelector } from "../../app/hooks";
 import { useGetDevicesQuery } from "../../features/api/spotify";
-import { useState } from "react";
 
 const ConnectMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, refetch } = useGetDevicesQuery();
+  const deviceId = useAppSelector((state) => state.auth.deviceId);
+  const [isDeviceActive, setIsDeviceActive] = useState(false);
+
+  useEffect(() => {
+    const activeDevice = data?.devices.find((device) => device.is_active);
+    if (activeDevice?.id === deviceId) {
+      setIsDeviceActive(true);
+    }
+  }, [data]);
 
   return (
-    <div className="connect-button">
+    <div
+      className={`connect-button ${
+        isDeviceActive ? "connect-button-active" : ""
+      }`}
+    >
       <ConnectIcon
         size="20"
         onClick={() => {
