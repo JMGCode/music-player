@@ -14,6 +14,18 @@ export const spotifyApiMeSlice = spotifyApiSlice.injectEndpoints({
     getFollowedArtists: builder.query<any, void>({
       query: () => `me/following?type=artist`,
     }),
+    getLikedTracks: builder.query<any, void>({
+      query: () => `me/tracks`,
+    }),
+    getLikedShows: builder.query<any, void>({
+      query: () => `me/shows`,
+    }),
+    getLikedAlbums: builder.query<any, void>({
+      query: () => `me/albums`,
+    }),
+    getLikedEpisodes: builder.query<any, void>({
+      query: () => `me/episodes`,
+    }),
   }),
 });
 
@@ -22,4 +34,8 @@ export const {
   useGetTopArtistsQuery,
   useGetTopTracksQuery,
   useGetFollowedArtistsQuery,
+  useGetLikedTracksQuery,
+  useGetLikedShowsQuery,
+  useGetLikedAlbumsQuery,
+  useGetLikedEpisodesQuery,
 } = spotifyApiMeSlice;
