@@ -44,13 +44,13 @@ const TempComponent = () => {
       <div
         className="menu__item"
         onClick={() => {
-          navigate("/collection/playlist");
+          navigate("/collection/playlists");
         }}
       >
         <div className="menu__item__icon ">
           <LibraryIcon
             size="18"
-            isSelected={location.pathname.includes("library")}
+            isSelected={location.pathname.includes("collection")}
           />
         </div>
         Your Library
