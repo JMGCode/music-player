@@ -1,0 +1,8 @@
+.range-control-container {
+  display: flex;
+  gap: 20px;
+}
+
+.range-control-container > *:not(:nth-child(2)) {
+  flex-basis: 80px;
+}
