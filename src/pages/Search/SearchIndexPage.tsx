@@ -77,7 +77,6 @@ const SearchIndexPage = () => {
                 // const { artists } = search;
                 subTitle = artists[0].name;
               }
-
               if (type === "show") {
                 subTitle = publisher || "Podcast";
               }

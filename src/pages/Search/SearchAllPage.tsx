@@ -2,13 +2,13 @@ import { replacer, reviver } from "../../helpers/stringifyMap";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import PlayClearIcon from "../../components/Icons/PlayClearIcon";
+import { CardSection } from "../../Layout/Container/Section";
+import { MainResultCard } from "../../components/Card/MainResultCard";
 import { SearchCard } from "../../components/Card";
+import { SectionList } from "../../Layout/Container/SectionList";
 import { TrackList } from "../../components";
 import localStorage from "redux-persist/es/storage";
 import { useSearchQuery } from "../../features/api/spotify";
-import { SectionList } from "../../Layout/Container/SectionList";
-import { CardSection } from "../../Layout/Container/Section";
 
 const SearchAllPage = () => {
   const { searchQuery = "" } = useParams();
@@ -128,6 +128,7 @@ const SearchAllPage = () => {
      */
 
     let obj: any = {
+      id: dataToSave.id,
       name: dataToSave.name,
       images: dataToSave.images,
       uri: dataToSave.uri,
@@ -174,71 +175,16 @@ const SearchAllPage = () => {
   return (
     <div style={{ padding: "0 30px" }}>
       <div className="search-principal-container">
-        <div className="search-principal">
-          <h2 style={{ marginBottom: "20px" }}>Main result</h2>
-          <div
-            className="card-container"
-            style={{
-              position: "relative",
-              width: "100%",
-              height: "100%",
-              justifyContent: "space-between",
-            }}
-          >
-            <img
-              style={{ width: "100px", aspectRatio: "1" }}
-              src={
-                principal?.type === "track"
-                  ? principal?.album.images[1].url
-                  : principal?.images[1].url
-              }
-              alt=""
-            />
-            <div
-              className="card-play-container"
-              style={{ right: "20px" }}
-              onClick={(e) => {
-                e.stopPropagation();
-                // console.log("play artist first song", principal);
-                handleSaveLocal(principal);
-              }}
-            >
-              <PlayClearIcon color="#0D0D0D" size="20" />
-            </div>
-
-            <div>
-              <h5
-                style={{
-                  fontSize: "2rem",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {principal?.name}
-              </h5>
-              <h6>
-                {principal?.type === "artist"
-                  ? principal?.name
-                  : principal?.type === "show"
-                  ? principal?.publisher
-                  : principal?.artists[0].name}{" "}
-                <span
-                  style={{
-                    backgroundColor: "#131313",
-                    borderRadius: "20px",
-                    fontSize: "0.7rem",
-                    padding: "6px 12px",
-                    marginLeft: "10px",
-                  }}
-                >
-                  {principal?.type === "show"
-                    ? "PODCAST"
-                    : principal?.type.toUpperCase()}
-                </span>
-              </h6>
-            </div>
-          </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "20px",
+            flexBasis: "500px",
+          }}
+        >
+          <h2>Main result</h2>
+          <MainResultCard data={principal} />
         </div>
         <div className="search-songs">
           <h2 style={{ marginBottom: "20px" }}>Songs</h2>
@@ -246,7 +192,7 @@ const SearchAllPage = () => {
             tracks={tracks}
             onItemClick={(track) => {
               // console.log(track);
-              handleSaveLocal(track);
+              // handleSaveLocal(track);
             }}
           />
         </div>
@@ -273,10 +219,10 @@ const SearchAllPage = () => {
                   console.log("click artist card", artist);
                   handleSaveLocal(artist);
                 }}
-                onClickPlay={() => {
-                  console.log("click play artist", artist);
-                  handleSaveLocal(artist);
-                }}
+                // onClickPlay={() => {
+                //   console.log("click play artist", artist);
+                //   handleSaveLocal(artist);
+                // }}
               />
             );
           })}
@@ -308,10 +254,10 @@ const SearchAllPage = () => {
                   console.log("click album", album);
                   handleSaveLocal(album);
                 }}
-                onClickPlay={() => {
-                  console.log("play album", album);
-                  handleSaveLocal(album);
-                }}
+                // onClickPlay={() => {
+                //   console.log("play album", album);
+                //   handleSaveLocal(album);
+                // }}
               />
             );
           })}
@@ -336,10 +282,10 @@ const SearchAllPage = () => {
                   console.log("click on show", show);
                   handleSaveLocal(show);
                 }}
-                onClickPlay={() => {
-                  console.log("paly show", show);
-                  handleSaveLocal(show);
-                }}
+                // onClickPlay={() => {
+                //   console.log("paly show", show);
+                //   handleSaveLocal(show);
+                // }}
               />
             );
           })}
