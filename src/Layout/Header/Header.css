@@ -3,12 +3,13 @@
   justify-content: start;
   align-items: center;
   gap: 20px;
-  padding: 10px 0;
+  padding: 0 20px 0 40px;
   position: sticky;
   top: 0;
   z-index: 3;
   background-color: #131313;
-  height: 64px;
+  /* height: 64px; */
+  height: 70px;
 }
 
 .header-navigation-container {
@@ -18,4 +19,109 @@
 }
 
 .header-menu {
+  /* padding: 0 10px; */
+  padding-left: 5px;
+  padding-right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: black;
+  border-radius: 40px;
+  height: 40px;
+  white-space: nowrap;
+  max-width: 250px;
+  position: relative;
+  justify-content: space-between;
+}
+
+.header-menu .user-name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.header-menu .user-img {
+  /* width: 24px; */
+  height: 80%;
+  border-radius: 50%;
+}
+
+.header-user-menu {
+  position: absolute;
+  top: 110%;
+  /* left: 0px; */
+  right: 0;
+  background-color: #242424;
+  /* width: calc(100% - 20px); */
+  width: 200px;
+  padding: 4px;
+  border-radius: 5px;
+  /* animation: ttee ease-in-out 2s; */
+  /* animation-duration: 2s; */
+  overflow: hidden;
+}
+
+.header-user-menu hr {
+  padding: 0;
+  margin: 0;
+}
+
+.header-user-menu-item,
+.header-user-menu-extra-item {
+  padding: 12px;
+  border-radius: 2px;
+  margin: 2px 0;
+}
+
+.header-user-menu-item:last-child,
+.header-user-menu-extra-item:last-child {
+  margin-bottom: 0;
+}
+.header-user-menu-item:first-child,
+.header-user-menu-extra-item:first-child {
+  margin-top: 0;
+}
+
+.header-user-menu-item:hover,
+.header-user-menu-extra-item:hover {
+  background-color: #3a3a3a;
+}
+
+.header-sider-btn {
+  display: none;
+}
+
+@keyframes ttee {
+  0% {
+    max-height: 0;
+  }
+  100% {
+    max-height: 600%;
+  }
+}
+
+@keyframes eett {
+  0% {
+    max-height: 600%;
+  }
+  100% {
+    max-height: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header-menu .user-name {
+    display: none;
+  }
+  .header-navigation-container {
+    display: none;
+  }
+
+  .header-container {
+    padding: 0 20px 0 20px;
+    gap: 8px;
+  }
+
+  .header-sider-btn {
+    display: block;
+  }
 }

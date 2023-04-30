@@ -1,3 +1,4 @@
+import { usePlayer } from "../../PlayerContext";
 import "./Footer.css";
 
 import { PropsWithChildren } from "react";

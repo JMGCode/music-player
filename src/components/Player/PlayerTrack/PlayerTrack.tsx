@@ -1,5 +1,6 @@
 import { ISpotifyTrack } from "../../../features/dashboard/dashboardSlice";
 import { getSmallestImage } from "../../../helpers";
+import "./PlayerTrack.css";
 
 interface Props {
   track: ISpotifyTrack | undefined;
@@ -14,7 +15,7 @@ const PlayerTrack: React.FC<Props> = ({ track, chooseTrack }) => {
   const albumImg = getSmallestImage(track?.album.images || []);
   return (
     <div
-      className="d-flex m-2 align-items-center"
+      className="player-track-container"
       style={{ cursor: "pointer", padding: ".5rem" }}
       onClick={handlePlay}
     >
@@ -27,8 +28,8 @@ const PlayerTrack: React.FC<Props> = ({ track, chooseTrack }) => {
       ) : (
         <div style={{ height: "64px", width: "64px" }}></div>
       )}
-      <div className="ms-3">
-        <div>{track?.name}</div>
+      <div style={{ marginLeft: "1rem" }}>
+        <div className="player-track-name">{track?.name}</div>
         <div className="text-muted">{track?.artists[0].name}</div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 .sider {
-  --sider-width: 200px;
+  --sider-width: 225px;
   width: var(--sider-width);
   transition: width 1s;
   overflow-y: hidden;
@@ -10,4 +10,10 @@
 
 .sider:hover {
   color: rgba(255, 255, 255, 1);
+}
+
+@media screen and (max-width: 768px) {
+  .sider {
+    --sider-width: 0px;
+  }
 }

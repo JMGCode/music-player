@@ -1,9 +1,23 @@
 import "./Sider.css";
 
-import { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
+
+import { useSider } from "../../SliderContext";
 
 const Sider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  return <div className="sider ">{children}</div>;
+  const siderState = useSider();
+  return (
+    <div
+      className="sider"
+      style={
+        {
+          "--sider-width": siderState ? "225px" : "0px",
+        } as React.CSSProperties
+      }
+    >
+      {children}
+    </div>
+  );
 };
 
 export default Sider;

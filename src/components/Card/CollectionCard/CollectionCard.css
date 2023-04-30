@@ -1,0 +1,16 @@
+.collection-content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+.collection-content-item {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 5px;
+  padding-right: 10px;
+}

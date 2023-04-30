@@ -1,0 +1,11 @@
+.player-track-container {
+  display: flex;
+  align-items: center;
+  /* margin: 0.3rem; */
+}
+
+.player-track-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -1,0 +1,44 @@
+.playlist-duration {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.playlist-scroll-title {
+  height: 64px;
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  right: 0; */
+
+  /* background-color: red; */
+  /* background: linear-gradient(
+    0deg,
+    rgba(45, 197, 189, 1) 0%,
+    rgba(50, 224, 216, 1) 68%
+  ); */
+  /* background-color: linear-gradient(0deg, #32e0d8 0%, #2dc5bd 100%); */
+  /* z-index: 1; */
+  background: rgba(0, 0, 0, 0.01);
+  transition: opacity 450ms;
+  opacity: 0.5;
+  color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* background: linear-gradient(
+  0deg,
+  rgba(45, 197, 189, 1) 0%,
+  rgb(34, 147, 141) 100%
+); */
+.playlist-scroll-title.visiblea {
+  /* background-color: rgb(34, 147, 141); */
+  opacity: 1;
+  color: white;
+  font-size: 28px;
+  padding: 10px;
+}

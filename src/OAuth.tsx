@@ -24,7 +24,9 @@ const OAuth = () => {
 
   useEffect(() => {
     async function login() {
+      console.log("accessToken==== ", accessToken);
       if (accessToken !== "") navigate("/");
+      console.log("code======", code);
       if (!code) return;
       try {
         const payload = await loginMutation(code).unwrap();

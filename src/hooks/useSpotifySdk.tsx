@@ -2,6 +2,8 @@ import {
   setIsPlayerPaused,
   setPlayerLoopState,
   setPlayerShuffleState,
+  setPlayerTrackDuration,
+  setPlayerTrackPosition,
   setPlayingTrack,
 } from "../features/dashboard/dashboardSlice";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -60,14 +62,17 @@ const useSpotifySdk = () => {
         if (!state) {
           return;
         }
-        console.log("playerSDKState: ", state);
+
         dispatch(setPlayingTrack(state.track_window.current_track));
         dispatch(setIsPlayerPaused(state.paused));
         dispatch(setPlayerLoopState(state.repeat_mode));
         dispatch(setPlayerShuffleState(state.shuffle));
+        dispatch(setPlayerTrackDuration(state.duration));
+        dispatch(setPlayerTrackPosition(state.position));
       });
 
       player.connect();
+
       setPlayerInstance(player);
     };
 

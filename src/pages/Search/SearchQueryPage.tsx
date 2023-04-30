@@ -3,11 +3,6 @@ import "./index.css";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-// import { ISpotifyTrack } from "../../features/dashboard/dashboardSlice";
-// import PlayClearIcon from "../../components/Icons/PlayClearIcon";
-import SearchAllPage from "./SearchAllPage";
-// import { SearchCard } from "../../components/Card/Card";
-// import { TrackList } from "../../components";
 import { useSearchQuery } from "../../features/api/spotify";
 
 const SearchQueryPage = () => {

@@ -33,7 +33,7 @@ const TrackItem: React.FC<Props> = ({ track, chooseTrack }) => {
           style={{ height: "48px", width: "48px" }}
         />
       )}
-      <div className="ms-3">
+      <div style={{ marginLeft: "1rem" }}>
         <div className="track-text">{track?.name}</div>
         <div className="track-artist-text">{track?.artists[0].name}</div>
       </div>

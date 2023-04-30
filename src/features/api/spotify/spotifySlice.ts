@@ -1,8 +1,8 @@
+import { IGenSearch, Image } from "./interfaces/genericSearch";
 import { IMe, IPlaylists, ISearch } from "./interfaces";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import CustomFetch from "../customFetch";
-import { IGenSearch } from "./interfaces/genericSearch";
 import { IPlaylist } from "./interfaces/playlist";
 import { ISpotifyTrack } from "../../dashboard/dashboardSlice";
 import { RootState } from "../../../app/store";
@@ -34,18 +34,29 @@ export const spotifyApiSlice = createApi({
   //   },
   // }),
   baseQuery: CustomFetch,
+  tagTypes: ["Devices"],
   endpoints: (builder) => ({
-    getMe: builder.query<IMe, void>({
-      query: () => `me`,
-    }),
     getPlaylists: builder.query<
-      { name: string; trackUri: string; id: any }[],
+      {
+        name: string;
+        trackUri: string;
+        id: any;
+        // images: { height: number; width: number; url: string }[];
+        images: Image[];
+        ownerName: string;
+      }[],
       void
     >({
-      query: () => "me/playlists",
-      transformResponse: (response: IPlaylists) => {
-        return response.items.map((item) => {
-          return { name: item.name, trackUri: item.tracks.href, id: item.id };
+      query: () => "me/playlists?limit=30",
+      transformResponse: (response: any) => {
+        return response.items.map((item: any) => {
+          return {
+            name: item.name,
+            trackUri: item.tracks.href,
+            id: item.id,
+            images: item.images,
+            ownerName: item.owner.display_name,
+          };
         });
       },
     }),
@@ -74,6 +85,30 @@ export const spotifyApiSlice = createApi({
         return { ...info, tracks: trackItems };
       },
     }),
+    getAlbumTracks: builder.query<any, string>({
+      query: (id) => `albums/${id}`,
+      transformResponse: (response: any) => {
+        console.log("Album response:", response);
+        const image = response.images[1]
+          ? response.images[1].url
+          : response.images[0].url;
+
+        const info = {
+          uri: response.uri,
+          name: response.name,
+          total: response.tracks.total,
+          image,
+        };
+
+        const items = response.tracks.items;
+        const filterItems = items.filter((item: any) => item.track !== null);
+        const trackItems = filterItems.map((item: any) => ({
+          ...item,
+          album: { images: response.images },
+        }));
+        return { ...info, tracks: trackItems };
+      },
+    }),
     searchByTrack: builder.query<ISpotifyTrack[], string>({
       query: (trackName = "") => `search/?type=track&q=${trackName}`,
       transformResponse: (response: ISearch) => {
@@ -97,9 +132,9 @@ export const spotifyApiSlice = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
-  useGetMeQuery,
   useGetPlaylistsQuery,
   useSearchByTrackQuery,
   useGetPlaylistTracksQuery,
+  useGetAlbumTracksQuery,
   useSearchQuery,
 } = spotifyApiSlice;

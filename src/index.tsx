@@ -1,29 +1,37 @@
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
 
 import {
   HomePage,
+  LibraryArtistsPage,
   LibraryPage,
+  LibraryPlaylistsPage,
+  LibraryPodcastsPage,
   PlaylistPage,
+  SearchAllPage,
+  SearchArtistPage,
+  SearchIndexPage,
   SearchPage,
   SearchQueryPage,
 } from "./pages";
 import {
-  Outlet,
   RouterProvider,
   createBrowserRouter,
   redirect,
 } from "react-router-dom";
-import { SearchAllPage, SearchIndexPage } from "./pages/Search";
 import { persistor, store } from "./app/store";
 
+import { AlbumPage } from "./pages/Album";
+import { ArtistPage } from "./pages/Artist";
 import Dashboard from "./Dashboard";
 import ErrorPage from "./error-page";
+import { GenrePage } from "./pages/Genre";
+import { LibraryAlbumsPage } from "./pages/Library";
 import { Lyrics } from "./components";
 import OAuth from "./OAuth";
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
-import SearchArtistPage from "./pages/Search/SearchArtistPage";
+import { ShowPage } from "./pages/Show";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(
@@ -39,9 +47,10 @@ const router = createBrowserRouter([
     loader: () => {
       const token = store.getState().auth.accessToken;
       const tokenStorage = localStorage.getItem("persist:main-root");
-      if (token === "" && !tokenStorage) {
-        return redirect("/login");
-      }
+      const tokenS = JSON.parse(tokenStorage || "")?.accessToken;
+      // if (token === "" && tokenS === "") {
+      //   return redirect("/login");
+      // }
     },
     children: [
       { path: "/", element: <HomePage /> },
@@ -64,17 +73,21 @@ const router = createBrowserRouter([
         ],
       },
       { path: "/playlist/:playlistId", element: <PlaylistPage /> },
+      { path: "/album/:albumId", element: <AlbumPage /> },
+      { path: "/artist/:artistId", element: <ArtistPage /> },
+      { path: "/show/:showId", element: <ShowPage /> },
+      { path: "/genre/:genreId", element: <GenrePage /> },
       { path: "/lyrics", element: <Lyrics /> },
       {
         path: "/collection",
-        element: <Outlet />,
+        element: <LibraryPage />,
         children: [
-          { path: "/collection/playlist", element: <p>My playlists</p> },
-          { path: "/collection/artists", element: <p>My Artists</p> },
-          { path: "/collection/shows", element: <p>My Podcast</p> },
+          { path: "/collection/playlists", element: <LibraryPlaylistsPage /> },
+          { path: "/collection/artists", element: <LibraryArtistsPage /> },
+          { path: "/collection/shows", element: <LibraryPodcastsPage /> },
+          { path: "/collection/albums", element: <LibraryAlbumsPage /> },
         ],
       },
-      { path: "/collection/playlist", element: <LibraryPage /> },
     ],
   },
   {

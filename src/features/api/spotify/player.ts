@@ -1,3 +1,4 @@
+import { getParamsString } from "../../../helpers";
 import { spotifyApiSlice } from "./spotifySlice";
 
 interface IDevice {
@@ -19,6 +20,19 @@ export type ControlType = "play" | "pause" | "next" | "previous";
 
 export const extendedApiSlice = spotifyApiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    getRecentlyPlayed: builder.query<any, void>({
+      query: () => `me/player/recently-played`,
+      transformResponse: (data: any) => {
+        const foundItems: any[] = [];
+        //@ts-ignore
+        const filterItems = data.items.filter((item: any) => {
+          const isPresent = !foundItems.includes(item.track.id);
+          foundItems.push(item.track.id);
+          return isPresent;
+        });
+        return { ...data, items: filterItems };
+      },
+    }),
     getCurrentPlayingTrack: builder.query<any, any>({
       query: () => `me/player/currently-playing`,
     }),
@@ -116,6 +130,7 @@ export const extendedApiSlice = spotifyApiSlice.injectEndpoints({
     }),
     getDevices: builder.query<{ devices: IDevice[] }, void>({
       query: () => `me/player/devices`,
+      providesTags: ["Devices"],
     }),
     transferPlayer: builder.mutation<any, { deviceId: string; play?: boolean }>(
       {
@@ -127,10 +142,32 @@ export const extendedApiSlice = spotifyApiSlice.injectEndpoints({
             play,
           },
         }),
+        invalidatesTags: ["Devices"],
       }
     ),
     getPlayerState: builder.query<any, void>({
       query: () => "/me/player",
+    }),
+    seekPosition: builder.mutation<
+      any,
+      { deviceId?: string; position: number }
+    >({
+      query: ({ position, deviceId }) => {
+        const params = getParamsString({
+          device_id: deviceId,
+          position_ms: position,
+        });
+        return {
+          url: `/me/player/seek${params}`,
+          method: "PUT",
+        };
+        // url: "/me/player/seek",
+        // method: "PUT",
+        // body: {
+        //   position_ms: position,
+        //   device_id: deviceId,
+        // },
+      },
     }),
   }),
 });
@@ -149,4 +186,6 @@ export const {
   useTransferPlayerMutation,
   useGetPlayerStateQuery,
   useControlPlayerMutation,
+  useGetRecentlyPlayedQuery,
+  useSeekPositionMutation,
 } = extendedApiSlice;

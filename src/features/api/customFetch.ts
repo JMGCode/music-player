@@ -5,15 +5,19 @@ import {
   FetchBaseQueryMeta,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query";
+import { clearCredentials, refreshCredentials } from "../auth/authSlice";
 
 import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import { Mutex } from "async-mutex";
 import { RootState } from "../../app/store";
+import { error as errorNotification } from "../../components/Notification/Notify";
+import { Error404NoPremium } from "../../Notifications";
 
 const baseUrl = `https://api.spotify.com/v1/`;
+const baseUrlServer = `http://localhost:3001/`;
 // const baseUrl = `${process.env.REACT_APP_SERVER_ENDPOINT}/api/`;
 
-// Create a new mutex
-// const mutex = new Mutex();
+const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
   baseUrl,
@@ -27,19 +31,26 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+const baseQueryServer = fetchBaseQuery({ baseUrl: baseUrlServer });
+
 const customFetchBase: BaseQueryFn<
   string | FetchArgs,
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   // wait until the mutex is available without locking it
-  // await mutex.waitForUnlock();
+  await mutex.waitForUnlock();
 
-  console.log("QUERY BEFORE EVERYTHING");
   let result = await baseQuery(args, api, extraOptions);
+  const errorData = (result.error?.data as any)?.error;
 
+  if (result.error?.status === 403) {
+    if (errorData.reason === "PREMIUM_REQUIRED") {
+      handleNoPremium(errorData);
+    }
+  }
   if (result.error?.status === 404) {
-    if ((result.error?.data as any)?.error.reason === "NO_ACTIVE_DEVICE") {
+    if (errorData.reason === "NO_ACTIVE_DEVICE") {
       const deviceResult = await handleNoDeviceFound(
         baseQuery,
         api,
@@ -55,37 +66,41 @@ const customFetchBase: BaseQueryFn<
       }
     }
   }
-  if ((result.error?.data as any)?.message === "You are not logged in") {
-    // if (!mutex.isLocked()) {
-    // const release = await mutex.acquire();
 
-    try {
-      console.log("REFRESH TOKEN ON QUERY ERROR");
-      const refreshResult = await baseQuery(
-        { credentials: "include", url: "auth/refresh" },
-        api,
-        extraOptions
-      );
+  if (result.error?.status === 401) {
+    if (!mutex.isLocked()) {
+      const release = await mutex.acquire();
 
-      if (refreshResult.data) {
-        // Retry the initial query
-        console.log("RETRY QUERY AFTER REFRESH TOKEN");
-        result = await baseQuery(args, api, extraOptions);
-      } else {
-        // api.dispatch(logout());
-        // window.location.href = "/login";
-        console.log("REDIRECT TO LOGIN PAGE");
+      try {
+        const state: any = api.getState();
+        const { refreshToken } = state.auth;
+
+        console.log("ASK REFRESH");
+        const refreshResult = await baseQueryServer(
+          { url: "refresh", method: "POST", body: { refreshToken } },
+          api,
+          extraOptions
+        );
+
+        if (refreshResult.data) {
+          // Retry the initial query
+          api.dispatch(refreshCredentials(refreshResult?.data as any));
+          // console.log("RETRY QUERY AFTER REFRESH TOKEN");
+          result = await baseQuery(args, api, extraOptions);
+        } else {
+          // console.log("TOKEN: REDIRECT TO LOGIN PAGE");
+          api.dispatch(clearCredentials());
+          window.location.href = "/login";
+        }
+      } finally {
+        // release must be called once the mutex should be released again.
+        release();
       }
-    } finally {
-      // release must be called once the mutex should be released again.
-      // release();
+    } else {
+      // wait until the mutex is available without locking it
+      await mutex.waitForUnlock();
+      result = await baseQuery(args, api, extraOptions);
     }
-    // }
-    //  else {
-    //   // wait until the mutex is available without locking it
-    //   await mutex.waitForUnlock();
-    //   result = await baseQuery(args, api, extraOptions);
-    // }
   }
 
   return result;
@@ -118,12 +133,16 @@ const handleNoDeviceFound = async (
       api,
       extraOptions
     );
-    console.log("transfer reusl", transferResult);
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return transferResult;
   } catch (e) {
     console.log("transfer error , refresh page !!!!");
   }
+};
+
+const handleNoPremium = (errorData: any) => {
+  errorNotification(Error404NoPremium(errorData), true);
 };
 
 export default customFetchBase;

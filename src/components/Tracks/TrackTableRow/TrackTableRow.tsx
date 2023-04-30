@@ -9,6 +9,7 @@ import PlayClearIcon from "../../Icons/PlayClearIcon";
 import { getSmallestImage } from "../../../helpers";
 import { getTimeString } from "../../../helpers/getTimeString";
 import { useAppSelector } from "../../../app/hooks";
+import useBreakpoint from "../../../hooks/useBreakpoint";
 import { useControlPlayerMutation } from "../../../features/api/spotify";
 
 interface IProps {
@@ -22,6 +23,8 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
   const [isHovered, setIsHovered] = useState(false);
   const isPaused = useAppSelector((state) => state.dashboard.isPaused);
   const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
+  const breakpoint = useBreakpoint();
+  const hideAlbum = ["sm", "xs"];
 
   const isSelected =
     playingTrack?.id === track.id || playingTrack?.name === track.name;
@@ -111,8 +114,8 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
   };
 
   return (
-    <div
-      className={`track-table-row `}
+    <tr
+      className="track-table-row"
       onMouseEnter={() => {
         setIsHovered(true);
       }}
@@ -120,30 +123,41 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
         setIsHovered(false);
       }}
     >
-      {renderIndex(isPaused, isHovered, isSelected, index)}
-      <div
-        className={`track-table-title ${isSelected ? "selected" : ""}`}
-        onClick={() => {
-          console.log("handle play");
-        }}
-      >
-        {track && (
-          <img
-            src={albumImg.url}
-            alt=""
-            style={{ height: "45px", width: "45px" }}
-            // style={{ height: "64px", width: "64px" }}
-          />
-        )}
-        <div className="ms-3">
-          <div className="track-text">{track?.name}</div>
-          <div className="track-artist-text">{track?.artists[0].name}</div>
+      <td></td>
+      <td>{renderIndex(isPaused, isHovered, isSelected, index)}</td>
+      <td>
+        <div
+          className={`track-table-title ${isSelected ? "selected" : ""}`}
+          onClick={() => {
+            console.log("handle play");
+          }}
+        >
+          {track && (
+            <img
+              src={albumImg.url}
+              alt=""
+              style={{ height: "45px", width: "45px" }}
+              // style={{ height: "64px", width: "64px" }}
+            />
+          )}
+          <div
+            style={{
+              overflow: "hidden",
+              height: "100%",
+              alignItems: "center",
+              display: "grid",
+              marginLeft: "1rem",
+            }}
+          >
+            <div className="track-text">{track?.name}</div>
+            <div className="track-artist-text">{track?.artists[0].name}</div>
+          </div>
         </div>
-      </div>
-      <div>{track.album.name}</div>
-
-      <div>{getTimeString(track.duration_ms / 1000)}</div>
-    </div>
+      </td>
+      {!hideAlbum.includes(breakpoint) && <td>{track.album.name}</td>}
+      <td>{getTimeString(track.duration_ms / 1000)}</td>
+      <td></td>
+    </tr>
   );
 };
 

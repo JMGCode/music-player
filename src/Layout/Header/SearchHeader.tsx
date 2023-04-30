@@ -16,7 +16,13 @@ const SearchHeader: FC<PropsWithChildren<IProps>> = ({
   search,
 }) => {
   return (
-    <Header>
+    <Header
+      styles={{
+        container: {
+          padding: "0 20px 0 40px",
+        },
+      }}
+    >
       <Search onChange={onChange} search={search} setSearch={setSearch} />
       {children}
     </Header>
