@@ -8,14 +8,14 @@ import {
 import { clearCredentials, refreshCredentials } from "../auth/authSlice";
 
 import { BaseQueryApi } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import { Error404NoPremium } from "../../Notifications";
 import { Mutex } from "async-mutex";
 import { RootState } from "../../app/store";
 import { error as errorNotification } from "../../components/Notification/Notify";
-import { Error404NoPremium } from "../../Notifications";
 
 const baseUrl = `https://api.spotify.com/v1/`;
-const baseUrlServer = `http://localhost:3001/`;
-// const baseUrl = `${process.env.REACT_APP_SERVER_ENDPOINT}/api/`;
+// const baseUrlServer = `http://localhost:3001/`;
+const baseUrlServer = `${process.env.REACT_APP_SERVER_ENDPOINT}/api/spotify/`;
 
 const mutex = new Mutex();
 
