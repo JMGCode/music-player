@@ -9,6 +9,7 @@ import PlayClearIcon from "../../Icons/PlayClearIcon";
 import { getSmallestImage } from "../../../helpers";
 import { getTimeString } from "../../../helpers/getTimeString";
 import { useAppSelector } from "../../../app/hooks";
+import useBreakpoint from "../../../hooks/useBreakpoint";
 import { useControlPlayerMutation } from "../../../features/api/spotify";
 
 interface IProps {
@@ -22,6 +23,8 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
   const [isHovered, setIsHovered] = useState(false);
   const isPaused = useAppSelector((state) => state.dashboard.isPaused);
   const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
+  const breakpoint = useBreakpoint();
+  const hideAlbum = ["sm", "xs"];
 
   const isSelected =
     playingTrack?.id === track.id || playingTrack?.name === track.name;
@@ -151,7 +154,7 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
           </div>
         </div>
       </td>
-      <td>{track.album.name}</td>
+      {!hideAlbum.includes(breakpoint) && <td>{track.album.name}</td>}
       <td>{getTimeString(track.duration_ms / 1000)}</td>
       <td></td>
     </tr>

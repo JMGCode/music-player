@@ -55,9 +55,6 @@
   text-align: start;
 }
 
-.track-table-header th:first-child {
-  padding-left: 0px;
-}
 .track-table-header th:last-child {
   padding-right: 20px;
 }
@@ -80,4 +77,16 @@
 
 .track-table-row:hover td:not(:first-child):not(:last-child) {
   background-color: rgba(255, 255, 255, 0.05);
+}
+
+@media screen and (max-width: 600px) {
+  .track-table-row td:first-child,
+  .track-table-row td:last-child {
+    padding: 0;
+  }
+
+  .track-table-header th:first-child,
+  .track-table-header th:last-child {
+    padding: 0;
+  }
 }

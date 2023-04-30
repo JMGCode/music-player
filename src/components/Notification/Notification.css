@@ -37,7 +37,8 @@
 
 .notification-item-container {
   background-color: rgba(19, 19, 19, 1);
-  width: 400px;
+  width: 80vw;
+  max-width: 400px;
   color: white;
   z-index: 4;
   border-radius: 20px;

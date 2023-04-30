@@ -11,3 +11,9 @@
 .sider:hover {
   color: rgba(255, 255, 255, 1);
 }
+
+@media screen and (max-width: 768px) {
+  .sider {
+    --sider-width: 0px;
+  }
+}

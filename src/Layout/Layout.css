@@ -2,7 +2,7 @@ body {
   background-color: #131315;
 }
 .layout {
-  height: 100vh;
+  height: 100svh;
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-template-rows: 1fr min-content;

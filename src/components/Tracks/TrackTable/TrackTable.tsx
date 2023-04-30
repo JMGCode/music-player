@@ -4,6 +4,7 @@ import { ClockIcon } from "../../Icons";
 import { ISpotifyTrack } from "../../../features/dashboard/dashboardSlice";
 import { TrackTableRow } from "../TrackTableRow";
 import { useAppSelector } from "../../../app/hooks";
+import useBreakpoint from "../../../hooks/useBreakpoint";
 
 const TrackTable: React.FC<{
   uri?: string;
@@ -17,7 +18,8 @@ const TrackTable: React.FC<{
   headerTopOffset = "64px",
 }) => {
   const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
-
+  const breakpoint = useBreakpoint();
+  const hideAlbum = ["sm", "xs"];
   return (
     <div className="track-table-container">
       <table className="track-table">
@@ -26,14 +28,14 @@ const TrackTable: React.FC<{
           className="track-table-header"
         >
           <tr>
-            <th style={{ width: "30px" }}></th>
+            <th style={{ width: "0px" }}></th>
             <th style={{ width: "30px" }}>#</th>
             <th>Title</th>
-            <th>Album</th>
+            {!hideAlbum.includes(breakpoint) && <th>Album</th>}
             <th style={{ width: "80px" }}>
               <ClockIcon size="18" />
             </th>
-            <th style={{ width: "30px" }}></th>
+            <th style={{ width: "0px" }}></th>
           </tr>
         </thead>
         <tbody>

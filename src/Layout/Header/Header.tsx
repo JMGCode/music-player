@@ -11,11 +11,14 @@ import {
   getRandColorFromStrs,
 } from "../../helpers/getRandColorFromStr";
 
+import Skeleton from "../../components/Skeleton/Skeleton";
 import { clearCredentials } from "../../features/auth/authSlice";
 import { useAppDispatch } from "../../app/hooks";
+import useBreakpoint from "../../hooks/useBreakpoint";
 import { useGetMeQuery } from "../../features/api/spotify/me";
 import { useNavigate } from "react-router-dom";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
+import { useSiderUpdate } from "../../SliderContext";
 
 interface IProps {
   styles?: any;
@@ -54,12 +57,16 @@ const menuItems = [
 const Header: FC<PropsWithChildren<IProps>> = ({ children, styles }) => {
   const navigate = useNavigate();
   const { container } = styles || {};
-  const { data: user } = useGetMeQuery();
+  const { data: user, isLoading } = useGetMeQuery();
   const [isClosing, setIsClosing] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [userColor, setUserColor] = useState({ rgb: "rgb(0,0,0)", hsl: "" });
   const dispatch = useAppDispatch();
   const userMenuRef = useRef(null);
+  const breakpoint = useBreakpoint();
+
+  const toogleSider = useSiderUpdate();
+
   useOutsideAlerter(userMenuRef, () => {
     if (!isVisible) {
       setIsClosing(true);
@@ -102,7 +109,11 @@ const Header: FC<PropsWithChildren<IProps>> = ({ children, styles }) => {
         <LeftCircleArrowIcon onClick={() => navigate(-1)} />
         <RightCircleArrowIcon onClick={() => navigate(1)} />
       </div>
-      <div style={{ flex: 1 }}>{children}</div>
+      <div className="header-sider-btn">
+        <RightCircleArrowIcon onClick={toogleSider} />
+      </div>
+
+      <div style={{ flex: 1, overflow: "hidden" }}>{children}</div>
       <div
         className="header-menu"
         onClick={() => {
@@ -123,7 +134,16 @@ const Header: FC<PropsWithChildren<IProps>> = ({ children, styles }) => {
             overflow: "hidden",
           }}
         >
-          {user?.images.length > 0 ? (
+          {isLoading ? (
+            <Skeleton
+              style={{
+                height: "80%",
+                width: "32px",
+                flexShrink: "0",
+                borderRadius: "50%",
+              }}
+            />
+          ) : user?.images.length > 0 ? (
             <img
               className="user-img"
               src={user?.images[0].url}
@@ -145,7 +165,14 @@ const Header: FC<PropsWithChildren<IProps>> = ({ children, styles }) => {
               {user?.display_name[0]}
             </p>
           )}
-          <span className="user-name">{user?.display_name}</span>
+
+          <span className="user-name">
+            {isLoading ? (
+              <Skeleton style={{ width: "30ch", height: "1rem" }} />
+            ) : (
+              user?.display_name
+            )}
+          </span>
         </div>
         <div
           style={{

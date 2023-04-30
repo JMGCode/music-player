@@ -2,6 +2,7 @@ const baseUrl = "https://accounts.spotify.com/authorize";
 const redirectUri = "http://localhost:3000/login";
 const scope = [
   "streaming",
+  "user-read-currently-playing",
   "user-read-email",
   "user-read-private",
   "user-library-read",
@@ -27,7 +28,7 @@ const Login = () => {
   return (
     <div
       style={{
-        minHeight: "100vh",
+        minHeight: "100svh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

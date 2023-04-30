@@ -5,6 +5,7 @@ import {
   useControlPlayerMutation,
   useGetDevicesQuery,
   useRepeatPlayedTrackMutation,
+  useSeekPositionMutation,
   useSetPlayerVolumeMutation,
   useToggleShufflePlayerMutation,
   useTransferPlayerMutation,
@@ -17,8 +18,9 @@ import {
   RepeatIcon,
   VolumeIcon,
 } from "../Icons";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { usePlayer, usePlayerUpdate } from "../../PlayerContext";
 
 import { ConnectMenu } from "../ConnectDevice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +30,7 @@ import { RangeControl } from "./RangeControl";
 import ShuffleIcon from "../Icons/ShuffleIcon";
 import SpotifyIcon from "../Icons/SpotifyIcon";
 import { faMicrophoneLines } from "@fortawesome/free-solid-svg-icons";
+import { getTimeString } from "../../helpers/getTimeString";
 import { info as infoNotification } from "../Notification/Notify";
 import { useAppSelector } from "../../app/hooks";
 import useSpotifySdk from "../../hooks/useSpotifySdk";
@@ -45,32 +48,73 @@ const Player = () => {
   const [transferMutation] = useTransferPlayerMutation();
   const [volumeMutation] = useSetPlayerVolumeMutation();
   const [controlMutation] = useControlPlayerMutation();
+  const [seekMutation] = useSeekPositionMutation();
 
   const {
     isPaused,
     loopState,
     shuffleState,
+    trackDuration,
+    trackPosition,
     currTrack: playingTrack,
   } = useAppSelector((state) => state.dashboard);
-  const { data } = useGetDevicesQuery();
+
+  const { data, refetch } = useGetDevicesQuery();
   const deviceId = useAppSelector((state) => state.auth.deviceId);
   const [volume, setVolume] = useState(50);
   const [isDeviceActive, setIsDeviceActive] = useState(false);
+  const playerMobileState = usePlayer();
+  const tooglePlayerMobileState = usePlayerUpdate();
 
-  const throttle = useThrottle();
+  const [elapsedTrackTime, setElapsedTrackTime] = useState(0);
+  const trackIntervalRef = useRef<NodeJS.Timer>();
+  const [isDraggingPosition, setIsDraggingPosition] = useState(false);
 
-  const handleVolumeChange = ({ deviceId, volume }: any) => {
-    if (!deviceId) return;
-    volumeMutation({ deviceId, volume });
-    setVolume(volume);
+  useEffect(() => {
+    setElapsedTrackTime(trackPosition / 1000);
+    if (!isPaused) {
+      const interval = setInterval(handlePositionInterval, 1000);
+      trackIntervalRef.current = interval;
+    }
+    return () =>
+      trackIntervalRef.current && clearInterval(trackIntervalRef.current);
+  }, [trackDuration, trackPosition]);
+
+  const handlePositionInterval = () => {
+    setElapsedTrackTime((prev) => {
+      const time = (prev += 1);
+      if (time >= trackDuration / 1000 && trackIntervalRef.current) {
+        clearInterval(trackIntervalRef.current);
+      }
+      return time;
+    });
   };
+
+  const handleVolumeChange = useCallback(
+    ({ deviceId, volume }: any) => {
+      const roundVolume = Math.floor(volume);
+      console.log(deviceId, player);
+      if (!deviceId) return;
+      if (!player) return;
+      // volumeMutation({ deviceId, volume: roundVolume });
+      player.setVolume(roundVolume / 100).catch((e: any) => console.log(e));
+      setVolume(roundVolume);
+    },
+    [player]
+  );
 
   useEffect(() => {
     const activeDevice = data?.devices.find((device) => device.is_active);
+    console.log(
+      "useEffect",
+      activeDevice?.id,
+      deviceId,
+      activeDevice?.id === deviceId
+    );
     if (activeDevice?.id === deviceId) {
       setIsDeviceActive(true);
     }
-  }, [data]);
+  }, [data, deviceId]);
 
   //TODO: get currDevice(Api) if not deviceSelected
   //send curr deviceId if no device Id send notification error
@@ -91,7 +135,6 @@ const Player = () => {
           await player.connect();
           setTimeout(async () => {
             await transferMutation({ deviceId, play: false });
-
             controlMutation({ deviceId, action })
               .unwrap()
               .catch(() => {
@@ -102,10 +145,26 @@ const Player = () => {
       });
   };
 
+  const handleTrackPositionChange = (value: number) => {
+    console.log("cvv", value);
+    const percPos = Math.floor(value);
+    const posMs = (percPos * (trackDuration / 1000)) / 100;
+    setElapsedTrackTime(posMs);
+  };
+
   return (
-    <div className="player-container">
+    <div
+      className={`player-container ${isDeviceActive ? "active-player" : ""}`}
+    >
+      <div
+        onClick={tooglePlayerMobileState}
+        className="player-close-btn"
+        style={{ paddingTop: `${playerMobileState ? "0px" : "5px"}` }}
+      >
+        {playerMobileState ? "x" : "^"}
+      </div>
       <div className="player">
-        <div className="playing-track-container">
+        <div className={`playing-track-container `}>
           <PlayerTrack
             key={playingTrack?.uri}
             track={playingTrack}
@@ -114,8 +173,21 @@ const Player = () => {
             }}
           />
         </div>
-        <div className="player-controls-container">
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div
+          className={`player-controls-container ${
+            playerMobileState ? "" : "player-hidden"
+          }`}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              flex: "1 0 auto",
+              minWidth: "200px",
+              maxWidth: "500px",
+            }}
+          >
             <div className="player-icon">
               <ShuffleIcon
                 size="20"
@@ -133,6 +205,12 @@ const Player = () => {
               {!isPaused ? (
                 <PauseIcon
                   onClick={() => {
+                    trackIntervalRef.current &&
+                      clearInterval(trackIntervalRef.current);
+                    console.log(
+                      "clear track interval",
+                      trackIntervalRef.current
+                    );
                     handleControlAction("pause");
                   }}
                 />
@@ -166,41 +244,77 @@ const Player = () => {
                 }}
               />
             </div>
-            <RangeControl />
+            <div className="track-control-container">
+              <p>{getTimeString(elapsedTrackTime)}</p>
+              <div style={{ flex: 1 }}>
+                <RangeControl
+                  onChange={handleTrackPositionChange}
+                  // value={Math.floor((elapsedTrackTime * 100) / 90)}
+                  onStart={() => {
+                    setIsDraggingPosition(true);
+                    trackIntervalRef.current &&
+                      clearInterval(trackIntervalRef.current);
+                  }}
+                  onEnd={() => {
+                    if (isDraggingPosition) {
+                      setIsDraggingPosition(false);
+                      trackIntervalRef.current &&
+                        clearInterval(trackIntervalRef.current);
+
+                      seekMutation({
+                        position: Math.floor(elapsedTrackTime * 1000),
+                        deviceId,
+                      });
+                    }
+                  }}
+                  value={Math.floor(
+                    (elapsedTrackTime * 100) / (trackDuration / 1000)
+                  )}
+                />
+              </div>
+              <p>{getTimeString(trackDuration / 1000)}</p>
+            </div>
           </div>
         </div>
-        <div className="volume-container">
-          <FontAwesomeIcon
-            icon={faMicrophoneLines}
-            color={`${path === "/lyrics" ? "green" : ""}`}
-            onClick={() => {
-              if (path === "/lyrics") {
-                navigate(-1);
-              } else {
-                navigate("/lyrics");
+        <div
+          className={`volume-container ${
+            playerMobileState ? "" : "controls-hidden"
+          }`}
+        >
+          <div style={{ display: "flex", gap: "20px" }}>
+            <FontAwesomeIcon
+              className="lyrics-btn"
+              icon={faMicrophoneLines}
+              color={`${path === "/lyrics" ? "green" : ""}`}
+              onClick={() => {
+                if (path === "/lyrics") {
+                  navigate(-1);
+                } else {
+                  navigate("/lyrics");
+                }
+              }}
+            />
+
+            <ConnectMenu
+              onClose={() => {
+                setTimeout(() => {
+                  refetch();
+                }, 1000);
+              }}
+            />
+          </div>
+          <div className="volume-control">
+            <VolumeIcon size="26" value={volume} />
+            <RangeControl
+              width={"100px"}
+              onChange={(volume: number) =>
+                handleVolumeChange({ volume, deviceId })
               }
-            }}
-          />
-
-          <ConnectMenu />
-          <VolumeIcon size="40" value={volume} />
-
-          <input
-            className="volume"
-            type="range"
-            id="vol"
-            name="vol"
-            min="0"
-            max="100"
-            onChange={(e) =>
-              throttle(handleVolumeChange, 300, {
-                deviceId,
-                volume: Number(e.target.value),
-              })
-            }
-          />
+              value={volume}
+            />
+          </div>
         </div>
-        {isDeviceActive && (
+        {/* {isDeviceActive && (
           <div
             style={{
               backgroundColor: "#56bd40",
@@ -217,7 +331,7 @@ const Player = () => {
             <SpotifyIcon id="spotify-bottom-bar" color="black" size="20" />{" "}
             Listening on JMGCode's PC
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

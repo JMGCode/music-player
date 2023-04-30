@@ -68,3 +68,34 @@
   font-size: 28px;
   padding: 10px;
 }
+
+.playlist-header-name {
+  display: block;
+}
+
+/* .playlist-scroll-title span {
+  display: none;
+} */
+@media screen and (max-width: 768px) {
+  .playlist-header-name {
+    display: none;
+  }
+  .playlist-header {
+    flex-direction: column;
+  }
+
+  .playlist-header-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .playlist-name {
+    font-size: 2rem;
+    -webkit-line-clamp: 2;
+  }
+  /* .playlist-scroll-title {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+  } */
+}

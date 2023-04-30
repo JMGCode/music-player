@@ -1,0 +1,20 @@
+.collection-contianer {
+  grid-column: span 2;
+}
+
+.route-container {
+  display: flex;
+  column-gap: 10px;
+  overflow: scroll;
+  padding: 0 5px;
+}
+
+.route-container::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 410px) {
+  .collection-contianer {
+    grid-column: span 1;
+  }
+}

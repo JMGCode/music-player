@@ -1,3 +1,4 @@
+import { getParamsString } from "../../../helpers";
 import { spotifyApiSlice } from "./spotifySlice";
 
 interface IDevice {
@@ -129,6 +130,7 @@ export const extendedApiSlice = spotifyApiSlice.injectEndpoints({
     }),
     getDevices: builder.query<{ devices: IDevice[] }, void>({
       query: () => `me/player/devices`,
+      providesTags: ["Devices"],
     }),
     transferPlayer: builder.mutation<any, { deviceId: string; play?: boolean }>(
       {
@@ -140,10 +142,32 @@ export const extendedApiSlice = spotifyApiSlice.injectEndpoints({
             play,
           },
         }),
+        invalidatesTags: ["Devices"],
       }
     ),
     getPlayerState: builder.query<any, void>({
       query: () => "/me/player",
+    }),
+    seekPosition: builder.mutation<
+      any,
+      { deviceId?: string; position: number }
+    >({
+      query: ({ position, deviceId }) => {
+        const params = getParamsString({
+          device_id: deviceId,
+          position_ms: position,
+        });
+        return {
+          url: `/me/player/seek${params}`,
+          method: "PUT",
+        };
+        // url: "/me/player/seek",
+        // method: "PUT",
+        // body: {
+        //   position_ms: position,
+        //   device_id: deviceId,
+        // },
+      },
     }),
   }),
 });
@@ -163,4 +187,5 @@ export const {
   useGetPlayerStateQuery,
   useControlPlayerMutation,
   useGetRecentlyPlayedQuery,
+  useSeekPositionMutation,
 } = extendedApiSlice;

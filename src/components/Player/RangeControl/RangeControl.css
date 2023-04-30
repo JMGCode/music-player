@@ -6,3 +6,58 @@
 .range-control-container > *:not(:nth-child(2)) {
   flex-basis: 80px;
 }
+
+.range-container {
+  /* width: 200px; */
+  height: 4px;
+  background-color: #222;
+  border-radius: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.range-container:hover .range-slider {
+  background-color: green;
+}
+
+.range-slider.active {
+  background-color: green;
+}
+
+.range-slider {
+  height: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+}
+
+.range-slider::after {
+  content: "";
+  right: -10px;
+  top: 50%;
+  /*   top:-15px; */
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: #ccc;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.range-container:hover .range-slider::after {
+  opacity: 1;
+}
+
+.range-slider.active::after {
+  opacity: 1;
+}
+/* .volume {
+  font-size: 21px;
+  width: 4ch;
+  user-select: none;
+} */
+
+.transition-slide {
+  transition: width 10000ms ease-in-out;
+}

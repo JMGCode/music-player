@@ -1,9 +1,11 @@
+import "./ScrollHeader.css";
+
 import React, { FC, useEffect, useState } from "react";
+
+import { Header } from "../../Header";
 import { PlayerButton } from "../../../components/PlayerButton";
 import { getRandColorFromStr } from "../../../helpers/getRandColorFromStr";
 import useObservableIntersection from "../../../hooks/useObservableIntersection";
-import { Header } from "../../Header";
-import "./ScrollHeader.css";
 
 interface Props {
   title?: string;
@@ -65,7 +67,7 @@ const ScrollHeader: FC<Props> = ({ title, height = 324, children }) => {
         styles={{
           container: {
             backgroundColor: `hsla(${backgroundColor.h},70%,25%,${headerAlpha})`,
-            padding: "0 20px 0 40px",
+            // padding: "0 20px 0 40px",
           },
         }}
       >
@@ -75,7 +77,7 @@ const ScrollHeader: FC<Props> = ({ title, height = 324, children }) => {
           }`}
         >
           {headerTitleVisible && title && (
-            <PlayerButton width="45px" height="45px" />
+            <PlayerButton width="35px" height="35px" />
           )}
 
           <span>{title}</span>

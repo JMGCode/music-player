@@ -4,23 +4,29 @@ import { Content, Footer, Layout, Sider } from "./Layout";
 import { Player, PlaylistList } from "./components";
 
 import { Outlet } from "react-router-dom";
+import PlayerProvider from "./PlayerContext";
+import SiderProvider from "./SliderContext";
 import TempComponent from "./TempComponent";
 
 const Dashboard = () => {
   return (
     <Layout>
-      <Sider>
-        <TempComponent />
-        <PlaylistList title="Playlists" />
-      </Sider>
+      <SiderProvider>
+        <Sider>
+          <TempComponent />
+          <PlaylistList title="Playlists" />
+        </Sider>
 
-      <Content>
-        <Outlet />
-      </Content>
+        <Content>
+          <Outlet />
+        </Content>
 
-      <Footer>
-        <Player />
-      </Footer>
+        <PlayerProvider>
+          <Footer>
+            <Player />
+          </Footer>
+        </PlayerProvider>
+      </SiderProvider>
     </Layout>
   );
 };

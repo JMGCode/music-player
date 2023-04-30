@@ -3,10 +3,10 @@ import {
   useGetLikedShowsQuery,
 } from "../../features/api/spotify/me";
 
+import { CardSection } from "../../Layout/Container/Section";
 import { CollectionCard } from "../../components/Card/CollectionCard";
 import { SearchCard } from "../../components/Card";
 import { SectionList } from "../../Layout/Container/SectionList";
-import { CardSection } from "../../Layout/Container/Section";
 
 const LibraryPodcastsPage = () => {
   const { data: shows, isLoading: isLoadingShows } = useGetLikedShowsQuery();
@@ -20,7 +20,7 @@ const LibraryPodcastsPage = () => {
         isLoading={isLoadingShows}
         items={shows?.items}
       >
-        <div style={{ gridColumn: "span 2" }}>
+        <div className="collection-contianer">
           <CollectionCard
             collection={episodes}
             title="Your Episodes"

@@ -58,10 +58,13 @@ const LibraryPage = () => {
         }}
       >
         <div
-          style={{
-            display: "flex",
-            columnGap: "10px",
-          }}
+          // style={{
+          //   display: "flex",
+          //   columnGap: "10px",
+          //   overflow: "scroll",
+          //   padding: "0 5px",
+          // }}
+          className="route-container"
         >
           {routes.map(({ title, route }) => {
             return (

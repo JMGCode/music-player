@@ -135,7 +135,7 @@ const PlaylistPage = () => {
           /> */}
           {headerTitleVisible && <PlayerButton width="45px" height="45px" />}
 
-          <span>{data?.name}</span>
+          <span className="playlist-header-name">{data?.name}</span>
         </div>
       </Header>
 

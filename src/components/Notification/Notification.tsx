@@ -1,7 +1,5 @@
 import "./Notification.css";
-import { FC, PropsWithChildren, useEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import createContainer from "./createContainer";
+
 import {
   CrossIcon,
   ErrorCircle,
@@ -9,6 +7,10 @@ import {
   SuccessCircle,
   WarningCircle,
 } from "../Icons";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
+
+import createContainer from "./createContainer";
+import { createPortal } from "react-dom";
 
 const Colors = {
   info: "info",
@@ -54,13 +56,13 @@ const Notification: FC<PropsWithChildren<IProps>> = ({
   }, [autoClose]);
 
   const getIcons: any = {
-    info: <InfoCircle color="white" size="50px" backgroundColor="#2196f3" />,
-    error: <ErrorCircle color="white" size="50px" backgroundColor="#f44336" />,
+    info: <InfoCircle color="white" size="25px" backgroundColor="#2196f3" />,
+    error: <ErrorCircle color="white" size="25px" backgroundColor="#f44336" />,
     warning: (
-      <WarningCircle color="white" size="50px" backgroundColor="#ff9800" />
+      <WarningCircle color="white" size="25px" backgroundColor="#ff9800" />
     ),
     success: (
-      <SuccessCircle color="white" size="50px" backgroundColor="#4caf50" />
+      <SuccessCircle color="white" size="25px" backgroundColor="#4caf50" />
     ),
   };
 

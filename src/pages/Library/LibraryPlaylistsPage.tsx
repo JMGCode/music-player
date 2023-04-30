@@ -4,6 +4,7 @@ import { useGetLikedTracksQuery } from "../../features/api/spotify/me";
 import { useGetPlaylistsQuery } from "../../features/api/spotify";
 import { SectionList } from "../../Layout/Container/SectionList";
 import { CardSection } from "../../Layout/Container/Section";
+import "./Library.css";
 
 const LibraryPlaylistsPage = () => {
   const { data: likedTracks, isLoading: isLoadingLikedTracks } =
@@ -20,7 +21,7 @@ const LibraryPlaylistsPage = () => {
         //@ts-ignore
         items={playlists}
       >
-        <div style={{ gridColumn: "span 2" }}>
+        <div className="collection-contianer">
           <CollectionCard
             collection={likedTracks}
             title="Liked Songs"

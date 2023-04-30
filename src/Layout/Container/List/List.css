@@ -1,6 +1,6 @@
 /* 194 */
 .list-container {
-  --min-grid: 210px;
+  --min-grid: 165px;
   --max-grid: 1fr;
 
   display: grid;
@@ -22,4 +22,14 @@
 
 .list-container-scroll {
   overflow: scroll;
+}
+
+@media screen and (max-width: 400px) {
+  .list-container {
+    --min-grid: 125px;
+  }
+
+  .list-container-nowrap {
+    column-gap: 10px;
+  }
 }

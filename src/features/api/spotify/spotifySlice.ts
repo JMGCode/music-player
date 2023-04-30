@@ -34,6 +34,7 @@ export const spotifyApiSlice = createApi({
   //   },
   // }),
   baseQuery: CustomFetch,
+  tagTypes: ["Devices"],
   endpoints: (builder) => ({
     getPlaylists: builder.query<
       {
