@@ -2,7 +2,7 @@ import "./SearchCard.css";
 
 import Card from "../Card";
 import { FC } from "react";
-import Img404 from "../../../assets/Img404.png";
+import Img404 from "../../../images/Img404.png";
 import { PlayerButton } from "../../PlayerButton";
 import { useNavigate } from "react-router-dom";
 
