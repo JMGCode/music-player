@@ -18,7 +18,8 @@ export const serverApiSlice = createApi({
   endpoints: (builder) => ({
     login: builder.mutation<IAPILogin, string>({
       query: (code) => ({
-        url: "login",
+        url: "hello",
+        // url: "login",
         method: "POST",
         body: { code },
       }),
