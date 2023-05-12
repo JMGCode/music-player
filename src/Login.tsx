@@ -1,5 +1,6 @@
 const baseUrl = "https://accounts.spotify.com/authorize";
-const redirectUri = "http://localhost:3000/login";
+const redirectUri = process.env.REACT_APP_REDIRECT_URI;
+// const redirectUri = "http://localhost:3000/login";
 const scope = [
   "streaming",
   "user-read-currently-playing",

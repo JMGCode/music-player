@@ -14,8 +14,9 @@ import { RootState } from "../../app/store";
 import { error as errorNotification } from "../../components/Notification/Notify";
 
 const baseUrl = `https://api.spotify.com/v1/`;
+const baseUrlServer = process.env.REACT_APP_SERVER;
 // const baseUrlServer = `http://localhost:3001/`;
-const baseUrlServer = `${process.env.REACT_APP_SERVER_ENDPOINT}/api/spotify/`;
+// const baseUrlServer = `${process.env.REACT_APP_SERVER_ENDPOINT}/api/spotify/`;
 
 const mutex = new Mutex();
 

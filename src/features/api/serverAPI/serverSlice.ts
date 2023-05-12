@@ -12,7 +12,8 @@ interface IAPIRefreshToken {
 
 export const serverApiSlice = createApi({
   reducerPath: "serverApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/" }),
+  // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_SERVER }),
   endpoints: (builder) => ({
     login: builder.mutation<IAPILogin, string>({
       query: (code) => ({
