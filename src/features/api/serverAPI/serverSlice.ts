@@ -16,14 +16,14 @@ export const serverApiSlice = createApi({
   endpoints: (builder) => ({
     login: builder.mutation<IAPILogin, string>({
       query: (code) => ({
-        url: "login",
+        url: "login/",
         method: "POST",
         body: { code },
       }),
     }),
     refreshToken: builder.mutation<IAPIRefreshToken, string>({
       query: (refreshToken) => ({
-        url: "refresh",
+        url: "refresh/",
         method: "POST",
         body: { refreshToken },
       }),
