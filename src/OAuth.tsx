@@ -32,7 +32,7 @@ const OAuth = () => {
         const payload = await loginMutation(code).unwrap();
         console.log("login response", payload);
         dispatch(setCredentials(payload));
-        navigate("/");
+        // navigate("/");
       } catch (error) {
         console.error("rejected", error);
       }
