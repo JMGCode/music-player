@@ -28,14 +28,14 @@ const OAuth = () => {
       if (accessToken !== "") navigate("/");
       console.log("code======", code);
       if (!code) return;
-      try {
-        const payload = await loginMutation(code).unwrap();
-        console.log("login response", payload);
-        // dispatch(setCredentials(payload));
-        // navigate("/");
-      } catch (error) {
-        console.error("rejected", error);
-      }
+      // try {
+      //   // const payload = await loginMutation(code).unwrap();
+      //   // console.log("login response", payload);
+      //   // dispatch(setCredentials(payload));
+      //   // navigate("/");
+      // } catch (error) {
+      //   console.error("rejected", error);
+      // }
     }
     login();
   }, [code]);
