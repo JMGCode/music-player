@@ -15,7 +15,7 @@
 .list-container-nowrap {
   overflow: hidden;
   grid-template-rows: 1fr;
-  gap: 0px;
+  row-gap: 0px;
   column-gap: 20px;
   grid-auto-rows: 0px;
 }
