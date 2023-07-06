@@ -16,6 +16,8 @@ interface ISearchCard {
   onClickCard: () => void;
   onClickPlay?: () => void;
   tempToPlay?: any;
+  isPlaying?: boolean;
+  noPlay?: boolean;
 }
 const SearchCard: FC<ISearchCard> = ({
   title,
@@ -27,14 +29,13 @@ const SearchCard: FC<ISearchCard> = ({
   onClickCard,
   onClickPlay,
   tempToPlay,
+  isPlaying = false,
+  noPlay = false,
 }) => {
-  // const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
-  let navigate = useNavigate();
   return (
     <Card
       onClick={() => {
         onClickCard();
-        navigate(`/${type}/${id}`);
       }}
     >
       <>
@@ -50,16 +51,21 @@ const SearchCard: FC<ISearchCard> = ({
               borderRadius: `${isImgCircle ? "50%" : "5px"}`,
             }}
           />
-          <div
-            className="card-play-container"
-            onClick={(e) => {
-              console.log("temp: ", tempToPlay);
-              e.stopPropagation();
-              onClickPlay && onClickPlay();
-            }}
-          >
-            <PlayerButton width="55px" height="55px" track={tempToPlay} />
-          </div>
+          {!noPlay && (
+            <div
+              className="card-play-container"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickPlay && onClickPlay();
+              }}
+            >
+              <PlayerButton
+                width="55px"
+                height="55px"
+                state={isPlaying ? "playing" : "paused"}
+              />
+            </div>
+          )}
         </div>
         <p className="card-title">{title}</p>
         <p className="card-subtitle">{subTitle}</p>

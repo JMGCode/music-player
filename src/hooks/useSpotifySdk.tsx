@@ -63,7 +63,12 @@ const useSpotifySdk = () => {
           return;
         }
 
-        dispatch(setPlayingTrack(state.track_window.current_track));
+        dispatch(
+          setPlayingTrack({
+            ...state.track_window.current_track,
+            context: state.context,
+          })
+        );
         dispatch(setIsPlayerPaused(state.paused));
         dispatch(setPlayerLoopState(state.repeat_mode));
         dispatch(setPlayerShuffleState(state.shuffle));

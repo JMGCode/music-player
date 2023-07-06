@@ -133,7 +133,9 @@ const AlbumPage = () => {
             size="50"
             color={headerTitleVisible ? "#56bd40" : "rgba(0, 0, 0, 0.00)"}
           /> */}
-          {headerTitleVisible && <PlayerButton width="45px" height="45px" />}
+          {headerTitleVisible && (
+            <PlayerButton width="45px" height="45px" state="paused" />
+          )}
 
           <span className="playlist-header-name">{data?.name}</span>
         </div>

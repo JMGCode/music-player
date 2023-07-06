@@ -6,12 +6,13 @@ import {
   useGetTopTracksQuery,
 } from "../../features/api/spotify/me";
 
-import { SearchCard } from "../../components/Card";
-import { useGetRecentlyPlayedQuery } from "../../features/api/spotify";
+import ArtistSearchCard from "../../components/Card/SearchCard/ArtistSearchCard";
 import { CardSection } from "../../Layout/Container/Section";
 import { ScrollHeader } from "../../Layout/Container/ScrollHeader";
 import { ScrollHeaderContent } from "../../Layout/Container/ScrollHeader/ScrollHeader";
 import { SectionList } from "../../Layout/Container/SectionList";
+import SongSearchCard from "../../components/Card/SearchCard/SongSearchCard";
+import { useGetRecentlyPlayedQuery } from "../../features/api/spotify";
 
 const HomePage = () => {
   const { data: followedArtists, isLoading: isFollowedArtistLoading } =
@@ -41,17 +42,11 @@ const HomePage = () => {
               const album = track.album;
 
               return (
-                <SearchCard
-                  type={track.type}
-                  id={track.id}
-                  key={`search-card-recent-played/${track.id}`}
-                  title={track.name}
-                  subTitle={artist.name}
-                  img={album?.images[1]?.url || ""}
-                  onClickCard={() => {
-                    console.log("click album", track);
-                  }}
-                  tempToPlay={track}
+                <SongSearchCard
+                  keyString="search-card-recent-played"
+                  album={album}
+                  artist={artist}
+                  track={track}
                 />
               );
             })}
@@ -66,18 +61,9 @@ const HomePage = () => {
           >
             {followedArtists?.artists.items.map((artist: any) => {
               return (
-                <SearchCard
-                  type={artist.type}
-                  id={artist.id}
-                  key={`home-card--followed-artist/${artist.id}`}
-                  title={artist.name}
-                  subTitle={"Artist"}
-                  img={artist?.images[1]?.url || ""}
-                  isImgCircle={true}
-                  onClickCard={() => {
-                    console.log("click album", artist);
-                  }}
-                  tempToPlay={artist}
+                <ArtistSearchCard
+                  keyString="home-card--followed-artist"
+                  artist={artist}
                 />
               );
             })}
@@ -92,18 +78,9 @@ const HomePage = () => {
           >
             {topArtists?.items.map((artist: any) => {
               return (
-                <SearchCard
-                  type={artist.type}
-                  id={artist.id}
-                  key={`search-card-album/${artist.id}`}
-                  title={artist.name}
-                  subTitle={"Artist"}
-                  img={artist?.images[1]?.url || ""}
-                  isImgCircle={true}
-                  onClickCard={() => {
-                    console.log("click album", artist);
-                  }}
-                  tempToPlay={artist}
+                <ArtistSearchCard
+                  keyString="search-card-album"
+                  artist={artist}
                 />
               );
             })}
@@ -118,18 +95,13 @@ const HomePage = () => {
             {topTracks?.items.map((track: any) => {
               const artist = track.artists[0];
               const album = track.album;
+
               return (
-                <SearchCard
-                  type={track.type}
-                  id={track.id}
-                  key={`search-card-top-track/${track.id}`}
-                  title={track.name}
-                  subTitle={artist.name}
-                  img={album?.images[1]?.url || ""}
-                  onClickCard={() => {
-                    console.log("click album", track.name);
-                  }}
-                  tempToPlay={track}
+                <SongSearchCard
+                  keyString="search-card-top-track"
+                  album={album}
+                  artist={artist}
+                  track={track}
                 />
               );
             })}

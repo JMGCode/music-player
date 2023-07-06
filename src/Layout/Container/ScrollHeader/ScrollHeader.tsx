@@ -77,7 +77,7 @@ const ScrollHeader: FC<Props> = ({ title, height = 324, children }) => {
           }`}
         >
           {headerTitleVisible && title && (
-            <PlayerButton width="35px" height="35px" />
+            <PlayerButton width="35px" height="35px" state="paused" />
           )}
 
           <span>{title}</span>

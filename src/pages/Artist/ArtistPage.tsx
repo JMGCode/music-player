@@ -1,27 +1,30 @@
 import "./ArtistPage.css";
 
-import { TrackList } from "../../components";
 import {
   AlbumGroupType,
   useGetArtistQuery,
+  useGetArtistTopTracksQuery,
   useGetArtistsAlbumsQuery,
   useGetArtistsRelatedQuery,
-  useGetArtistTopTracksQuery,
 } from "../../features/api/spotify/artist";
-import { useParams } from "react-router-dom";
-import { useAppSelector } from "../../app/hooks";
-import { useGetMeQuery } from "../../features/api/spotify/me";
-import { FC, useEffect, useState } from "react";
-import { SearchCard } from "../../components/Card";
-import { Header } from "../../Layout/Header";
-import useObservableIntersection from "../../hooks/useObservableIntersection";
-import { PlayerButton } from "../../components/PlayerButton";
-import { getRandColorFromStr } from "../../helpers/getRandColorFromStr";
 import { CardSection, Section } from "../../Layout/Container/Section";
+import { FC, useEffect, useState } from "react";
+
+import AlbumSearchCard from "../../components/Card/SearchCard/AlbumSearchCard";
+import ArtistSearchCard from "../../components/Card/SearchCard/ArtistSearchCard";
+import { Header } from "../../Layout/Header";
 import { List } from "../../Layout/Container/List";
+import { PlayerButton } from "../../components/PlayerButton";
 import { ScrollHeader } from "../../Layout/Container/ScrollHeader";
 import { ScrollHeaderContent } from "../../Layout/Container/ScrollHeader/ScrollHeader";
+import { SearchCard } from "../../components/Card";
 import { SectionList } from "../../Layout/Container/SectionList";
+import { TrackList } from "../../components";
+import { getRandColorFromStr } from "../../helpers/getRandColorFromStr";
+import { useAppSelector } from "../../app/hooks";
+import { useGetMeQuery } from "../../features/api/spotify/me";
+import useObservableIntersection from "../../hooks/useObservableIntersection";
+import { useParams } from "react-router-dom";
 
 const ArtistPage = () => {
   const [groupType, setGroupType] = useState<AlbumGroupType[]>(["compilation"]);
@@ -94,18 +97,7 @@ const ArtistPage = () => {
           >
             {albums?.items?.map((album: any) => {
               return (
-                <SearchCard
-                  type={album.type}
-                  id={album.id}
-                  key={`search-card-album/${album.id}`}
-                  title={album.name}
-                  subTitle={"Album"}
-                  img={album?.images[1]?.url || ""}
-                  onClickCard={() => {
-                    console.log("click album", album);
-                  }}
-                  tempToPlay={album}
-                />
+                <AlbumSearchCard keyString="search-card-album" album={album} />
               );
             })}
           </CardSection>
@@ -118,18 +110,9 @@ const ArtistPage = () => {
           >
             {relatedArtists?.artists?.map((artist: any) => {
               return (
-                <SearchCard
-                  type={artist.type}
-                  id={artist.id}
-                  key={`search-card-album/${artist.id}`}
-                  title={artist.name}
-                  isImgCircle={true}
-                  subTitle={"Artist"}
-                  img={artist?.images[1]?.url || ""}
-                  onClickCard={() => {
-                    console.log("click album", artist);
-                  }}
-                  tempToPlay={artist}
+                <ArtistSearchCard
+                  keyString="search-card-album"
+                  artist={artist}
                 />
               );
             })}
@@ -141,20 +124,9 @@ const ArtistPage = () => {
             isLoading={isLoadingAppearsOn}
             items={appersOn?.items}
           >
-            {appersOn?.items?.map((artist: any) => {
+            {appersOn?.items?.map((album: any) => {
               return (
-                <SearchCard
-                  type={artist.type}
-                  id={artist.id}
-                  key={`search-card-album/${artist.id}`}
-                  title={artist.name}
-                  subTitle={"Artist"}
-                  img={artist?.images[1]?.url || ""}
-                  onClickCard={() => {
-                    console.log("click album", artist);
-                  }}
-                  tempToPlay={artist}
-                />
+                <AlbumSearchCard keyString="search-card-album" album={album} />
               );
             })}
           </CardSection>

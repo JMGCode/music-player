@@ -7,6 +7,7 @@ import { CardSection } from "../../Layout/Container/Section";
 import { CollectionCard } from "../../components/Card/CollectionCard";
 import { SearchCard } from "../../components/Card";
 import { SectionList } from "../../Layout/Container/SectionList";
+import ShowSearchCard from "../../components/Card/SearchCard/ShowSearchCard";
 
 const LibraryPodcastsPage = () => {
   const { data: shows, isLoading: isLoadingShows } = useGetLikedShowsQuery();
@@ -32,18 +33,7 @@ const LibraryPodcastsPage = () => {
         {shows?.items?.map((item: any) => {
           const { show } = item;
           return (
-            <SearchCard
-              key={`collection-card-shows/${show.id}`}
-              id={show.id}
-              type={show.type}
-              title={show.name}
-              subTitle={`By ${show.publisher}`}
-              img={show?.images[0]?.url || ""}
-              onClickCard={() => {
-                console.log("click artist card", show);
-              }}
-              tempToPlay={[show]}
-            />
+            <ShowSearchCard keyString="collection-card-shows" show={show} />
           );
         })}
       </CardSection>

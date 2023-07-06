@@ -1,7 +1,8 @@
-import { SearchCard } from "../../components/Card";
-import { useGetFollowedArtistsQuery } from "../../features/api/spotify/me";
+import ArtistSearchCard from "../../components/Card/SearchCard/ArtistSearchCard";
 import { CardSection } from "../../Layout/Container/Section";
+import { SearchCard } from "../../components/Card";
 import { SectionList } from "../../Layout/Container/SectionList";
+import { useGetFollowedArtistsQuery } from "../../features/api/spotify/me";
 
 const LibraryArtistsPage = () => {
   const { data: artists, isLoading } = useGetFollowedArtistsQuery();
@@ -17,18 +18,9 @@ const LibraryArtistsPage = () => {
       >
         {artists?.artists?.items?.map((artist: any) => {
           return (
-            <SearchCard
-              key={`collection-card-artists/${artist.id}`}
-              title={artist.name}
-              subTitle={`${artist.name}`}
-              img={artist.images[0]?.url || ""}
-              isImgCircle
-              type={artist.type}
-              id={artist.id}
-              onClickCard={() => {
-                console.log("click artist card", artist);
-              }}
-              tempToPlay={artist}
+            <ArtistSearchCard
+              keyString="artist-collection-card"
+              artist={artist}
             />
           );
         })}

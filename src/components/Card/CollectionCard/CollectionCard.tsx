@@ -1,7 +1,9 @@
+import "./CollectionCard.css";
+
 import React, { useState } from "react";
+
 import { FC } from "react";
 import { PlayerButton } from "../../PlayerButton";
-import "./CollectionCard.css";
 
 interface IProps {
   onClick: () => void;
@@ -82,7 +84,7 @@ const CollectionCard: FC<IProps> = ({
           transition: "bottom 500ms , opacity 300ms",
         }}
       >
-        <PlayerButton onClick={() => {}} />
+        <PlayerButton onClick={() => {}} state="paused" />
       </div>
     </article>
   );

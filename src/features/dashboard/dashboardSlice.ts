@@ -29,6 +29,7 @@ export interface ISpotifyTrack {
   name: string;
   uid: string;
   uri: string;
+  context: any;
 }
 
 interface IDashboard {

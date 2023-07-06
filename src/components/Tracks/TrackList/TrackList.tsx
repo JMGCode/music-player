@@ -18,21 +18,24 @@ const TrackList: React.FC<{
             track={track}
             key={track.uri + index}
             chooseTrack={(value: ISpotifyTrack) => {
-              const args = uri
-                ? //album
-                  {
-                    context_uri: uri,
-                    offset: {
-                      position: index,
-                    },
-                    position_ms: 0,
-                  }
-                : //track
-                  {
-                    uris: [value.uri],
+              let args = {};
+              if (uri) {
+                args = {
+                  context_uri: uri,
+                  offset: {
+                    position: index,
+                  },
+                  position_ms: 0,
+                };
+              } else {
+                const items = tracks
+                  .filter((track, i) => i >= index)
+                  .map((track) => track.uri);
 
-                    position_ms: 0,
-                  };
+                args = {
+                  uris: items,
+                };
+              }
 
               controlMutation({
                 deviceId: "",

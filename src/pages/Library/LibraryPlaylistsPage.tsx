@@ -1,10 +1,12 @@
+import "./Library.css";
+
+import { CardSection } from "../../Layout/Container/Section";
 import { CollectionCard } from "../../components/Card/CollectionCard";
+import PlaylistSearchCard from "../../components/Card/SearchCard/PlaylistSearchCard";
 import { SearchCard } from "../../components/Card";
+import { SectionList } from "../../Layout/Container/SectionList";
 import { useGetLikedTracksQuery } from "../../features/api/spotify/me";
 import { useGetPlaylistsQuery } from "../../features/api/spotify";
-import { SectionList } from "../../Layout/Container/SectionList";
-import { CardSection } from "../../Layout/Container/Section";
-import "./Library.css";
 
 const LibraryPlaylistsPage = () => {
   const { data: likedTracks, isLoading: isLoadingLikedTracks } =
@@ -32,17 +34,9 @@ const LibraryPlaylistsPage = () => {
         </div>
         {playlists?.map((playlist) => {
           return (
-            <SearchCard
-              key={`collection-card-playlist/${playlist.id}`}
-              title={playlist.name}
-              subTitle={`By ${playlist.ownerName}`}
-              type={"playlist"}
-              id={playlist.id}
-              img={playlist.images[0]?.url || ""}
-              onClickCard={() => {
-                console.log("click artist card", playlist);
-              }}
-              tempToPlay={[playlist]}
+            <PlaylistSearchCard
+              keyString="playlist-collection-card"
+              playlist={playlist}
             />
           );
         })}

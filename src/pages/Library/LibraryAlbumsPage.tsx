@@ -1,7 +1,8 @@
-import { SearchCard } from "../../components/Card";
-import { useGetLikedAlbumsQuery } from "../../features/api/spotify/me";
+import AlbumSearchCard from "../../components/Card/SearchCard/AlbumSearchCard";
 import { CardSection } from "../../Layout/Container/Section";
+import { SearchCard } from "../../components/Card";
 import { SectionList } from "../../Layout/Container/SectionList";
+import { useGetLikedAlbumsQuery } from "../../features/api/spotify/me";
 
 const LibraryAlbumsPage = () => {
   const { data: albums, isLoading } = useGetLikedAlbumsQuery();
@@ -17,21 +18,11 @@ const LibraryAlbumsPage = () => {
       >
         {albums?.items?.map((item: any) => {
           const { album } = item;
-          const { artists } = album;
-          const artist = artists[0];
 
           return (
-            <SearchCard
-              key={`collection-card-playlist/${album.id}`}
-              title={album.name}
-              subTitle={`${artist.name}`}
-              img={album.images[0]?.url || ""}
-              type={album.type}
-              id={album.id}
-              onClickCard={() => {
-                console.log("click artist card", album);
-              }}
-              tempToPlay={album}
+            <AlbumSearchCard
+              keyString="collection-card-playlist"
+              album={album}
             />
           );
         })}

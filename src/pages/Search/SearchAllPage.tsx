@@ -2,6 +2,8 @@ import { replacer, reviver } from "../../helpers/stringifyMap";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import AlbumSearchCard from "../../components/Card/SearchCard/AlbumSearchCard";
+import ArtistSearchCard from "../../components/Card/SearchCard/ArtistSearchCard";
 import { CardSection } from "../../Layout/Container/Section";
 import { MainResultCard } from "../../components/Card/MainResultCard";
 import { SearchCard } from "../../components/Card";
@@ -207,22 +209,10 @@ const SearchAllPage = () => {
         >
           {data?.artists?.items.map((artist) => {
             return (
-              <SearchCard
-                key={`search-card-artist/${artist.id}`}
-                title={artist.name}
-                subTitle="Artists"
-                img={artist?.images[1]?.url || ""}
-                isImgCircle={true}
-                type={artist.type}
-                id={artist.id}
-                onClickCard={() => {
-                  console.log("click artist card", artist);
-                  handleSaveLocal(artist);
-                }}
-                // onClickPlay={() => {
-                //   console.log("click play artist", artist);
-                //   handleSaveLocal(artist);
-                // }}
+              <ArtistSearchCard
+                keyString="search-card-artist"
+                artist={artist}
+                //save handleSaveLocal(artist);
               />
             );
           })}
@@ -235,29 +225,11 @@ const SearchAllPage = () => {
           items={data?.albums?.items || []}
         >
           {data?.albums?.items.map((album) => {
-            const artistName = album.artists[0].name;
-            const year = album.release_date.split("-")[0];
-
-            const subtitle = `${year} • ${artistName}` || "Album";
-
             return (
-              //TODO:Change onClickCard and onClickPlay to be only one function and pass
-              //a parameter to know witch one was clicked
-              <SearchCard
-                key={`search-card-album/${album.id}`}
-                title={album.name}
-                subTitle={subtitle}
-                img={album?.images[1]?.url || ""}
-                type={album.type}
-                id={album.id}
-                onClickCard={() => {
-                  console.log("click album", album);
-                  handleSaveLocal(album);
-                }}
-                // onClickPlay={() => {
-                //   console.log("play album", album);
-                //   handleSaveLocal(album);
-                // }}
+              <AlbumSearchCard
+                keyString="search-card-album"
+                album={album}
+                //save handleSaveLocal(artist);
               />
             );
           })}
@@ -282,10 +254,6 @@ const SearchAllPage = () => {
                   console.log("click on show", show);
                   handleSaveLocal(show);
                 }}
-                // onClickPlay={() => {
-                //   console.log("paly show", show);
-                //   handleSaveLocal(show);
-                // }}
               />
             );
           })}

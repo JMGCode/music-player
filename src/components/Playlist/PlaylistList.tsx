@@ -14,9 +14,10 @@ const PlaylistList: React.FC<IPlaylistList> = ({ title }) => {
   let navigate = useNavigate();
   if (isLoading) {
     const arr = new Array(20).fill(0);
-    const res = arr.map(() => {
+    const res = arr.map((_, index: number) => {
       return (
         <Skeleton
+          key={index}
           style={{ height: "1rem", margin: "8px", borderRadius: "0.4rem" }}
         />
       );
