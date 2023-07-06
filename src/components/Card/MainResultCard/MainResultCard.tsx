@@ -76,7 +76,7 @@ const MainResultCard: FC<Props> = ({ data }) => {
           transition: "bottom 500ms , opacity 300ms",
         }}
       >
-        <PlayerButton onClick={() => {}} />
+        <PlayerButton onClick={() => {}} state="paused" />
       </div>
     </article>
   );
