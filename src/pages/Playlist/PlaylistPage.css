@@ -22,6 +22,7 @@
 .playlist-header-img {
   height: 260px;
   width: 260px;
+  border-radius: 20px;
 }
 
 .playlist-duration {
@@ -87,6 +88,7 @@
   .playlist-header-img {
     width: 150px;
     height: 150px;
+    border-radius: 15px;
   }
 
   .playlist-name {

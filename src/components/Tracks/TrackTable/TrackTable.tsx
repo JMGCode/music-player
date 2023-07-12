@@ -15,7 +15,8 @@ const TrackTable: React.FC<{
   uri,
   tracks,
   headerColor = "rgba(23,23,23,1)",
-  headerTopOffset = "64px",
+  headerTopOffset = "70px",
+  // headerTopOffset = "64px",
 }) => {
   const playingTrack = useAppSelector((state) => state.dashboard.currTrack);
   const breakpoint = useBreakpoint();

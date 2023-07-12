@@ -60,8 +60,11 @@ export const spotifyApiSlice = createApi({
         });
       },
     }),
-    getPlaylistTracks: builder.query<IPlayListTracksResponse, string>({
-      query: (id) => `playlists/${id}`,
+    getPlaylistTracks: builder.query<
+      IPlayListTracksResponse,
+      { id: string; market: string }
+    >({
+      query: ({ id, market }) => `playlists/${id}?market=${market}`,
       transformResponse: (response: IPlaylist) => {
         const image = response.images[1]
           ? response.images[1].url

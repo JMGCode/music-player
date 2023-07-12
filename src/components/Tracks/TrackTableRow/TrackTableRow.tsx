@@ -1,6 +1,6 @@
 import "./TrackTableRow.css";
 
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import BarAnimation from "../../Icons/BarAnimation/BarAnimation";
 import { ISpotifyTrack } from "../../../features/dashboard/dashboardSlice";
@@ -72,7 +72,6 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
             <PlayClearIcon
               size="18"
               onClick={() => {
-                console.log("second play button");
                 handlePlay(track);
               }}
             />
@@ -95,13 +94,12 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
         }
       }
     } else {
-      if (isHovered) {
+      if (isHovered && track?.is_playable) {
         //play
         return (
           <PlayClearIcon
             size="18"
             onClick={() => {
-              console.log("second play button");
               handlePlay(track);
             }}
           />
@@ -115,7 +113,10 @@ const TrackTableRow: FC<IProps> = ({ index, track, uri }) => {
 
   return (
     <tr
-      className="track-table-row"
+      // style={{
+      //   backgroundColor: track?.is_playable ? "" : "rgba(0,0,0,0.2)",
+      // }}
+      className={`track-table-row ${track.is_playable ? "" : "not-playable"}`}
       onMouseEnter={() => {
         setIsHovered(true);
       }}
