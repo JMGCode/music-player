@@ -1,15 +1,15 @@
 import { replacer, reviver } from "../../helpers/stringifyMap";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 
 import AlbumSearchCard from "../../components/Card/SearchCard/AlbumSearchCard";
 import ArtistSearchCard from "../../components/Card/SearchCard/ArtistSearchCard";
 import { CardSection } from "../../Layout/Container/Section";
 import { MainResultCard } from "../../components/Card/MainResultCard";
-import { SearchCard } from "../../components/Card";
 import { SectionList } from "../../Layout/Container/SectionList";
+import ShowSearchCard from "../../components/Card/SearchCard/ShowSearchCard";
 import { TrackList } from "../../components";
 import localStorage from "redux-persist/es/storage";
+import { useParams } from "react-router-dom";
 import { useSearchQuery } from "../../features/api/spotify";
 
 const SearchAllPage = () => {
@@ -243,18 +243,19 @@ const SearchAllPage = () => {
         >
           {data?.shows?.items.map((show) => {
             return (
-              <SearchCard
-                key={`search-card-podcast/${show.id}`}
-                title={show.name}
-                subTitle={show?.publisher || "Podcast"}
-                img={show?.images[1]?.url || ""}
-                type={show.type}
-                id={show.id}
-                onClickCard={() => {
-                  console.log("click on show", show);
-                  handleSaveLocal(show);
-                }}
-              />
+              // <SearchCard
+              //   key={`search-card-podcast/${show.id}`}
+              //   title={show.name}
+              //   subTitle={show?.publisher || "Podcast"}
+              //   img={show?.images[1]?.url || ""}
+              //   type={show.type}
+              //   id={show.id}
+              //   onClickCard={() => {
+              //     console.log("click on show", show);
+              //     handleSaveLocal(show);
+              //   }}
+              // />
+              <ShowSearchCard keyString="show-search-card" show={show} />
             );
           })}
         </CardSection>
