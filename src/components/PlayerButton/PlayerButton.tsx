@@ -3,7 +3,6 @@ import "./PlayerButton.css";
 import { FC } from "react";
 import PauseClearIcon from "../Icons/PauseClearIcon";
 import PlayClearIcon from "../Icons/PlayClearIcon";
-import { useControlPlayerMutation } from "../../features/api/spotify";
 
 type ButtonStateType = "paused" | "playing";
 interface IProps {
@@ -21,12 +20,6 @@ const PlayerButton: FC<IProps> = ({
   state = "paused",
   onClick,
 }) => {
-  //CARD Podcast => nothign
-  //CARD Album => first of the album
-  //CARD Artits =>  first of most popular
-  //CARD Playlist => first on the list
-  //CARD COLLECTION (both) => first element in the collection
-
   return (
     <div
       className="player-button"
@@ -34,20 +27,12 @@ const PlayerButton: FC<IProps> = ({
         width: width,
         height: height,
       }}
+      onClick={onClick}
     >
       {state === "paused" ? (
-        <PlayClearIcon
-          id="playerButton"
-          color="#0D0D0D"
-          size={size}
-          onClick={onClick}
-        />
+        <PlayClearIcon id="playerButton" color="#0D0D0D" size={size} />
       ) : (
-        <PauseClearIcon
-          color="#0D0D0D"
-          size={(Number(size) + 5).toString()}
-          onClick={onClick}
-        />
+        <PauseClearIcon color="#0D0D0D" size={(Number(size) + 5).toString()} />
       )}
     </div>
   );
