@@ -1,6 +1,5 @@
 import ArtistSearchCard from "../../components/Card/SearchCard/ArtistSearchCard";
 import { CardSection } from "../../Layout/Container/Section";
-import { SearchCard } from "../../components/Card";
 import { SectionList } from "../../Layout/Container/SectionList";
 import { useGetFollowedArtistsQuery } from "../../features/api/spotify/me";
 
