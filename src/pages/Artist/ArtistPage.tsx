@@ -7,29 +7,30 @@ import {
   useGetArtistsAlbumsQuery,
   useGetArtistsRelatedQuery,
 } from "../../features/api/spotify/artist";
-import { CardSection, Section } from "../../Layout/Container/Section";
 import { FC, useEffect, useState } from "react";
 
 import AlbumSearchCard from "../../components/Card/SearchCard/AlbumSearchCard";
 import ArtistSearchCard from "../../components/Card/SearchCard/ArtistSearchCard";
-import { Header } from "../../Layout/Header";
-import { List } from "../../Layout/Container/List";
-import { PlayerButton } from "../../components/PlayerButton";
+import { CardSection } from "../../Layout/Container/Section";
 import { ScrollHeader } from "../../Layout/Container/ScrollHeader";
 import { ScrollHeaderContent } from "../../Layout/Container/ScrollHeader/ScrollHeader";
-import { SearchCard } from "../../components/Card";
 import { SectionList } from "../../Layout/Container/SectionList";
 import { TrackList } from "../../components";
-import { getRandColorFromStr } from "../../helpers/getRandColorFromStr";
 import { useAppSelector } from "../../app/hooks";
+import { useControlPlayerMutation } from "../../features/api/spotify";
 import { useGetMeQuery } from "../../features/api/spotify/me";
-import useObservableIntersection from "../../hooks/useObservableIntersection";
 import { useParams } from "react-router-dom";
 
 const ArtistPage = () => {
+  const [controlMutation] = useControlPlayerMutation();
   const [groupType, setGroupType] = useState<AlbumGroupType[]>(["compilation"]);
   const { artistId = "" } = useParams();
   const { data: user } = useGetMeQuery();
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const { isPaused, currTrack: playingTrack } = useAppSelector(
+    (state) => state.dashboard
+  );
 
   const { data: artist, isLoading: isLoadingAritst } = useGetArtistQuery(
     artistId,
@@ -56,9 +57,47 @@ const ArtistPage = () => {
   const { data: relatedArtists, isLoading: isLoadingRelatedArtists } =
     useGetArtistsRelatedQuery(artistId, { skip: !artistId });
 
+  useEffect(() => {
+    if (isPaused) {
+      setIsPlaying(false);
+    } else {
+      //get artists names array
+      const names = playingTrack?.artists.map((artist) => artist?.name);
+      if (names?.includes(artist?.name)) {
+        setIsPlaying(true);
+      } else {
+        setIsPlaying(false);
+      }
+    }
+  }, [playingTrack]);
   return (
     <>
-      <ScrollHeader title={artist?.name}>
+      <ScrollHeader
+        title={artist?.name}
+        isPlaying={isPlaying}
+        onPlay={() => {
+          if (!isPlaying) {
+            let args = {};
+            const isArtistPlaying = playingTrack?.artists[0].uri === artist.uri;
+
+            if (!isArtistPlaying)
+              args = {
+                uris: [...topTracks?.tracks.map((track: any) => track.uri)],
+              };
+
+            controlMutation({
+              deviceId: "",
+              action: "play",
+              args,
+            });
+          } else {
+            controlMutation({
+              deviceId: "",
+              action: "pause",
+            });
+          }
+        }}
+      >
         <img
           src={artist?.images[0].url}
           alt=""
