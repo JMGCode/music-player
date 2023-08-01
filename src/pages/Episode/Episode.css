@@ -1,0 +1,126 @@
+.podcast-desc {
+  color: #b1b1b1;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.episode-desc,
+.last-episode,
+.episode-date {
+  color: #b1b1b1;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.episode-desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Number of lines to display */
+  -webkit-line-clamp: 2;
+  /* Make sure to provide sufficient height for two lines */
+  /* max-height: 5em; */
+}
+
+.podcast-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  padding: 0 10px;
+}
+
+.podcast-container.col-2 {
+  grid-template-columns: minmax(500px, 60%) minmax(300px, 1fr);
+  column-gap: 80px;
+}
+
+.podcast-container.col-2 > .podcast-content {
+  order: -1;
+}
+
+.podcast-content h4 {
+  font-size: 16px;
+}
+
+.podcast-header {
+  font-size: 24px;
+}
+.podcast-tag {
+  background-color: red;
+  border-radius: 20px;
+  width: fit-content;
+  padding: 3px 12px;
+}
+
+.podcast-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.podcast-play-container {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.podcast-show-more {
+  cursor: pointer;
+}
+
+.last-episode-container {
+  background-color: hsla(0, 0%, 100%, 0.07);
+  border-radius: 5px;
+  padding: 15px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.last-episode-container:hover {
+  background-color: hsla(0, 0%, 100%, 0.1);
+}
+
+.episodes-container {
+  padding: 20px 0;
+}
+.episodes-container > .podcast-header {
+  padding: 0px 15px;
+}
+
+.episode-wrapper:hover {
+  background-color: hsla(0, 0%, 100%, 0.1);
+  border-radius: 5px;
+}
+
+.episode-wrapper hr {
+  border-color: hsla(0, 0%, 100%, 0.1);
+}
+
+.episode-wrapper:hover hr,
+.episode-wrapper:hover + * hr {
+  border-color: transparent;
+}
+
+.episode-item-container {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  column-gap: 20px;
+  padding: 15px 0;
+}
+
+.episode-item-data {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 5px;
+}
+
+.episode-item {
+  padding: 0 15px;
+}
+
+.episode-list {
+  margin-top: 20px;
+}

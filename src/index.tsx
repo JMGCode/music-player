@@ -23,6 +23,7 @@ import { persistor, store } from "./app/store";
 import { AlbumPage } from "./pages/Album";
 import { ArtistPage } from "./pages/Artist";
 import Dashboard from "./Dashboard";
+import EpisodePage from "./pages/Episode/Episode";
 import ErrorPage from "./error-page";
 import { GenrePage } from "./pages/Genre";
 import { LibraryAlbumsPage } from "./pages/Library";
@@ -78,6 +79,7 @@ const router = createBrowserRouter([
       { path: "/album/:albumId", element: <AlbumPage /> },
       { path: "/artist/:artistId", element: <ArtistPage /> },
       { path: "/show/:showId", element: <ShowPage /> },
+      { path: "/episode/:episodeId", element: <EpisodePage /> },
       { path: "/genre/:genreId", element: <GenrePage /> },
       { path: "/lyrics", element: <Lyrics /> },
       {

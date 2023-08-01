@@ -9,7 +9,11 @@ const extendedApiSlice = spotifyApiSlice.injectEndpoints({
     getEpisodes: builder.query<any, string>({
       query: (showId) => `shows/${showId}/episodes`,
     }),
+    getEpisode: builder.query<any, string>({
+      query: (episodeId) => `episodes/${episodeId}`,
+    }),
   }),
 });
 
-export const { useGetShowQuery, useGetEpisodesQuery } = extendedApiSlice;
+export const { useGetShowQuery, useGetEpisodesQuery, useGetEpisodeQuery } =
+  extendedApiSlice;
