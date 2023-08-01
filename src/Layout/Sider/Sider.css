@@ -1,8 +1,8 @@
 .sider {
   --sider-width: 225px;
   width: var(--sider-width);
-  transition: width 1s;
-  overflow-y: hidden;
+  transition: width 300ms;
+  overflow: hidden;
   background-color: #0d0d0d;
   display: grid;
   grid-template-rows: min-content 1fr;

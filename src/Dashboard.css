@@ -2,14 +2,14 @@
   padding: 20px 40px 20px 40px;
 }
 
-.search-page { 
+.search-page {
   display: flex;
   flex-direction: column;
 }
 
 .scrollable {
   height: 100%;
- 
+
   overflow: overlay;
 }
 
@@ -37,6 +37,7 @@
   margin: 10px;
   display: flex;
   align-items: center;
+  white-space: nowrap;
 }
 
 .menu hr {
@@ -49,7 +50,6 @@
   margin-bottom: 5px;
 }
 
- 
 .search-recents-container::-webkit-scrollbar {
   display: none;
 }
