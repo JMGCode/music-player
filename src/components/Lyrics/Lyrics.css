@@ -1,3 +1,18 @@
 .lyrics {
-  padding: 10px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  text-align: center;
+  line-height: 2rem;
+  font-size: 1.5rem;
+  width: 100%;
+  /* white-space: pre; */
+}
+
+@media screen and (max-width: 1200px) {
+  .lyrics {
+    line-height: 1.6rem;
+    font-size: 1rem;
+  }
 }
