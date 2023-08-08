@@ -146,7 +146,7 @@ const Player = () => {
   };
 
   const handleTrackPositionChange = (value: number) => {
-    console.log("cvv", value);
+    console.log("trackPosition", value);
     const percPos = Math.floor(value);
     const posMs = (percPos * (trackDuration / 1000)) / 100;
     setElapsedTrackTime(posMs);

@@ -28,7 +28,7 @@
   height: 25px;
   border-radius: 50%;
   background-color: #fff;
-  animation: bounce 0.5s alternate infinite;
+  animation: bouncer 0.5s alternate infinite;
 }
 
 .ball:nth-child(2) {
@@ -39,7 +39,7 @@
   animation-delay: 0.32s;
 }
 
-@keyframes bounce {
+@keyframes bouncer {
   from {
     transform: scaleX(1.25);
   }
