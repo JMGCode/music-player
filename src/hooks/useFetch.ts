@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 
 const reducer = (state: any, { type, responseJSON, error }: any) => {
   switch (type) {
@@ -17,10 +17,6 @@ const reducer = (state: any, { type, responseJSON, error }: any) => {
 };
 
 const useFetch = (url: string, flags?: { skip?: boolean }) => {
-  // const [responseJson, setResponseJson] = useState(null);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(null);
-
   const [state, dispatch] = useReducer(reducer, {
     responseJSON: null,
     isLoading: true,
@@ -53,7 +49,7 @@ const useFetch = (url: string, flags?: { skip?: boolean }) => {
     return () => {
       shouldCancel = true;
     };
-  }, [url]);
+  }, [url, flags]);
 
   return state;
 };

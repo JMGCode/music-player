@@ -6,7 +6,6 @@ import {
   useGetDevicesQuery,
   useRepeatPlayedTrackMutation,
   useSeekPositionMutation,
-  useSetPlayerVolumeMutation,
   useToggleShufflePlayerMutation,
   useTransferPlayerMutation,
 } from "../../features/api/spotify";
@@ -28,13 +27,14 @@ import { InfoNoPremium } from "../../Notifications";
 import { PlayerTrack } from "./PlayerTrack";
 import { RangeControl } from "./RangeControl";
 import ShuffleIcon from "../Icons/ShuffleIcon";
-import SpotifyIcon from "../Icons/SpotifyIcon";
+// import SpotifyIcon from "../Icons/SpotifyIcon";
 import { faMicrophoneLines } from "@fortawesome/free-solid-svg-icons";
 import { getTimeString } from "../../helpers/getTimeString";
 import { info as infoNotification } from "../Notification/Notify";
 import { useAppSelector } from "../../app/hooks";
 import useSpotifySdk from "../../hooks/useSpotifySdk";
-import useThrottle from "../../hooks/useThrottle";
+
+// import useThrottle from "../../hooks/useThrottle";
 
 const Player = () => {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Player = () => {
   const [repeatMutation] = useRepeatPlayedTrackMutation();
   const [shuffleMutation] = useToggleShufflePlayerMutation();
   const [transferMutation] = useTransferPlayerMutation();
-  const [volumeMutation] = useSetPlayerVolumeMutation();
+  // const [volumeMutation] = useSetPlayerVolumeMutation();
   const [controlMutation] = useControlPlayerMutation();
   const [seekMutation] = useSeekPositionMutation();
 

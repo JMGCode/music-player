@@ -2,7 +2,7 @@
   position: sticky;
   top: 60px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   flex-wrap: nowrap;
   overflow: hidden;
   gap: 20px;

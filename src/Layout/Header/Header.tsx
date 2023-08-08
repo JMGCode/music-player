@@ -6,19 +6,16 @@ import {
   RightCircleArrowIcon,
 } from "../../components/Icons";
 import { FC, PropsWithChildren, useEffect, useRef, useState } from "react";
-import {
-  getRandColorFromStr,
-  getRandColorFromStrs,
-} from "../../helpers/getRandColorFromStr";
+import { useSider, useSiderUpdate } from "../../SliderContext";
 
 import Skeleton from "../../components/Skeleton/Skeleton";
 import { clearCredentials } from "../../features/auth/authSlice";
+import { getRandColorFromStr } from "../../helpers/getRandColorFromStr";
 import { useAppDispatch } from "../../app/hooks";
-import useBreakpoint from "../../hooks/useBreakpoint";
+// import useBreakpoint from "../../hooks/useBreakpoint";
 import { useGetMeQuery } from "../../features/api/spotify/me";
 import { useNavigate } from "react-router-dom";
 import useOutsideAlerter from "../../hooks/useOutsideAlerter";
-import { useSiderUpdate } from "../../SliderContext";
 
 interface IProps {
   styles?: any;
@@ -63,9 +60,10 @@ const Header: FC<PropsWithChildren<IProps>> = ({ children, styles }) => {
   const [userColor, setUserColor] = useState({ rgb: "rgb(0,0,0)", hsl: "" });
   const dispatch = useAppDispatch();
   const userMenuRef = useRef(null);
-  const breakpoint = useBreakpoint();
+  // const breakpoint = useBreakpoint();
 
   const toogleSider = useSiderUpdate();
+  const siderState = useSider();
 
   useOutsideAlerter(userMenuRef, () => {
     if (!isVisible) {
@@ -110,7 +108,11 @@ const Header: FC<PropsWithChildren<IProps>> = ({ children, styles }) => {
         <RightCircleArrowIcon onClick={() => navigate(1)} />
       </div>
       <div className="header-sider-btn">
-        <RightCircleArrowIcon onClick={toogleSider} />
+        {siderState ? (
+          <LeftCircleArrowIcon onClick={toogleSider} />
+        ) : (
+          <RightCircleArrowIcon onClick={toogleSider} />
+        )}
       </div>
 
       <div style={{ flex: 1, overflow: "hidden" }}>{children}</div>
