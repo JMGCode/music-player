@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 interface Props {
   show: any;
   keyString: string;
+  onClick?: () => void;
 }
-const ShowSearchCard: FC<Props> = ({ keyString, show }) => {
+const ShowSearchCard: FC<Props> = ({ keyString, show, onClick }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     const { type, id } = show;
     navigate(`/${type}/${id}`);
+    onClick && onClick();
   };
 
   return (

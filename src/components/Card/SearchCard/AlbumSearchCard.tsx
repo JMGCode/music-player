@@ -8,9 +8,16 @@ import { useNavigate } from "react-router-dom";
 interface Props {
   album: any;
   keyString: string;
+  onClick?: () => void;
+  onPlayClick?: () => void;
 }
 
-const AlbumSearchCard: FC<Props> = ({ keyString, album }) => {
+const AlbumSearchCard: FC<Props> = ({
+  keyString,
+  album,
+  onClick,
+  onPlayClick,
+}) => {
   const navigate = useNavigate();
   const [controlMutation] = useControlPlayerMutation();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -21,11 +28,13 @@ const AlbumSearchCard: FC<Props> = ({ keyString, album }) => {
 
   const handleCardClick = () => {
     navigate(`/album/${album.id}`);
+    onClick && onClick();
   };
 
   const handleButtonClick = () => {
+    onPlayClick && onPlayClick();
     if (!isPlaying) {
-      const isAlbumPlaying = playingTrack?.album.uri == album.uri;
+      const isAlbumPlaying = playingTrack?.album.uri === album.uri;
       let args = {};
       if (!isAlbumPlaying) {
         args = { context_uri: album.uri };
@@ -47,7 +56,7 @@ const AlbumSearchCard: FC<Props> = ({ keyString, album }) => {
     if (isPaused) {
       setIsPlaying(false);
     } else {
-      const isAlbumPlaying = playingTrack?.album.uri == album.uri;
+      const isAlbumPlaying = playingTrack?.album.uri === album.uri;
       if (isAlbumPlaying) {
         setIsPlaying(true);
       } else {

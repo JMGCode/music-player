@@ -193,8 +193,7 @@ const SearchAllPage = () => {
           <TrackList
             tracks={tracks}
             onItemClick={(track) => {
-              // console.log(track);
-              // handleSaveLocal(track);
+              handleSaveLocal(track);
             }}
           />
         </div>
@@ -212,7 +211,7 @@ const SearchAllPage = () => {
               <ArtistSearchCard
                 keyString="search-card-artist"
                 artist={artist}
-                //save handleSaveLocal(artist);
+                onClick={() => handleSaveLocal(artist)}
               />
             );
           })}
@@ -229,7 +228,7 @@ const SearchAllPage = () => {
               <AlbumSearchCard
                 keyString="search-card-album"
                 album={album}
-                //save handleSaveLocal(artist);
+                onClick={() => handleSaveLocal(album)}
               />
             );
           })}
@@ -243,19 +242,11 @@ const SearchAllPage = () => {
         >
           {data?.shows?.items.map((show) => {
             return (
-              // <SearchCard
-              //   key={`search-card-podcast/${show.id}`}
-              //   title={show.name}
-              //   subTitle={show?.publisher || "Podcast"}
-              //   img={show?.images[1]?.url || ""}
-              //   type={show.type}
-              //   id={show.id}
-              //   onClickCard={() => {
-              //     console.log("click on show", show);
-              //     handleSaveLocal(show);
-              //   }}
-              // />
-              <ShowSearchCard keyString="show-search-card" show={show} />
+              <ShowSearchCard
+                keyString="show-search-card"
+                show={show}
+                onClick={() => handleSaveLocal(show)}
+              />
             );
           })}
         </CardSection>

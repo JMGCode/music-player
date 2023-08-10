@@ -2,7 +2,13 @@ import { CategoryCard, SearchCard } from "../../components/Card";
 import { replacer, reviver } from "../../helpers/stringifyMap";
 import { useEffect, useState } from "react";
 
+import AlbumSearchCard from "../../components/Card/SearchCard/AlbumSearchCard";
+import ArtistSearchCard from "../../components/Card/SearchCard/ArtistSearchCard";
+import { CardSection } from "../../Layout/Container/Section";
 import { CrossIcon } from "../../components/Icons";
+import { SectionList } from "../../Layout/Container/SectionList";
+import ShowSearchCard from "../../components/Card/SearchCard/ShowSearchCard";
+import SongSearchCard from "../../components/Card/SearchCard/SongSearchCard";
 import getArrayFromMap from "../../helpers/getArrayFromMap";
 import { getSmallestImage } from "../../helpers";
 import localStorage from "redux-persist/es/storage";
@@ -39,102 +45,69 @@ const SearchIndexPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "40px",
-        padding: " 40px",
-      }}
-    >
-      {recentSearches.length > 0 && (
-        <div>
-          <h2 style={{ marginBottom: "20px" }}>Recent Searches</h2>
-          <div className="search-list-container">
-            {recentSearches.map((search) => {
-              const {
-                name,
-                images,
-                uri,
-                type,
-                artists,
-                release_date,
-                publisher,
-                id,
-              } = search;
-              // const image = getSmallestImage(images);
-              const image = images[1] ? images[1] : images[0] ? images[0] : "";
-              let subTitle = "Artist";
-
-              if (type === "album") {
-                // const { artists, release_date } = search;
-                const artistName = artists[0].name;
-                const year = release_date.split("-")[0];
-
-                subTitle = `${year} • ${artistName}` || "Album";
-              }
-              if (type === "track") {
-                // const { artists } = search;
-                subTitle = artists[0].name;
-              }
-              if (type === "show") {
-                subTitle = publisher || "Podcast";
-              }
-              return (
-                <div style={{ position: "relative" }}>
-                  <SearchCard
-                    title={search.name}
-                    subTitle={subTitle}
-                    type={type}
-                    id={id}
-                    img={image.url}
-                    onClickCard={() => {
-                      console.log("click index card");
-                    }}
-                    onClickPlay={() => {
-                      console.log("play index card");
-                    }}
+    <SectionList style={{ marginTop: "0px", padding: "0 30px" }}>
+      <CardSection
+        title="Recent Searches"
+        type="noWrap"
+        isLoading={false}
+        items={recentSearches}
+      >
+        {recentSearches.map((item: any) => {
+          return (
+            <>
+              <div style={{ position: "relative" }}>
+                {item.type === "artist" && (
+                  <ArtistSearchCard keyString="recent-artist" artist={item} />
+                )}
+                {item.type === "album" && (
+                  <AlbumSearchCard keyString="recent-album" album={item} />
+                )}
+                {item.type === "show" && (
+                  <ShowSearchCard keyString="recent-show" show={item} />
+                )}
+                {item.type === "track" && (
+                  <SongSearchCard
+                    keyString="recent-song"
+                    artist={item.artists[0]}
+                    album={item.album}
+                    track={item}
                   />
-                  <div
-                    className="search-card-delete-btn"
-                    onClick={() => {
-                      handleDeleteFromLocalStorage(search.uri);
-                    }}
-                  >
-                    <CrossIcon size="10" />
-                  </div>
+                )}
+                <div
+                  className="search-card-delete-btn"
+                  onClick={() => {
+                    handleDeleteFromLocalStorage(item.uri);
+                  }}
+                >
+                  <CrossIcon size="10" />
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-      <div>
-        <h2 style={{ marginBottom: "20px" }}>See All</h2>
-        <div
-          // className="search-list-container "
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(215px, 1fr))",
-            gap: "30px",
-          }}
-        >
-          {categories?.categories.items.map((category: any) => {
-            return (
-              <CategoryCard
-                key={category.id}
-                id={category.id}
-                title={category.name}
-                img={category.icons[0].url}
-                onClick={() => {
-                  navigate(`../genre/${category.id}`);
-                }}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </div>
+              </div>
+            </>
+          );
+        })}
+      </CardSection>
+
+      <CardSection
+        title="See All"
+        type="wrap"
+        isLoading={false}
+        items={categories?.categories.items}
+      >
+        {categories?.categories.items.map((category: any) => {
+          return (
+            <CategoryCard
+              key={category.id}
+              id={category.id}
+              title={category.name}
+              img={category.icons[0].url}
+              onClick={() => {
+                navigate(`../genre/${category.id}`);
+              }}
+            />
+          );
+        })}
+      </CardSection>
+    </SectionList>
   );
 };
 

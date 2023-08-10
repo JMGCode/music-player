@@ -10,8 +10,15 @@ import { useNavigate } from "react-router-dom";
 interface Props {
   keyString: string;
   artist: any;
+  onClick?: () => void;
+  onPlayClick?: () => void;
 }
-const ArtistSearchCard: FC<Props> = ({ artist, keyString }) => {
+const ArtistSearchCard: FC<Props> = ({
+  artist,
+  keyString,
+  onClick,
+  onPlayClick,
+}) => {
   const navigate = useNavigate();
   const [controlMutation] = useControlPlayerMutation();
   const { data: user } = useGetMeQuery();
@@ -49,9 +56,11 @@ const ArtistSearchCard: FC<Props> = ({ artist, keyString }) => {
   const handleCardClick = () => {
     const { type, id } = artist;
     navigate(`/${type}/${id}`);
+    onClick && onClick();
   };
 
   const handleButtonClick = () => {
+    onPlayClick && onPlayClick();
     if (!isPlaying) {
       let args = {};
       const isArtistPlaying = playingTrack?.artists[0].uri === artist.uri;
