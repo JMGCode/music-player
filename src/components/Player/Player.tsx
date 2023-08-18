@@ -106,7 +106,7 @@ const Player = () => {
   useEffect(() => {
     const activeDevice = data?.devices.find((device) => device.is_active);
     console.log(
-      "useEffect",
+      "useEffect Active Device Player.ts",
       activeDevice?.id,
       deviceId,
       activeDevice?.id === deviceId
@@ -139,6 +139,7 @@ const Player = () => {
               .unwrap()
               .catch(() => {
                 console.log("action failed a second time go back to login");
+                // navigate('/');
               });
           }, 1500);
         }
