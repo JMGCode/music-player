@@ -34,8 +34,6 @@ import { info as infoNotification } from "../Notification/Notify";
 import { useAppSelector } from "../../app/hooks";
 import useSpotifySdk from "../../hooks/useSpotifySdk";
 
-// import useThrottle from "../../hooks/useThrottle";
-
 const Player = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,7 +44,6 @@ const Player = () => {
   const [repeatMutation] = useRepeatPlayedTrackMutation();
   const [shuffleMutation] = useToggleShufflePlayerMutation();
   const [transferMutation] = useTransferPlayerMutation();
-  // const [volumeMutation] = useSetPlayerVolumeMutation();
   const [controlMutation] = useControlPlayerMutation();
   const [seekMutation] = useSeekPositionMutation();
 
@@ -71,14 +68,21 @@ const Player = () => {
   const [isDraggingPosition, setIsDraggingPosition] = useState(false);
 
   useEffect(() => {
+    if (!playingTrack) {
+      trackIntervalRef.current && clearInterval(trackIntervalRef.current);
+      setElapsedTrackTime(0);
+      return;
+    }
+
     setElapsedTrackTime(trackPosition / 1000);
     if (!isPaused) {
       const interval = setInterval(handlePositionInterval, 1000);
+      trackIntervalRef.current && clearInterval(trackIntervalRef.current);
       trackIntervalRef.current = interval;
     }
     return () =>
       trackIntervalRef.current && clearInterval(trackIntervalRef.current);
-  }, [trackDuration, trackPosition]);
+  }, [playingTrack, trackPosition, isPaused]);
 
   const handlePositionInterval = () => {
     setElapsedTrackTime((prev) => {
