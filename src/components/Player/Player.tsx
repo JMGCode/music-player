@@ -27,7 +27,6 @@ import { InfoNoPremium } from "../../Notifications";
 import { PlayerTrack } from "./PlayerTrack";
 import { RangeControl } from "./RangeControl";
 import ShuffleIcon from "../Icons/ShuffleIcon";
-// import SpotifyIcon from "../Icons/SpotifyIcon";
 import { faMicrophoneLines } from "@fortawesome/free-solid-svg-icons";
 import { getTimeString } from "../../helpers/getTimeString";
 import { info as infoNotification } from "../Notification/Notify";
@@ -107,22 +106,6 @@ const Player = () => {
     [player]
   );
 
-  useEffect(() => {
-    const activeDevice = data?.devices.find((device) => device.is_active);
-    console.log(
-      "useEffect Active Device Player.ts",
-      activeDevice?.id,
-      deviceId,
-      activeDevice?.id === deviceId
-    );
-    if (activeDevice?.id === deviceId) {
-      setIsDeviceActive(true);
-    }
-  }, [data, deviceId]);
-
-  //TODO: get currDevice(Api) if not deviceSelected
-  //send curr deviceId if no device Id send notification error
-  //no device found
   const handleControlAction = (action: ControlType) => {
     if (!deviceId) {
       infoNotification(<InfoNoPremium />, true);
@@ -143,7 +126,6 @@ const Player = () => {
               .unwrap()
               .catch(() => {
                 console.log("action failed a second time go back to login");
-                // navigate('/');
               });
           }, 1500);
         }
@@ -158,9 +140,7 @@ const Player = () => {
   };
 
   return (
-    <div
-      className={`player-container ${isDeviceActive ? "active-player" : ""}`}
-    >
+    <div className={`player-container`}>
       <div
         onClick={tooglePlayerMobileState}
         className="player-close-btn"
