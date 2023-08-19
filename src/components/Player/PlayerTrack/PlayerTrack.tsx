@@ -1,6 +1,7 @@
+import "./PlayerTrack.css";
+
 import { ISpotifyTrack } from "../../../features/dashboard/dashboardSlice";
 import { getSmallestImage } from "../../../helpers";
-import "./PlayerTrack.css";
 
 interface Props {
   track: ISpotifyTrack | undefined;
@@ -12,7 +13,7 @@ const PlayerTrack: React.FC<Props> = ({ track, chooseTrack }) => {
     chooseTrack(track);
   };
 
-  const albumImg = getSmallestImage(track?.album.images || []);
+  const albumImg = getSmallestImage(track?.album?.images || []);
   return (
     <div
       className="player-track-container"
@@ -21,7 +22,7 @@ const PlayerTrack: React.FC<Props> = ({ track, chooseTrack }) => {
     >
       {track ? (
         <img
-          src={albumImg.url}
+          src={albumImg?.url}
           alt=""
           style={{ height: "64px", width: "64px" }}
         />
@@ -30,7 +31,7 @@ const PlayerTrack: React.FC<Props> = ({ track, chooseTrack }) => {
       )}
       <div style={{ marginLeft: "1rem" }}>
         <div className="player-track-name">{track?.name}</div>
-        <div className="text-muted">{track?.artists[0].name}</div>
+        <div className="text-muted">{track?.artists?.[0]?.name || ""}</div>
       </div>
     </div>
   );
