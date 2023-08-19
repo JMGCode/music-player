@@ -8,17 +8,11 @@ import { useGetMeQuery } from "../../../features/api/spotify/me";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  keyString: string;
   artist: any;
   onClick?: () => void;
   onPlayClick?: () => void;
 }
-const ArtistSearchCard: FC<Props> = ({
-  artist,
-  keyString,
-  onClick,
-  onPlayClick,
-}) => {
+const ArtistSearchCard: FC<Props> = ({ artist, onClick, onPlayClick }) => {
   const navigate = useNavigate();
   const [controlMutation] = useControlPlayerMutation();
   const { data: user } = useGetMeQuery();
@@ -82,7 +76,6 @@ const ArtistSearchCard: FC<Props> = ({
     <SearchCard
       type={artist.type}
       id={artist.id}
-      key={`${keyString}/${artist.id}`}
       title={artist.name}
       subTitle={"Artist"}
       img={artist?.images[1]?.url || ""}

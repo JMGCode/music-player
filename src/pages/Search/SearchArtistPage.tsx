@@ -39,16 +39,21 @@ const SearchArtistPage = () => {
           if (searchQueryType === "albums") {
             const album = element as AlbumElement;
             return (
-              <AlbumSearchCard keyString="album-search-card" album={album} />
+              <AlbumSearchCard
+                key={`album-search-card/${album.id}`}
+                album={album}
+              />
             );
           } else if (searchQueryType === "shows") {
             const show = element as ShowsItem;
             // subtitle = show?.publisher || "Podcast";
-            return <ShowSearchCard keyString="show-search-card" show={show} />;
+            return (
+              <ShowSearchCard key={`show-search-card/${show.id}`} show={show} />
+            );
           } else {
             return (
               <ArtistSearchCard
-                keyString="artist-search-card"
+                key={`artist-search-card/${genElem.id}`}
                 artist={genElem}
               />
             );

@@ -57,17 +57,23 @@ const SearchIndexPage = () => {
             <>
               <div style={{ position: "relative" }}>
                 {item.type === "artist" && (
-                  <ArtistSearchCard keyString="recent-artist" artist={item} />
+                  <ArtistSearchCard
+                    key={`$recent-artist/${item.id}`}
+                    artist={item}
+                  />
                 )}
                 {item.type === "album" && (
-                  <AlbumSearchCard keyString="recent-album" album={item} />
+                  <AlbumSearchCard
+                    key={`recent-album/${item.id}`}
+                    album={item}
+                  />
                 )}
                 {item.type === "show" && (
-                  <ShowSearchCard keyString="recent-show" show={item} />
+                  <ShowSearchCard key={`recent-show/${item.id}`} show={item} />
                 )}
                 {item.type === "track" && (
                   <SongSearchCard
-                    keyString="recent-song"
+                    key={`recent-song/${item.id}`}
                     artist={item.artists[0]}
                     album={item.album}
                     track={item}

@@ -43,7 +43,7 @@ const HomePage = () => {
 
               return (
                 <SongSearchCard
-                  keyString="search-card-recent-played"
+                  key={`search-card-recent-played/${track.id}`}
                   album={album}
                   artist={artist}
                   track={track}
@@ -62,7 +62,7 @@ const HomePage = () => {
             {followedArtists?.artists.items.map((artist: any) => {
               return (
                 <ArtistSearchCard
-                  keyString="home-card--followed-artist"
+                  key={`home-card--followed-artist/${artist.id}`}
                   artist={artist}
                 />
               );
@@ -79,7 +79,7 @@ const HomePage = () => {
             {topArtists?.items.map((artist: any) => {
               return (
                 <ArtistSearchCard
-                  keyString="search-card-album"
+                  key={`search-card-album/${artist.id}`}
                   artist={artist}
                 />
               );
@@ -98,7 +98,7 @@ const HomePage = () => {
 
               return (
                 <SongSearchCard
-                  keyString="search-card-top-track"
+                  key={`search-card-top-track/${track.id}`}
                   album={album}
                   artist={artist}
                   track={track}

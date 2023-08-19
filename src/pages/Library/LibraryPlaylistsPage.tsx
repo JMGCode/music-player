@@ -37,7 +37,7 @@ const LibraryPlaylistsPage = () => {
         {playlists?.map((playlist) => {
           return (
             <PlaylistSearchCard
-              keyString="playlist-collection-card"
+              key={`playlist-collection-card/${playlist.id}`}
               playlist={playlist}
             />
           );
