@@ -7,17 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   album: any;
-  keyString: string;
   onClick?: () => void;
   onPlayClick?: () => void;
 }
 
-const AlbumSearchCard: FC<Props> = ({
-  keyString,
-  album,
-  onClick,
-  onPlayClick,
-}) => {
+const AlbumSearchCard: FC<Props> = ({ album, onClick, onPlayClick }) => {
   const navigate = useNavigate();
   const [controlMutation] = useControlPlayerMutation();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -73,7 +67,6 @@ const AlbumSearchCard: FC<Props> = ({
     <SearchCard
       type={album.type}
       id={album.id}
-      key={`${keyString}/${album.id}`}
       title={album.name}
       subTitle={subtitle}
       img={album?.images[1]?.url || ""}

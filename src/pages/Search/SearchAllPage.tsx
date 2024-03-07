@@ -209,7 +209,7 @@ const SearchAllPage = () => {
           {data?.artists?.items.map((artist) => {
             return (
               <ArtistSearchCard
-                keyString="search-card-artist"
+                key={`search-card-artist/${artist.id}`}
                 artist={artist}
                 onClick={() => handleSaveLocal(artist)}
               />
@@ -226,7 +226,7 @@ const SearchAllPage = () => {
           {data?.albums?.items.map((album) => {
             return (
               <AlbumSearchCard
-                keyString="search-card-album"
+                key={`search-card-album/${album.id}`}
                 album={album}
                 onClick={() => handleSaveLocal(album)}
               />
@@ -243,7 +243,7 @@ const SearchAllPage = () => {
           {data?.shows?.items.map((show) => {
             return (
               <ShowSearchCard
-                keyString="show-search-card"
+                key={`show-search-card/${show.id}`}
                 show={show}
                 onClick={() => handleSaveLocal(show)}
               />

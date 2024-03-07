@@ -9,9 +9,8 @@ interface Props {
   track: any;
   album: any;
   artist: any;
-  keyString: string;
 }
-const SongSearchCard: FC<Props> = ({ keyString, track, album, artist }) => {
+const SongSearchCard: FC<Props> = ({ track, album, artist }) => {
   const navigate = useNavigate();
   const [controlMutation] = useControlPlayerMutation();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -55,7 +54,6 @@ const SongSearchCard: FC<Props> = ({ keyString, track, album, artist }) => {
     <SearchCard
       type={track.type}
       id={track.id}
-      key={`${keyString}/${track.id}`}
       title={track.name}
       subTitle={artist.name}
       img={album?.images[1]?.url || ""}

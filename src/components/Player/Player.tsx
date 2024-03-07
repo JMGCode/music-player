@@ -27,14 +27,11 @@ import { InfoNoPremium } from "../../Notifications";
 import { PlayerTrack } from "./PlayerTrack";
 import { RangeControl } from "./RangeControl";
 import ShuffleIcon from "../Icons/ShuffleIcon";
-// import SpotifyIcon from "../Icons/SpotifyIcon";
 import { faMicrophoneLines } from "@fortawesome/free-solid-svg-icons";
 import { getTimeString } from "../../helpers/getTimeString";
 import { info as infoNotification } from "../Notification/Notify";
 import { useAppSelector } from "../../app/hooks";
 import useSpotifySdk from "../../hooks/useSpotifySdk";
-
-// import useThrottle from "../../hooks/useThrottle";
 
 const Player = () => {
   const navigate = useNavigate();
@@ -46,7 +43,6 @@ const Player = () => {
   const [repeatMutation] = useRepeatPlayedTrackMutation();
   const [shuffleMutation] = useToggleShufflePlayerMutation();
   const [transferMutation] = useTransferPlayerMutation();
-  // const [volumeMutation] = useSetPlayerVolumeMutation();
   const [controlMutation] = useControlPlayerMutation();
   const [seekMutation] = useSeekPositionMutation();
 
@@ -71,14 +67,21 @@ const Player = () => {
   const [isDraggingPosition, setIsDraggingPosition] = useState(false);
 
   useEffect(() => {
+    if (!playingTrack) {
+      trackIntervalRef.current && clearInterval(trackIntervalRef.current);
+      setElapsedTrackTime(0);
+      return;
+    }
+
     setElapsedTrackTime(trackPosition / 1000);
     if (!isPaused) {
       const interval = setInterval(handlePositionInterval, 1000);
+      trackIntervalRef.current && clearInterval(trackIntervalRef.current);
       trackIntervalRef.current = interval;
     }
     return () =>
       trackIntervalRef.current && clearInterval(trackIntervalRef.current);
-  }, [trackDuration, trackPosition]);
+  }, [playingTrack, trackPosition, isPaused]);
 
   const handlePositionInterval = () => {
     setElapsedTrackTime((prev) => {
@@ -103,22 +106,6 @@ const Player = () => {
     [player]
   );
 
-  useEffect(() => {
-    const activeDevice = data?.devices.find((device) => device.is_active);
-    console.log(
-      "useEffect",
-      activeDevice?.id,
-      deviceId,
-      activeDevice?.id === deviceId
-    );
-    if (activeDevice?.id === deviceId) {
-      setIsDeviceActive(true);
-    }
-  }, [data, deviceId]);
-
-  //TODO: get currDevice(Api) if not deviceSelected
-  //send curr deviceId if no device Id send notification error
-  //no device found
   const handleControlAction = (action: ControlType) => {
     if (!deviceId) {
       infoNotification(<InfoNoPremium />, true);
@@ -153,9 +140,7 @@ const Player = () => {
   };
 
   return (
-    <div
-      className={`player-container ${isDeviceActive ? "active-player" : ""}`}
-    >
+    <div className={`player-container`}>
       <div
         onClick={tooglePlayerMobileState}
         className="player-close-btn"

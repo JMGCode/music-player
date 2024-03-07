@@ -18,7 +18,7 @@ const LibraryArtistsPage = () => {
         {artists?.artists?.items?.map((artist: any) => {
           return (
             <ArtistSearchCard
-              keyString="artist-collection-card"
+              key={`artist-collection-card/${artist.id}`}
               artist={artist}
             />
           );

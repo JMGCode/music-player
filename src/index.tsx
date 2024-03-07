@@ -27,6 +27,7 @@ import EpisodePage from "./pages/Episode/Episode";
 import ErrorPage from "./error-page";
 import { GenrePage } from "./pages/Genre";
 import { LibraryAlbumsPage } from "./pages/Library";
+import LikedPlaylistPage from "./pages/LikedPlaylist/LikedPlaylistPage";
 import { Lyrics } from "./components";
 import OAuth from "./OAuth";
 import { PersistGate } from "redux-persist/integration/react";
@@ -83,6 +84,7 @@ const router = createBrowserRouter([
       { path: "/episode/:episodeId", element: <EpisodePage /> },
       { path: "/genre/:genreId", element: <GenrePage /> },
       { path: "/lyrics", element: <Lyrics /> },
+      { path: "/collection/tracks", element: <LikedPlaylistPage /> },
       {
         path: "/collection",
         element: <LibraryPage />,

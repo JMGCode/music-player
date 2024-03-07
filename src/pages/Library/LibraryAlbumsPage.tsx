@@ -21,7 +21,7 @@ const LibraryAlbumsPage = () => {
 
           return (
             <AlbumSearchCard
-              keyString="collection-card-playlist"
+              key={`collection-card-playlist/${album.id}`}
               album={album}
             />
           );

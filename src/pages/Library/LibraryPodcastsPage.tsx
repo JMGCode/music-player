@@ -33,7 +33,10 @@ const LibraryPodcastsPage = () => {
         {shows?.items?.map((item: any) => {
           const { show } = item;
           return (
-            <ShowSearchCard keyString="collection-card-shows" show={show} />
+            <ShowSearchCard
+              key={`collection-card-shows/${show.id}`}
+              show={show}
+            />
           );
         })}
       </CardSection>

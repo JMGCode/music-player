@@ -6,13 +6,14 @@ import PlaylistSearchCard from "../../components/Card/SearchCard/PlaylistSearchC
 import { SectionList } from "../../Layout/Container/SectionList";
 import { useGetLikedTracksQuery } from "../../features/api/spotify/me";
 import { useGetPlaylistsQuery } from "../../features/api/spotify";
+import { useNavigate } from "react-router-dom";
 
 const LibraryPlaylistsPage = () => {
   const { data: likedTracks, isLoading: isLoadingLikedTracks } =
     useGetLikedTracksQuery();
   const { data: playlists, isLoading: isLoadingPlaylists } =
     useGetPlaylistsQuery();
-
+  const navigate = useNavigate();
   return (
     <SectionList style={{ padding: "0 30px" }}>
       <CardSection
@@ -26,7 +27,9 @@ const LibraryPlaylistsPage = () => {
           <CollectionCard
             collection={likedTracks}
             title="Liked Songs"
-            onClick={() => {}}
+            onClick={() => {
+              navigate("/collection/tracks");
+            }}
             color={"250"}
             countText="liked songs"
           />
@@ -34,7 +37,7 @@ const LibraryPlaylistsPage = () => {
         {playlists?.map((playlist) => {
           return (
             <PlaylistSearchCard
-              keyString="playlist-collection-card"
+              key={`playlist-collection-card/${playlist.id}`}
               playlist={playlist}
             />
           );

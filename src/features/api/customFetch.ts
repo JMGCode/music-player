@@ -18,6 +18,10 @@ const baseUrlServer = process.env.REACT_APP_SERVER;
 // const baseUrlServer = `http://localhost:3001/`;
 // const baseUrlServer = `${process.env.REACT_APP_SERVER_ENDPOINT}/api/spotify/`;
 
+const REFRESHTOKEN = 401;
+const NOPREMIUM = 403;
+const NODEVICE = 404;
+
 const mutex = new Mutex();
 
 const baseQuery = fetchBaseQuery({
@@ -45,12 +49,12 @@ const customFetchBase: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
   const errorData = (result.error?.data as any)?.error;
 
-  if (result.error?.status === 403) {
+  if (result.error?.status === NOPREMIUM) {
     if (errorData.reason === "PREMIUM_REQUIRED") {
       handleNoPremium(errorData);
     }
   }
-  if (result.error?.status === 404) {
+  if (result.error?.status === NODEVICE) {
     if (errorData.reason === "NO_ACTIVE_DEVICE") {
       const deviceResult = await handleNoDeviceFound(
         baseQuery,
@@ -62,13 +66,13 @@ const customFetchBase: BaseQueryFn<
         result = await baseQuery(args, api, extraOptions);
       } else {
         // api.dispatch(logout());
-        // window.location.href = "/login";
-        console.log("REDIRECT TO LOGIN PAGE");
+        window.location.href = "/login";
+        // console.log("REDIRECT TO LOGIN PAGE");
       }
     }
   }
 
-  if (result.error?.status === 401) {
+  if (result.error?.status === REFRESHTOKEN) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
 
@@ -89,9 +93,10 @@ const customFetchBase: BaseQueryFn<
           // console.log("RETRY QUERY AFTER REFRESH TOKEN");
           result = await baseQuery(args, api, extraOptions);
         } else {
-          // console.log("TOKEN: REDIRECT TO LOGIN PAGE");
+          console.log("TOKEN: REDIRECT TO LOGIN PAGE");
           api.dispatch(clearCredentials());
           window.location.href = "/login";
+          // window.location.reload();
         }
       } finally {
         // release must be called once the mutex should be released again.

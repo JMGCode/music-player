@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   playlist: any;
-  keyString: string;
 }
-const PlaylistSearchCard: FC<Props> = ({ keyString, playlist }) => {
+const PlaylistSearchCard: FC<Props> = ({ playlist }) => {
   const navigate = useNavigate();
   const [controlMutation] = useControlPlayerMutation();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -59,7 +58,6 @@ const PlaylistSearchCard: FC<Props> = ({ keyString, playlist }) => {
   }, [playingTrack]);
   return (
     <SearchCard
-      key={`${keyString}/${playlist.id}`}
       title={playlist.name}
       subTitle={`By ${playlist.ownerName}`}
       type={"playlist"}

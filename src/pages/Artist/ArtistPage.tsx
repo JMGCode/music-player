@@ -136,7 +136,10 @@ const ArtistPage = () => {
           >
             {albums?.items?.map((album: any) => {
               return (
-                <AlbumSearchCard keyString="search-card-album" album={album} />
+                <AlbumSearchCard
+                  key={`search-card-album/${album.id}`}
+                  album={album}
+                />
               );
             })}
           </CardSection>
@@ -150,7 +153,7 @@ const ArtistPage = () => {
             {relatedArtists?.artists?.map((artist: any) => {
               return (
                 <ArtistSearchCard
-                  keyString="search-card-album"
+                  key={`search-card-album/${artist.id}`}
                   artist={artist}
                 />
               );
@@ -165,7 +168,7 @@ const ArtistPage = () => {
           >
             {appersOn?.items?.map((album: any) => {
               return (
-                <AlbumSearchCard keyString="search-card-album" album={album} />
+                <AlbumSearchCard key={`search-card-album/${album.id}`} album={album} />
               );
             })}
           </CardSection>
